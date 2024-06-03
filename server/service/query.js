@@ -3,7 +3,7 @@ import 'dotenv/config'
 
 async function query(query, params) {
     let results;
-    console.log("in query"+query+"  "+params);   
+    console.log("in query "+query+"  "+params);   
     const connection=await mysql.createConnection({
         host: 'localhost',
         user: 'root',
@@ -11,8 +11,9 @@ async function query(query, params) {
         password: process.env.PASSWORD
     });
     try {
-        console.log("in try query");
+        console.log("in try query"); 
         [results] = await connection.execute(query, params);
+
     } catch (err) {
         console.log("in catch query " + err);
     }
