@@ -1,4 +1,6 @@
 import { UserService } from '../service/userService.js';
+import jwt from 'jsonwebtoken';
+import 'dotenv/config'
 
 export default class EntranceController {
     async login(req, res, next) {
@@ -15,11 +17,11 @@ export default class EntranceController {
             //     email: resultUsers[0].email,
             //     phone: resultUsers[0].phone,
             // };
-            // const token = jwt.sign(authorizedUser, process.env.JWT_SECRET, {
-            //     expiresIn: '1h',
-            // });
+            const token = jwt.sign(result, process.env.JWT_SECRET, {
+                expiresIn: '1h',
+            });
             // return res.status(200).json({ data: authorizedUser, token: { token }, status: 200 });
-            return res.status(200).json({ data: result, status: 200 });
+            return res.status(200).json({ data: result,token: { token }, status: 200 });
         } catch (ex) {
             const err = {};
             switch (ex.message) {
@@ -41,8 +43,11 @@ export default class EntranceController {
     async register(req, res, next) {
         try {
             const userService = new UserService();
-            await userService.register(req.body);
-            return res.status(200).json({ status: 200 });
+            const result =await userService.register(req.body);
+            const token = jwt.sign(result ,process.env.JWT_SECRET, {
+                expiresIn: '1h',
+            });
+            return res.status(200).json({id:result,token: { token }, status: 200 });
         } catch (ex) {
             const err = {};
             switch (ex.message) {

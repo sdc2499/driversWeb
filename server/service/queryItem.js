@@ -1,10 +1,23 @@
 import 'dotenv/config'
 export class QueryItem {
-    
+
     loginQuery() {
-        const query = 'SELECT firstName,lastName,phone,email FROM db.costumers C, db.passwords P WHERE C.id = P.costumerId && C.phone=? && P.password=?';
+        const query = 'SELECT firstName,lastName,phone,email,userType FROM db.users U, db.passwords P WHERE U.id = P.id && U.phone=? && P.password=?';
         return query
     }
+
+    getMainDetailesQuery() {
+        const query = 'SELECT firstName,lastName,phone,ratingAverage,ratingAmount FROM db.drivers D, db.rating R WHERE D.id = R.driverId';
+        return query
+    }
+
+    upgradeToDriverQuery(questionMarks) {
+        return `START TRANSACTION; UPDATE db.users SET userType = 'driver' WHERE ID = ? ;  INSERT INTO db.drivers VALUES (${questionMarks}); COMMIT;`
+    }
+
+
+
+
 
     postItemQuery(tableName, questionMarks) {
         const query = `INSERT INTO db.${tableName} VALUES( ${questionMarks}) `;
@@ -24,9 +37,9 @@ export class QueryItem {
         const query = `UPDATE db.${tableName} SET isActive = 0 WHERE ${params} = ?`;
         return query;
     }
-
-    updateItemQuery(tableName, updateDetails) {
-        const query = `UPDATE db.${tableName} SET ${updateDetails}  WHERE id = ?`;
+    //לבדוק האם עובד בריירת מחדל
+    updateItemQuery(tableName, updateDetails, key = "id") {
+        const query = `UPDATE db.${tableName} SET ${updateDetails}  WHERE ${key} = ?`;
         return query;
     }
 

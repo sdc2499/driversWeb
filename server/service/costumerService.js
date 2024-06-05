@@ -8,7 +8,7 @@ export class CostumerService {
         stringToQuery = stringToQuery.slice(0, -1);
         let values = Object.values(body);
         values.push(id);
-        const queryCostumer = queryItem.updateItemQuery("costumers", stringToQuery);
+        const queryCostumer = queryItem.updateItemQuery("users", stringToQuery);
         const result = await query(queryCostumer, values)
         return result
     }

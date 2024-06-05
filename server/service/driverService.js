@@ -9,7 +9,7 @@ export class DriverService {
         return result;
     }
 
-//לבדוק למה לא עובד עם כמה משתנים
+    //לבדוק למה לא עובד עם כמה משתנים
     async getDrivers(req) {
         const queryItem = new QueryItem();
         let queryDriver, conditionsParams = [], conditionsValues = [];
@@ -33,10 +33,27 @@ export class DriverService {
         return result;
     }
 
+    async getMainDetails(driverId) {
+        const queryItem = new QueryItem();
+        let queryDriver = queryItem.getMainDetailesQuery();
+        const result = await query(queryDriver, [driverId])
+        return result;
+    }
+
     async postDriver(driver) {
         const queryItem = new QueryItem();
-        let queryDriver = queryItem.postItemQuery("drivers", "NULL," + "?,".repeat(Object.keys(driver).length - 1) + "?");
-        const result = await query(queryDriver, Object.values(driver));
+        let queryUser = queryItem.postItemQuery("users", "NULL," + "?,".repeat(Object.keys(driver[0]).length - 1) + "?");
+        const result = await query(queryUser, [Object.values(driver[0]),"driver"]);
+        const driverId = result.insertId;
+        const queryDriver = queryItem.postItemQuery("drivers", "?,".repeat(Object.keys(driver[1]).length + 1) + "?")
+        await query(queryDriver, [driverId, Object.values(driver[1]),0,0]);
+        return;
+    }
+
+    async upgradeToDriver(driverDetails, id) {
+        const queryItem = new QueryItem();
+        let queryDriver = queryItem.upgradeToDriverQuery("?,".repeat(Object.keys(driverDetails).length + 2) + "?");
+        const result = await query(queryDriver, [id, id, Object.values(driverDetails), 0, 0]);
         return;
     }
 
@@ -51,5 +68,18 @@ export class DriverService {
         const result = await query(queryDriver, values)
         return result
     }
-    
+
+    // //אם לעשות חישוב בקלינט או בסרבר מה הדירוג
+    // async updateDriverRating(body, id) {
+    //     const queryItem = new QueryItem();
+    //     let stringToQuery = "";
+    //     Object.keys(body).forEach(key => { stringToQuery += key += "=?," });
+    //     stringToQuery = stringToQuery.slice(0, -1);
+    //     let values = Object.values(body);
+    //     values.push(id);
+    //     const queryDriver = queryItem.updateItemQuery("rating", stringToQuery,"driverId");
+    //     const result = await query(queryDriver, values)
+    //     return result
+    // }
+
 }

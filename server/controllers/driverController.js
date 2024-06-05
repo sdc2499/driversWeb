@@ -3,7 +3,6 @@ export default class DriverController {
     async getDrivers(req, res, next) {
         try {
             const driverService = new DriverService();
-            console.log("..."+req)
             const result = await driverService.getDrivers(req);
             return res.status(200).json({ data: result, status: 200 });
         }         
@@ -27,6 +26,29 @@ export default class DriverController {
         try {
             const driverService = new DriverService();
             const result = await driverService.getDriverById(req.params.id);
+            return res.status(200).json({ data: result, status: 200 });
+        }         
+        catch (ex) {
+            const err = {};
+            switch (ex.message) {
+                case "No elements found":
+                    err.statusCode = 404;
+                    break;
+                default:
+                    err.statusCode = 500;
+                    break;
+            }
+            err.message = ex.message;
+            next(err);
+        }
+    
+    }
+
+
+    async getMainDetails(req, res, next) {
+        try {
+            const driverService = new DriverService();
+            const result = await driverService.getMainDetails(req.params.id);
             return res.status(200).json({ data: result, status: 200 });
         }         
         catch (ex) {
@@ -70,6 +92,20 @@ export default class DriverController {
             console.log(req.body.firstName+"    "+ req.params.id)
             const driverService = new DriverService();
             await driverService.updateDriver(req.body, req.params.id);
+            return res.status(200).json({ status: 200, data: req.params.id });
+        }
+        catch (ex) {
+            const err = {}
+            err.statusCode = 500;
+            err.message = ex.message;
+            next(err)
+        }
+    }
+
+    async updateDriverRating(req, res,next) {
+        try {
+            const driverService = new DriverService();
+            await driverService.updateDriverRating(req.body, req.params.id);
             return res.status(200).json({ status: 200, data: req.params.id });
         }
         catch (ex) {
