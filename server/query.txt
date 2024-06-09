@@ -1,0 +1,38 @@
+
+CREATE TABLE `db`.`users` (
+  `id` INT AUTO_INCREMENT,
+  `firstName` VARCHAR(20) NOT NULL,
+  `lastName` VARCHAR(20) NOT NULL,
+  `phone` VARCHAR(10) NOT NULL,
+  `email` VARCHAR(25) NOT NULL,
+  `userType` VARCHAR(15) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  UNIQUE INDEX `phone_UNIQUE` (`phone` ASC) VISIBLE,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);
+
+
+CREATE TABLE `db`.`passwords` (
+  `userId` INT NOT NULL,
+  `password` VARCHAR(256) NOT NULL,
+  PRIMARY KEY (`userId`),
+  CONSTRAINT `userId`
+    FOREIGN KEY (`userId`)
+    REFERENCES `db`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+CREATE TABLE `db`.`drivers` (
+  `driverId` INT NOT NULL,
+  `gender` VARCHAR(1) NOT NULL,
+  `religiousSector` VARCHAR(15) NOT NULL,
+  `ratingAmount` INT NOT NULL,
+  `ratingAverage` FLOAT NULL,
+  PRIMARY KEY (`driverId`),
+  UNIQUE INDEX `driverId_UNIQUE` (`driverId` ASC) VISIBLE,
+  CONSTRAINT `driverId`
+    FOREIGN KEY (`driverId`)
+    REFERENCES `db`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);

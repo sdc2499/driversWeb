@@ -4,7 +4,7 @@ export class DriverService {
 
     async getDriverById(id) {
         const queryItem = new QueryItem();
-        let queryDriver = queryItem.getByParamQuery("drivers", `id=?`)
+        let queryDriver = queryItem.getByParamQuery("drivers", `driverId=?`)
         const result = await query(queryDriver, [id])
         return result;
     }
@@ -16,7 +16,7 @@ export class DriverService {
         let queryParames = req.query;
         if (req.params.id) {
             conditionsValues = req.params.id;
-            queryTodo = getByParamQuery("drivers", `id=?`)
+            queryTodo = getByParamQuery("drivers", `driverId=?`)
         }
         else {
             if (Object.entries(queryParames).length === 0)
@@ -42,11 +42,13 @@ export class DriverService {
 
     async postDriver(driver) {
         const queryItem = new QueryItem();
-        let queryUser = queryItem.postItemQuery("users", "NULL," + "?,".repeat(Object.keys(driver[0]).length - 1) + "?");
+        let queryUser = queryItem.postItemQuery("users", "NULL," + "?,".repeat(Object.keys(driver[0]).length ) + "?");
         const result = await query(queryUser, [Object.values(driver[0]),"driver"]);
         const driverId = result.insertId;
         const queryDriver = queryItem.postItemQuery("drivers", "?,".repeat(Object.keys(driver[1]).length + 1) + "?")
         await query(queryDriver, [driverId, Object.values(driver[1]),0,0]);
+        let queryUserPswd = queryItem.postItemQuery("passwords", userId + ",?");
+        await query(queryUserPswd, Object.values(driver[2]));
         return;
     }
 

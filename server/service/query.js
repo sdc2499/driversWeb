@@ -24,5 +24,5 @@ async function query(query, params) {
     return results;
 }
 export {
-    query
+    query 
 }

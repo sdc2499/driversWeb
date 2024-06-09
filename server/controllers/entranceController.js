@@ -44,10 +44,11 @@ export default class EntranceController {
         try {
             const userService = new UserService();
             const result =await userService.register(req.body);
-            const token = jwt.sign(result ,process.env.JWT_SECRET, {
-                expiresIn: '1h',
-            });
-            return res.status(200).json({id:result,token: { token }, status: 200 });
+            // const token = jwt.sign(result ,process.env.JWT_SECRET, {
+            //     expiresIn: '1h',
+            // });
+            return res.status(200).json({id:result, status: 200 });
+            // return res.status(200).json({id:result,token: { token }, status: 200 });
         } catch (ex) {
             const err = {};
             switch (ex.message) {
