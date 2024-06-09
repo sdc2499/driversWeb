@@ -42,20 +42,21 @@ export class DriverService {
 
     async postDriver(driver) {
         const queryItem = new QueryItem();
-        let queryUser = queryItem.postItemQuery("users", "NULL," + "?,".repeat(Object.keys(driver[0]).length ) + "?");
-        const result = await query(queryUser, [Object.values(driver[0]),"driver"]);
+        const { password, ...userWithoutPassword } = driver.user;
+        let queryUser = queryItem.postItemQuery("users", "NULL," + "?,".repeat(Object.keys(userWithoutPassword).length ) + "?");
+        const result = await query(queryUser, [...Object.values(userWithoutPassword),"driver"]);
         const driverId = result.insertId;
-        const queryDriver = queryItem.postItemQuery("drivers", "?,".repeat(Object.keys(driver[1]).length + 1) + "?")
-        await query(queryDriver, [driverId, Object.values(driver[1]),0,0]);
-        let queryUserPswd = queryItem.postItemQuery("passwords", userId + ",?");
-        await query(queryUserPswd, Object.values(driver[2]));
+        const queryDriver = queryItem.postItemQuery("drivers", "?,".repeat(Object.keys(driver.driver).length + 1) + "?")
+        await query(queryDriver, [driverId, ...Object.values(driver.driver),0]);
+        let queryUserPswd = queryItem.postItemQuery("passwords", driverId + ",?");
+        await query(queryUserPswd, [driver.user.password]);
         return;
     }
 
     async upgradeToDriver(driverDetails, id) {
         const queryItem = new QueryItem();
         let queryDriver = queryItem.upgradeToDriverQuery("?,".repeat(Object.keys(driverDetails).length + 2) + "?");
-        const result = await query(queryDriver, [id, id, Object.values(driverDetails), 0, 0]);
+        const result = await query(queryDriver, [id, id, ...Object.values(driverDetails), 0, 0]);
         return;
     }
 

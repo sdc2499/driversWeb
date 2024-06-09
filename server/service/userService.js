@@ -14,14 +14,13 @@ export class UserService {
     //לעשות בסקל שבטיפ יהיה 3 סוגים
     async register(user) {
         const queryItem = new QueryItem();
-        //אם הצליח להכניס משתמש ונפל כשהכניס סיסמא מה קורה?
-        user[1].password = sha256(user[1].password);
-        let queryUser = queryItem.postItemQuery("users", "NULL," + "?,".repeat(Object.keys(user[0]).length) + "?");
-        const result = await query(queryUser, [Object.values(user[0]), "costumer"]);
-        const userId = result.insertId;
-        let queryUserPswd = queryItem.postItemQuery("passwords", userId + ",?");
-        await query(queryUserPswd, Object.values(user[1]));
-        return userId;
+        let pswd = sha256(user.password);
+        let queryUser = queryItem.postItemQuery("users", "NULL," + "?,".repeat(Object.keys(user).length - 1) + "?");
+        const { password, ...userWithoutPassword } = user;
+        const result = await query(queryUser, [...Object.values(userWithoutPassword), "costumer"]);
+        let queryUserPswd = queryItem.postItemQuery("passwords", result.insertId + ",?");
+        await query(queryUserPswd, [pswd]);
+        return result.insertI;
     }
 }
 

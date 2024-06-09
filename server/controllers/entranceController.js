@@ -17,11 +17,11 @@ export default class EntranceController {
             //     email: resultUsers[0].email,
             //     phone: resultUsers[0].phone,
             // };
-            const token = jwt.sign(result, process.env.JWT_SECRET, {
-                expiresIn: '1h',
-            });
+            // const token = jwt.sign(result, process.env.JWT_SECRET, {
+            //     expiresIn: '1h',
+            // });
             // return res.status(200).json({ data: authorizedUser, token: { token }, status: 200 });
-            return res.status(200).json({ data: result,token: { token }, status: 200 });
+            return res.status(200).json({ data: result, status: 200 });
         } catch (ex) {
             const err = {};
             switch (ex.message) {
@@ -37,9 +37,6 @@ export default class EntranceController {
         }
     }
 
-
-    //לבדוק בטוח אם הסרביס צריך לקרוא לכל הטבלאות 
-    //מתי להצפין פה או בסרביס
     async register(req, res, next) {
         try {
             const userService = new UserService();

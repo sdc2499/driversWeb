@@ -7,14 +7,14 @@ import { entranceRouter } from "./routers/entranceRouter.js";
 import { rideRouter } from "./routers/rideRouter.js";
 import { driverRouter } from "./routers/driverRouter.js";
 
-const app=express();
+const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use('/entrance',entranceRouter)
+app.use('/entrance', entranceRouter)
 // app.use(authMiddleware);
-app.use('/ride',rideRouter)
-app.use('/drivers',driverRouter)
+app.use('/ride', rideRouter)
+app.use('/drivers', driverRouter)
 app.use(logErrors);
 
 app.listen(process.env.PORT, () => {
