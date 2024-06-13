@@ -10,7 +10,7 @@ export class QueryItem {
         const query = 'SELECT firstName,lastName,phone,ratingAverage,ratingAmount FROM db.drivers D, db.rating R WHERE D.id = R.driverId';
         return query
     }
-
+    
     upgradeToDriverQuery(questionMarks) {
         return `START TRANSACTION; UPDATE db.users SET userType = 'driver' WHERE ID = ? ;  INSERT INTO db.drivers VALUES (${questionMarks}); COMMIT;`
     }

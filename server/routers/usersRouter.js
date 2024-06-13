@@ -4,7 +4,7 @@ const usersRouter=express.Router();
 const costumerController = new CostumerController();
 
 usersRouter.get("/",costumerController.getUserByParam)
-// usersRouter.put("/:id",costumerController.updateDriverById);
+usersRouter.put("/:id",costumerController.upgradeToDriver);
 
 export {
     usersRouter 

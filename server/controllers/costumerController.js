@@ -14,6 +14,20 @@ export default class CostumerController {
             next(err)
         }
     }
+    async upgradeToDriver(req, res, next){
+        try {
+            const costumerService = new CostumerService();
+            console.log("in costumer controler:::"+req.body+req.body.gender+req.params.id)
+            await costumerService.upgradeToDriver(req.body, req.params.id);
+            return res.status(200).json({ status: 200, data: req.params.id });
+        }
+        catch (ex) {
+            const err = {}
+            err.statusCode = 500;  
+            err.message = ex.message;
+            next(err)
+        }
+    }
     async updateCostumer(req, res, next) {
         try {
             const costumerService = new CostumerService();
