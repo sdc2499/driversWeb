@@ -2,7 +2,7 @@ import 'dotenv/config'
 export class QueryItem {
 
     loginQuery() {
-        const query = 'SELECT firstName,lastName,phone,email,userType FROM db.users U, db.passwords P WHERE U.id = P.id && U.phone=? && P.password=?';
+        const query = 'SELECT id,firstName,lastName,phone,email,userType FROM db.users U, db.passwords P WHERE U.id = P.userId && U.phone=? && P.password=?';
         return query
     }
 

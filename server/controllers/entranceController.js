@@ -21,7 +21,7 @@ export default class EntranceController {
             //     expiresIn: '1h',
             // });
             // return res.status(200).json({ data: authorizedUser, token: { token }, status: 200 });
-            return res.status(200).json({ data: result, status: 200 });
+            return res.status(200).json({ data: result[0], status: 200 });
         } catch (ex) {
             const err = {};
             switch (ex.message) {
@@ -40,6 +40,7 @@ export default class EntranceController {
     async register(req, res, next) {
         try {
             const userService = new UserService();
+            console.log(req.body+req.body.firstName)
             const result =await userService.register(req.body);
             // const token = jwt.sign(result ,process.env.JWT_SECRET, {
             //     expiresIn: '1h',

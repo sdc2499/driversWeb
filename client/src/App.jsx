@@ -8,6 +8,7 @@ import Login from './componnent/entrance/Loginn';
 // import Layout from './componnent/Layout';
 import Error from './componnent/Error';
 import Info from './componnent/info/Info';
+import User from './componnent/user/User'
 import "./app.css"
 
 // import EditPassword from './components/editPassword/EditPassword';
@@ -27,12 +28,13 @@ function App() {
 
   useEffect(() => {
     const currntUser = JSON.parse(localStorage.getItem("currentUser"))
-    currntUser && fetch(`http://localhost:8080/costumer?phone=${currntUser.phone}`, {
-      headers: { Authorization: currntUser.token.token }
+    currntUser && fetch(`http://localhost:8080/users?phone=${currntUser.phone}`, {
+      // headers: { Authorization: currntUser.token.token }
     })
       .then(async response => {
         const data = await response.json();
-        response.ok && setCurrentUser(() => user(data[0]))
+        console.log("data in app.jsx: "+data+data[0]+data.id+data[0])
+        response.ok && setCurrentUser(() => user(data))
       })
   }, []);
 
@@ -45,6 +47,7 @@ function App() {
             <Route path='/home' element={<Home />}>
               {/* <Route path='editPassword' element={<EditPassword />} /> */}
               <Route path='info' element={<Info />} />
+              <Route path='user/:id' element={<User />} />
             </Route>
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />

@@ -40,11 +40,11 @@ const Home = () => {
         <>
             <header className={'sticky'}>
                 <nav >
-                    <NavLink className='editPassword' to='./editPassword' ><FaUserEdit /> </NavLink>
-                    <NavLink to='/login'>login</NavLink>
-                    <NavLink to='/register'>register</NavLink>
-                    <NavLink onClick={logout} to={'/login'} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Logout </NavLink>
-                    <NavLink to="./info" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Info </NavLink>
+                    <NavLink  className='editPassword' to='./editPassword' ><FaUserEdit /> </NavLink><br />
+                    <NavLink to='/login'>login</NavLink><br />
+                    <NavLink to='/register'>register</NavLink><br />
+                    <NavLink onClick={logout} to={'/login'} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Logout </NavLink><br />
+                    <NavLink to="/home/info" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Info </NavLink>
                 </nav>
             </header>
             {/* <h1>Hi {currentUser.firstName}</h1> */}

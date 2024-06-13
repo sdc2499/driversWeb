@@ -31,12 +31,12 @@ const Register = () => {
             setExist("notValid");
             return
         }
-        const user = [{
+        const user = {
             firstName: data.firstName,
             lastName: data.lastName,
             phone: data.phone,
             email: data.email,
-        }, { password: data.password }];
+         password: data.password };
 
         fetch('http://localhost:8080/entrance/register', {
             method: 'POST',
@@ -45,8 +45,9 @@ const Register = () => {
         })
             .then(async response => {
                 const data = await response.json();
-                if (response.ok)
-                    goToHome(user[0], data)
+                console.log("data in register::: "+data+data.status+user+user.firstName)
+                if (data.status==200)
+                    goToHome(user, data)
                 else
                     throw new Error(response)
             }).catch(response => {

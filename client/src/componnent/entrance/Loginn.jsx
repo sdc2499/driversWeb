@@ -16,6 +16,7 @@ const Login = () => {
     } = useForm();
     //לבדוק איזה פרטים לקחת ואיזה פרטים בכלל לשמור ללקוח
     const goToHome = (data, token_) => {
+        console.log(data+data.id)
         setCurrentUser({
             id: data.id,
             firstName: data.firstName,
@@ -25,7 +26,7 @@ const Login = () => {
             userType: data.userType
         })
         localStorage.setItem('currentUser', JSON.stringify({ phone: data.phone, userId: data.id, token: token_ }));
-        navigate(`/home/user/${data.username}`)
+        navigate(`/home/user/${data.id}`)
     }
 
     const logIn = async (user) => {
@@ -38,7 +39,7 @@ const Login = () => {
             const data = await response.json();
             goToHome(data.data, data.token)
         } catch (error) {
-            if (response.status == 500)
+            if (error.status == 500)
                 alert("oops somthing went wrong... please try again!")
             else
                 setExist(false);
