@@ -1,0 +1,154 @@
+npm install express socket.io
+
+//קוד השרת
+const express = require('express');
+const http = require('http');
+const socketIo = require('socket.io');
+
+const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
+
+let pendingRequests = [];
+
+io.on('connection', (socket) => {
+  console.log('a user connected:', socket.id);
+
+  socket.on('newRideRequest', (request) => {
+    console.log('New ride request received:', request);
+    pendingRequests.push({ ...request, socketId: socket.id });
+    io.emit('rideRequestForSecretary', request);
+  });
+
+  socket.on('priceUpdated', (updatedRequest) => {
+    console.log('Price updated:', updatedRequest);
+    pendingRequests = pendingRequests.map(req =>
+      req.id === updatedRequest.id ? { ...req, price: updatedRequest.price } : req
+    );
+    io.emit('rideRequestForDrivers', updatedRequest);
+  });
+
+  socket.on('driverAccepted', (requestId) => {
+    console.log('Driver accepted request:', requestId);
+    const request = pendingRequests.find(req => req.id === requestId);
+    if (request) {
+      io.to(request.socketId).emit('driverFound', { driverId: socket.id });
+      pendingRequests = pendingRequests.filter(req => req.id !== requestId);
+    }
+  });
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected:', socket.id);
+  });
+});
+
+server.listen(3000, () => {
+  console.log('Server listening on port 3000');
+});
+
+
+//צד לקוח
+
+npm install socket.io-client
+
+//socket.js
+import { io } from 'socket.io-client';
+
+const socket = io('http://localhost:3000');
+
+export default socket;
+
+
+//costumer.js
+import React, { useState } from 'react';
+import socket from './socket';
+
+const Customer = () => {
+  const [rideStatus, setRideStatus] = useState(null);
+
+  const requestRide = () => {
+    const rideRequest = { id: Date.now(), from: 'Location A', to: 'Location B' };
+    socket.emit('newRideRequest', rideRequest);
+  };
+
+  socket.on('driverFound', (data) => {
+    setRideStatus('Driver found! Driver ID: ' + data.driverId);
+  });
+
+  return (
+    <div>
+      <button onClick={requestRide}>Request Ride</button>
+      {rideStatus && <p>{rideStatus}</p>}
+    </div>
+  );
+};
+
+export default Customer;
+
+
+//secratay.js
+import React, { useState, useEffect } from 'react';
+import socket from './socket';
+
+const Secretary = () => {
+  const [requests, setRequests] = useState([]);
+
+  useEffect(() => {
+    socket.on('rideRequestForSecretary', (request) => {
+      setRequests(prev => [...prev, request]);
+    });
+  }, []);
+
+  const updatePrice = (id, price) => {
+    socket.emit('priceUpdated', { id, price });
+  };
+
+  return (
+    <div>
+      {requests.map(request => (
+        <div key={request.id}>
+          <p>From: {request.from}, To: {request.to}</p>
+          <input
+            type="number"
+            placeholder="Enter price"
+            onBlur={(e) => updatePrice(request.id, e.target.value)}
+          />
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default Secretary;
+
+
+//driver.js
+import React, { useState, useEffect } from 'react';
+import socket from './socket';
+
+const Driver = () => {
+  const [requests, setRequests] = useState([]);
+
+  useEffect(() => {
+    socket.on('rideRequestForDrivers', (request) => {
+      setRequests(prev => [...prev, request]);
+    });
+  }, []);
+
+  const acceptRequest = (id) => {
+    socket.emit('driverAccepted', id);
+  };
+
+  return (
+    <div>
+      {requests.map(request => (
+        <div key={request.id}>
+          <p>From: {request.from}, To: {request.to}, Price: {request.price}</p>
+          <button onClick={() => acceptRequest(request.id)}>Accept</button>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default Driver;

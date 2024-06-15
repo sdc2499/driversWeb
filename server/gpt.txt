@@ -1,0 +1,182 @@
+https://chatgpt.com/c/3f717221-8b79-4cff-a359-c6a5f0251a39
+
+כדי ליצור מערכת כזו, נצטרך להשתמש ב-Node.js עבור הצד השרת וב-React עבור הצד הלקוח. נשתמש גם ב-WebSocket (לדוגמה, עם ספריית Socket.IO) כדי לאפשר תקשורת בזמן אמת בין הלקוח והשרת.
+
+מבנה כללי של המערכת
+הלקוח שולח בקשת נסיעה לשרת.
+השרת שולח את הבקשה למזכירה באמצעות WebSocket.
+המזכירה מעדכנת את המחיר הסופי ושולחת את הבקשה לכל הנהגים.
+הנהגים מקבלים את הבקשה ומי שמאשר ראשון נבחר לנסיעה.
+השרת מודיע ללקוח שנמצא נהג.
+צד השרת (Node.js + Express + Socket.IO)
+התקנת ספריות
+נגדיר את התלות הדרושה באמצעות npm:
+
+sh
+Copy code
+npm install express socket.io
+קוד השרת
+javascript
+Copy code
+const express = require('express');
+const http = require('http');
+const socketIo = require('socket.io');
+
+const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
+
+let pendingRequests = [];
+
+io.on('connection', (socket) => {
+  console.log('a user connected:', socket.id);
+
+  socket.on('newRideRequest', (request) => {
+    console.log('New ride request received:', request);
+    pendingRequests.push({ ...request, socketId: socket.id });
+    io.emit('rideRequestForSecretary', request);
+  });
+
+  socket.on('priceUpdated', (updatedRequest) => {
+    console.log('Price updated:', updatedRequest);
+    pendingRequests = pendingRequests.map(req =>
+      req.id === updatedRequest.id ? { ...req, price: updatedRequest.price } : req
+    );
+    io.emit('rideRequestForDrivers', updatedRequest);
+  });
+
+  socket.on('driverAccepted', (requestId) => {
+    console.log('Driver accepted request:', requestId);
+    const request = pendingRequests.find(req => req.id === requestId);
+    if (request) {
+      io.to(request.socketId).emit('driverFound', { driverId: socket.id });
+      pendingRequests = pendingRequests.filter(req => req.id !== requestId);
+    }
+  });
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected:', socket.id);
+  });
+});
+
+server.listen(3000, () => {
+  console.log('Server listening on port 3000');
+});
+צד הלקוח (React + Socket.IO Client)
+התקנת ספריות
+נגדיר את התלות הדרושה באמצעות npm:
+
+sh
+Copy code
+npm install socket.io-client
+קוד הלקוח
+ניצור את הקבצים הדרושים לצורך אינטגרציה עם Socket.IO. נתחיל מהתחברות לשרת.
+
+socket.js
+javascript
+Copy code
+import { io } from 'socket.io-client';
+
+const socket = io('http://localhost:3000');
+
+export default socket;
+קוד רכיבי React
+ניצור רכיבים עבור הלקוח, המזכירה והנהגים.
+
+Customer.js
+javascript
+Copy code
+import React, { useState } from 'react';
+import socket from './socket';
+
+const Customer = () => {
+  const [rideStatus, setRideStatus] = useState(null);
+
+  const requestRide = () => {
+    const rideRequest = { id: Date.now(), from: 'Location A', to: 'Location B' };
+    socket.emit('newRideRequest', rideRequest);
+  };
+
+  socket.on('driverFound', (data) => {
+    setRideStatus('Driver found! Driver ID: ' + data.driverId);
+  });
+
+  return (
+    <div>
+      <button onClick={requestRide}>Request Ride</button>
+      {rideStatus && <p>{rideStatus}</p>}
+    </div>
+  );
+};
+
+export default Customer;
+Secretary.js
+javascript
+Copy code
+import React, { useState, useEffect } from 'react';
+import socket from './socket';
+
+const Secretary = () => {
+  const [requests, setRequests] = useState([]);
+
+  useEffect(() => {
+    socket.on('rideRequestForSecretary', (request) => {
+      setRequests(prev => [...prev, request]);
+    });
+  }, []);
+
+  const updatePrice = (id, price) => {
+    socket.emit('priceUpdated', { id, price });
+  };
+
+  return (
+    <div>
+      {requests.map(request => (
+        <div key={request.id}>
+          <p>From: {request.from}, To: {request.to}</p>
+          <input
+            type="number"
+            placeholder="Enter price"
+            onBlur={(e) => updatePrice(request.id, e.target.value)}
+          />
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default Secretary;
+Driver.js
+javascript
+Copy code
+import React, { useState, useEffect } from 'react';
+import socket from './socket';
+
+const Driver = () => {
+  const [requests, setRequests] = useState([]);
+
+  useEffect(() => {
+    socket.on('rideRequestForDrivers', (request) => {
+      setRequests(prev => [...prev, request]);
+    });
+  }, []);
+
+  const acceptRequest = (id) => {
+    socket.emit('driverAccepted', id);
+  };
+
+  return (
+    <div>
+      {requests.map(request => (
+        <div key={request.id}>
+          <p>From: {request.from}, To: {request.to}, Price: {request.price}</p>
+          <button onClick={() => acceptRequest(request.id)}>Accept</button>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default Driver;
+לסיכום
+המערכת הנ"ל מתבססת על Socket.IO כדי לאפשר תקשורת בזמן אמת בין הלקוח, המזכירה והנהגים. השרת בנוי ב-Node.js עם Express כדי לטפל בבקשות השונות ולנהל את התקשורת. בצד הלקוח, נבנו רכיבי React כדי לאפשר אינטראקציה עם המשתמשים השונים (לקוח, מזכירה, נהג).
