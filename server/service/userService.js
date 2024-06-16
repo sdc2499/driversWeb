@@ -1,6 +1,8 @@
 import { QueryItem } from "./queryItem.js";
 import { query } from "./query.js";
 import { sha256 } from 'js-sha256';
+import jwt from 'jsonwebtoken';
+
 export class UserService {
 
     async login(user) {
@@ -8,7 +10,14 @@ export class UserService {
         user.password = sha256(user.password)
         let queryUser = queryItem.loginQuery()
         const result = await query(queryUser, Object.values(user));
-        return result;
+        console.log("res"+result)
+        console.log("res0"+result[0])
+        console.log("resname"+result[0].firstName)
+
+        const token = jwt.sign(result[0], process.env.JWT_SECRET, {
+            expiresIn: '1h',
+        });
+        return {result:result[0],token:token};
     }
 
     //לעשות בסקל שבטיפ יהיה 3 סוגים
@@ -20,7 +29,10 @@ export class UserService {
         const result = await query(queryUser, [...Object.values(userWithoutPassword), "costumer"]);
         let queryUserPswd = queryItem.postItemQuery("passwords", result.insertId + ",?");
         await query(queryUserPswd, [pswd]);
-        return result.insertI;
+        const token = jwt.sign(user, process.env.JWT_SECRET, {
+            expiresIn: '1h',
+        });
+        return { userId: result.insertId, token: token };
     }
 }
 

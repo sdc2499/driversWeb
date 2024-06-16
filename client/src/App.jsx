@@ -9,8 +9,7 @@ import Login from './componnent/entrance/Loginn';
 import Error from './componnent/Error';
 import Info from './componnent/info/Info';
 import User from './componnent/user/User'
-import "./app.css"
-
+import './App.css'
 // import EditPassword from './components/editPassword/EditPassword';
 export const UserContext = createContext();
 

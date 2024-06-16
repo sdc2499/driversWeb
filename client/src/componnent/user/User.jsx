@@ -11,8 +11,8 @@ const User = () => {
         formState: { errors }
     } = useForm();
     function registerDriver(driverDetailes) {
-        console.log("userId:::::" + currentUser.userId)
-        fetch(`http://localhost:8080/users/${currentUser.userId}`, {
+        console.log("userId:::::" + currentUser.id)
+        fetch(`http://localhost:8080/users/${currentUser.id}`, {
             method: 'PUT',
             body: JSON.stringify({ gender: driverDetailes.gender, religiousSector: driverDetailes.religiousSector }),
             headers: { 'Content-type': 'application/json; charset=UTF-8' }

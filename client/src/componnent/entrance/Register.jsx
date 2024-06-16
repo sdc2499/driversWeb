@@ -9,8 +9,9 @@ const Register = () => {
     const [exist, setExist] = useState("");
     const [currentUser, setCurrentUser] = useContext(UserContext);
     const goToHome = (user, data) => {
+        console.log(data.token)
         setCurrentUser({
-            id: user.id,
+            id: data.id,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
