@@ -31,7 +31,9 @@ export default class CostumerController {
     async updateCostumer(req, res, next) {
         try {
             const costumerService = new CostumerService();
+            console.log(req.body[0].phone)
             await costumerService.updateCostumer(req.body, req.params.id);
+
             return res.status(200).json({ status: 200, data: req.params.id });
         }
         catch (ex) {

@@ -40,7 +40,7 @@ const Home = () => {
         <>
             <header className={'sticky'}>
                 <nav >
-                    <NavLink  className='editPassword' to='./editPassword' ><FaUserEdit /> </NavLink><br />
+                    <NavLink  className='editPassword' to='./editDetails' ><FaUserEdit /> </NavLink><br />
                     <NavLink to='/login'>login</NavLink><br />
                     <NavLink to='/register'>register</NavLink><br />
                     <NavLink onClick={logout} to={'/login'} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Logout </NavLink><br />

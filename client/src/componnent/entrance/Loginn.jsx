@@ -26,7 +26,7 @@ const Login = () => {
             userType: data.userType
         })
         localStorage.setItem('currentUser', JSON.stringify({ phone: data.phone, userId: data.id, token: token_ }));
-        navigate(`/home/user/${data.id}`)
+        navigate(`/home/${data.userType}/${data.id}`)
     }
 
     const logIn = async (user) => {

@@ -10,9 +10,9 @@ import Error from './componnent/Error';
 import Info from './componnent/info/Info';
 import User from './componnent/user/User'
 import Secretary from './Secretary'
+import EditDetails from './componnent/editDetails/EditDetails'
 import Driver from './Driver'
 import './App.css'
-// import EditPassword from './components/editPassword/EditPassword';
 export const UserContext = createContext();
 
 function App() {
@@ -46,11 +46,11 @@ function App() {
           <Routes >
             <Route path='/' element={<Navigate to={'/home'} />} />
             <Route path='/home' element={<Home />}>
-              {/* <Route path='editPassword' element={<EditPassword />} /> */}
+              <Route path='editDetails' element={<EditDetails/>} />
               <Route path='info' element={<Info />} />
-              <Route path='user/:id' element={<User />} />
-              <Route path='secretary' element={<Secretary />} />
-              <Route path='driver' element={<Driver />} />
+              <Route path='costumer/:id' element={<User />} />
+              <Route path='secretary/:id' element={<Secretary />} />
+              <Route path='driver/:id' element={<Driver />} />
             </Route>
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
