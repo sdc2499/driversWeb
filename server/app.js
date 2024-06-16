@@ -12,13 +12,11 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use('/entrance', entranceRouter)
-app.use('/users',usersRouter)
+app.use('/entrance', entranceRouter);
+app.use('/users', usersRouter);
 app.use(authMiddleware);
-app.use('/ride', rideRouter)
-app.use('/drivers', driverRouter)
+app.use('/ride', rideRouter);
+app.use('/drivers', driverRouter);
 app.use(logErrors);
 
-app.listen(process.env.PORT, () => {
-    console.log(`start server port: ${process.env.PORT}`);
-})
+export default app;
