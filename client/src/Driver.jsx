@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import socket from './socket';
+import { useNavigate } from "react-router-dom";
 
 const Driver = () => {
   const [requests, setRequests] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     socket.on('rideRequestForDrivers', (request) => {
@@ -12,6 +14,8 @@ const Driver = () => {
 
   const acceptRequest = (id) => {
     socket.emit('driverAccepted', id);
+    navigate('/home/user/1')
+
   };
 
   return (

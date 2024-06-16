@@ -10,8 +10,8 @@ import { usersRouter } from "./routers/usersRouter.js";
 
 const app = express();
 
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 app.use('/entrance', entranceRouter);
 app.use('/users', usersRouter);
 app.use(authMiddleware);

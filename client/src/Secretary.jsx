@@ -1,9 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
 import socket from './socket';
+import { useNavigate } from "react-router-dom";
 
 const Secretary = () => {
   const [requests, setRequests] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     socket.on('rideRequestForSecretary', (request) => {
@@ -11,8 +13,9 @@ const Secretary = () => {
     });
   }, []);
 
-  const updatePrice = (id, price) => {
-    socket.emit('priceUpdated', { id, price });
+  const updatePrice = (from,to,id, price) => {
+    socket.emit('priceUpdated', {from,to, id, price });
+    navigate('/home/driver')
   };
 
   return (
@@ -23,7 +26,7 @@ const Secretary = () => {
           <input
             type="number"
             placeholder="Enter price"
-            onBlur={(e) => updatePrice(request.id, e.target.value)}
+            onBlur={(e) => updatePrice(request.from,request.to,request.id, e.target.value)}
           />
         </div>
       ))}

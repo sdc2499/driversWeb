@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { UserContext } from '../../App';
 import socket from "../../socket";
-
+import { useNavigate } from "react-router-dom";
 const User = () => {
     const [currentUser, setCurrentUser] = useContext(UserContext);
     const [openForm, setOpenForm] = useState(false);
     const [rideStatus, setRideStatus] = useState(null);
-
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const registerDriver = (driverDetails) => {
@@ -21,6 +21,7 @@ const User = () => {
 
     const requestRide = () => {
         const rideRequest = { id: Date.now(), from: 'Location A', to: 'Location B' };
+        navigate('/home/secretary')
         socket.emit('newRideRequest', rideRequest);
     };
 

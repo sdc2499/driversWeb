@@ -9,6 +9,8 @@ import Login from './componnent/entrance/Loginn';
 import Error from './componnent/Error';
 import Info from './componnent/info/Info';
 import User from './componnent/user/User'
+import Secretary from './Secretary'
+import Driver from './Driver'
 import './App.css'
 // import EditPassword from './components/editPassword/EditPassword';
 export const UserContext = createContext();
@@ -47,6 +49,8 @@ function App() {
               {/* <Route path='editPassword' element={<EditPassword />} /> */}
               <Route path='info' element={<Info />} />
               <Route path='user/:id' element={<User />} />
+              <Route path='secretary' element={<Secretary />} />
+              <Route path='driver' element={<Driver />} />
             </Route>
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
