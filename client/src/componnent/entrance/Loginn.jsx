@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
 import { useForm } from 'react-hook-form';
-
+import './login.css';
 
 const Login = () => {
     const [currentUser, setCurrentUser] = useContext(UserContext);
@@ -14,7 +14,7 @@ const Login = () => {
         handleSubmit,
         formState: { errors }
     } = useForm();
-    //לבדוק איזה פרטים לקחת ואיזה פרטים בכלל לשמור ללקוח
+
     const goToHome = (data, token_) => {
         console.log(data+data.id)
         setCurrentUser({
@@ -24,10 +24,10 @@ const Login = () => {
             email: data.email,
             phone: data.phone,
             userType: data.userType
-        })
+        });
         localStorage.setItem('currentUser', JSON.stringify({ phone: data.phone, userId: data.id, token: token_ }));
-        navigate(`/home/${data.userType}/${data.id}`)
-    }
+        navigate(`/home/${data.userType}/${data.id}`);
+    };
 
     const logIn = async (user) => {
         try {
@@ -37,34 +37,37 @@ const Login = () => {
                 headers: { 'Content-type': 'application/json; charset=UTF-8' }
             });
             const data = await response.json();
-            goToHome(data.data, data.token)
+            goToHome(data.data, data.token);
         } catch (error) {
             if (error.status == 500)
-                alert("oops somthing went wrong... please try again!")
+                alert("Oops, something went wrong... please try again!");
             else
                 setExist(false);
         }
-    }
+    };
 
     return (
-        <>
-            <h1>login</h1>
+        <div className="container">
+            <h1>Login</h1>
             {!exist && <div>Incorrect phone or password</div>}
             <form noValidate onSubmit={handleSubmit(logIn)}>
-                <input type='tel' name='phone' placeholder='phone'
+                <input type='tel' name='phone' placeholder='Phone'
                     {...register("phone", {
-                        required: "phone is required.",
+                        required: "Phone is required.",
                     })} />
-                {errors.phone ? <p>{errors.phone.message}</p> : <br />}
-                <input type="password" name="password" id="" placeholder='password'
+                {errors.phone && <p>{errors.phone.message}</p>}
+
+                <input type="password" name="password" placeholder='Password'
                     {...register("password", {
-                        required: "password is required.",
+                        required: "Password is required.",
                     })} />
-                {errors.password ? <p>{errors.password.message}</p> : <br />}
+                {errors.password && <p>{errors.password.message}</p>}
+
                 <input type="submit" value="Log In" />
             </form>
-            <div>new here? <Link style={{ textDecoration: 'underline' }} to={'/register'}>please sign up</Link></div>
-        </>
-    )
-}
-export default Login
+            <div className="link">New here? <Link to={'/register'}>Please sign up</Link></div>
+        </div>
+    );
+};
+
+export default Login;

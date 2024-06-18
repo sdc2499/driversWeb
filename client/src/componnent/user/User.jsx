@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { UserContext } from '../../App';
 import { io } from 'socket.io-client';
+import './user.css';
 
 const socket = io('http://localhost:8080'); // ודא שהכתובת והפורט נכונים
 

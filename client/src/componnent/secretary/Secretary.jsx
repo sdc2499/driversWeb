@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import socket from './socket';
-import { useNavigate } from "react-router-dom";
+import socket from '../../socket';
+import { useNavigate } from 'react-router-dom';
+import './secretary.css'; // ייבוא קובץ ה-CSS המכיל את עיצוב המזכירה
 
 const Secretary = () => {
   const [requests, setRequests] = useState([]);
@@ -33,27 +34,27 @@ const Secretary = () => {
   };
 
   return (
-    <div>
-      <h1>Hello Secretary</h1>
+    <div className="secretary-container">
+      <h1 className="page-title">Hello Secretary</h1>
       {requests.map(request => (
-        <div key={request.id}>
-          <p>From: {request.from}</p>
-          <p>To: {request.to}</p>
-          <p>Date: {request.date}</p>
-          <p>Time: {request.time}</p>
-          <p>Type: {request.requestType === 'package' ? 'Package Delivery' : 'People Transportation'}</p>
+        <div className="request-item" key={request.id}>
+          <p><strong>From:</strong> {request.from}</p>
+          <p><strong>To:</strong> {request.to}</p>
+          <p><strong>Date:</strong> {request.date}</p>
+          <p><strong>Time:</strong> {request.time}</p>
+          <p><strong>Type:</strong> {request.requestType === 'package' ? 'Package Delivery' : 'People Transportation'}</p>
           {request.requestType === 'package' ? (
-            <p>Package Size: {request.packageSize}</p>
+            <p><strong>Package Size:</strong> {request.packageSize}</p>
           ) : (
             <>
-              <p>Adults: {request.adults}</p>
-              <p>Infants: {request.infants}</p>
+              <p><strong>Adults:</strong> {request.adults}</p>
+              <p><strong>Infants:</strong> {request.infants}</p>
             </>
           )}
           {request.closed ? (
-            <div>
+            <div className="closed-message">
               <p>This request has been closed.</p>
-              {request.price && <p>Final Price: {request.price}</p>}
+              {request.price && <p><strong>Final Price:</strong> {request.price}</p>}
             </div>
           ) : (
             <input

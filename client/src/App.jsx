@@ -9,9 +9,9 @@ import Login from './componnent/entrance/Loginn';
 import Error from './componnent/Error';
 import Info from './componnent/info/Info';
 import User from './componnent/user/User'
-import Secretary from './Secretary'
+import Secretary from './componnent/secretary/Secretary'
 import EditDetails from './componnent/editDetails/EditDetails'
-import Driver from './Driver'
+import Driver from './componnent/driver/Driver'
 import './App.css'
 export const UserContext = createContext();
 

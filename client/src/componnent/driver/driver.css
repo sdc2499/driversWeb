@@ -1,0 +1,51 @@
+.driver-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .page-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .accepted-requests {
+    margin-bottom: 30px;
+  }
+  
+  .accepted-request {
+    background-color: #e0f7fa;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #90caf9;
+    border-radius: 4px;
+  }
+  
+  .new-ride-requests {
+    margin-bottom: 30px;
+  }
+  
+  .ride-request {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .accept-button {
+    padding: 5px 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .accept-button:hover {
+    background-color: #45a049;
+  }
+  
