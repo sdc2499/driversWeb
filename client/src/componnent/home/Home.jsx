@@ -3,7 +3,6 @@ import { useParams, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { UserContext } from '../../App'
 import { FaArrowCircleUp } from 'react-icons/fa';
 import { FaUserEdit } from "react-icons/fa";
-
 // import './Home.css'
 const Home = () => {
     const navigate = useNavigate();
@@ -43,6 +42,7 @@ const Home = () => {
                     <NavLink  className='editPassword' to='./editDetails' ><FaUserEdit /> </NavLink><br />
                     <NavLink to='/login'>login</NavLink><br />
                     <NavLink to='/register'>register</NavLink><br />
+                    <NavLink to={`/home/${currentUser.userType}/${currentUser.id}`}>home</NavLink><br />
                     <NavLink onClick={logout} to={'/login'} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Logout </NavLink><br />
                     <NavLink to="/home/info" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Info </NavLink>
                 </nav>
