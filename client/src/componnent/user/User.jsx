@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { UserContext } from '../../App';
 import { io } from 'socket.io-client';
-import { useNavigate } from "react-router-dom";
 
 const socket = io('http://localhost:8080'); // ודא שהכתובת והפורט נכונים
 
@@ -11,8 +10,8 @@ const User = () => {
     const [openForm, setOpenForm] = useState(false);
     const [rideStatus, setRideStatus] = useState(null);
     const [noDriverMessage, setNoDriverMessage] = useState('');
-    const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [requestType, setRequestType] = useState('package'); // 'package' or 'people'
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
     const registerDriver = (driverDetails) => {
         console.log("userId:::::" + currentUser.id);
@@ -23,10 +22,11 @@ const User = () => {
         });
     };
 
-    const requestRide = () => {
-        const rideRequest = { id: Date.now(), from: 'Location A', to: 'Location B' };
+    const requestRide = (rideDetails) => {
+        const rideRequest = { id: Date.now(), ...rideDetails, requestType };
         socket.emit('newRideRequest', rideRequest);
         setRideStatus('Waiting for a driver to accept your request...');
+        reset(); // איפוס השדות בטופס לאחר שליחה
         
         // Set a timeout to update the message after 3 minutes
         setTimeout(() => {
@@ -51,6 +51,11 @@ const User = () => {
             socket.off('noDriverFound');
         };
     }, []);
+
+    const currentDate = new Date().toISOString().split('T')[0];
+    const maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() + 7);
+    const maxDateString = maxDate.toISOString().split('T')[0];
 
     return (
         <>
@@ -81,7 +86,104 @@ const User = () => {
             )}
 
             <div>
-                <button onClick={requestRide}>Request Ride</button>
+                <form noValidate onSubmit={handleSubmit(requestRide)}>
+                    <input
+                        type='text'
+                        name='from'
+                        placeholder='From'
+                        {...register("from", {
+                            required: "Starting location is required.",
+                        })}
+                    />
+                    {errors.from && <span>{errors.from.message}</span>}
+
+                    <input
+                        type='text'
+                        name='to'
+                        placeholder='To'
+                        {...register("to", {
+                            required: "Destination is required.",
+                        })}
+                    />
+                    {errors.to && <span>{errors.to.message}</span>}
+
+                    <input
+                        type='date'
+                        name='date'
+                        min={currentDate}
+                        max={maxDateString}
+                        {...register("date", {
+                            required: "Date is required.",
+                        })}
+                    />
+                    {errors.date && <span>{errors.date.message}</span>}
+
+                    <input
+                        type='time'
+                        name='time'
+                        {...register("time", {
+                            required: "Time is required.",
+                        })}
+                    />
+                    {errors.time && <span>{errors.time.message}</span>}
+
+                    <div>
+                        <label>
+                            <input
+                                type="radio"
+                                name="requestType"
+                                value="package"
+                                checked={requestType === 'package'}
+                                onChange={() => setRequestType('package')}
+                            />
+                            Package Delivery
+                        </label>
+                        <label>
+                            <input
+                                type="radio"
+                                name="requestType"
+                                value="people"
+                                checked={requestType === 'people'}
+                                onChange={() => setRequestType('people')}
+                            />
+                            People Transportation
+                        </label>
+                    </div>
+
+                    {requestType === 'package' && (
+                        <div>
+                            <select {...register("packageSize", { required: "Package size is required." })}>
+                                <option value="">Select Package Size</option>
+                                <option value="small">Small</option>
+                                <option value="medium">Medium</option>
+                                <option value="large">Large</option>
+                            </select>
+                            {errors.packageSize && <span>{errors.packageSize.message}</span>}
+                        </div>
+                    )}
+
+                    {requestType === 'people' && (
+                        <div>
+                            <input
+                                type='number'
+                                name='adults'
+                                placeholder='Number of Adults'
+                                {...register("adults", { required: "Number of adults is required." })}
+                            />
+                            {errors.adults && <span>{errors.adults.message}</span>}
+                            <input
+                                type='number'
+                                name='infants'
+                                placeholder='Number of Infants'
+                                {...register("infants", { required: "Number of infants is required." })}
+                            />
+                            {errors.infants && <span>{errors.infants.message}</span>}
+                        </div>
+                    )}
+
+                    <input type="submit" value="Request Ride" />
+                </form>
+
                 {rideStatus && <p>{rideStatus}</p>}
                 {noDriverMessage && <p>{noDriverMessage}</p>}
             </div>
@@ -90,6 +192,8 @@ const User = () => {
 };
 
 export default User;
+
+
 
 
 
