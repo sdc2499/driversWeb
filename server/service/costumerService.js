@@ -37,20 +37,17 @@ export class CostumerService {
         return;
     }
     async updateCostumer(body, id) {
-
+        console.log("body in update:::"+body)
         const queryItem = new QueryItem();
         let stringToQuery = "";
         Object.keys(body).forEach(key => { (key != "id") && (stringToQuery += key += "=?,") });
         stringToQuery = stringToQuery.slice(0, -1);
-        console.log("😍😍😍"+body+body[0]+body.firstName)
 
         let values = Object.values(body);
         values.push(id);
         const queryCostumer = queryItem.updateItemQuery("users", stringToQuery);
-        console.log("😍"+queryCostumer)
 
         const result = await query(queryCostumer, values)
-        console.log("😍😍"+result)
 
         return result
     }

@@ -1,4 +1,4 @@
-import react,{useContext} from 'react'
+import React, { useContext } from 'react'
 import { UserContext } from '../../App'
 
 
@@ -7,14 +7,30 @@ const EditDetails = () => {
 
     const editDetails = (element) => {
         element.preventDefault()
-console.log(element.target[0].value)
+        const updatedUser = {
+            firstName: element.target[0].value,
+            lastName: element.target[1].value,
+            phone: element.target[2].value,
+            email: element.target[3].value
+        }
+        console.log("updatedUser:::" + updatedUser + " " + updatedUser.phone)
         fetch(`http://localhost:8080/users/${currentUser.id}`, {
             method: 'PUT',
-            body: JSON.stringify({ firstName: element.target[0].value, lastName: element.target[1].value , phone: element.target[2].value, email: element.target[3].value})
-
+            body: JSON.stringify(updatedUser),
+            headers: { 'Content-type': 'application/json; charset=UTF-8' }
         }).then(response => {
-
-            response.ok ? alert("wow") : alert("oops somthing went wrong... please try again!")
+            response.ok ? () => {
+                alert("wow");
+                // setCurrentUser({
+                //     id: currentUser.id,
+                //     firstName: element.target[0].value,
+                //     lastName: element.target[1].value,
+                //     email: element.target[3].value,
+                //     phone: element.target[2].value,
+                //     userType: currentUser.userType
+                // });
+                // localStorage.setItem('currentUser', JSON.stringify({ phone: element.target[2].value, userId: currentUser.id, token: currentUser.token }));
+            } : alert("oops somthing went wrong... please try again!")
         });
     }
 
