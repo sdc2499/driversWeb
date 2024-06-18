@@ -9,7 +9,7 @@ const Secretary = () => {
 
   useEffect(() => {
     const handleNewRequest = (request) => {
-      setRequests(prev => [...prev, { ...request, closed: false }]);
+      setRequests(prev => [...prev, { ...request, closed: false, priceUpdated: false }]);
     };
 
     const handleRequestClosed = (requestId) => {
@@ -28,9 +28,14 @@ const Secretary = () => {
   }, []);
 
   const updatePrice = (request, price) => {
-    const updatedRequest = { ...request, price };
+    const updatedRequest = { ...request, price, priceUpdated: true };
     setRequests(prev => prev.map(req => req.id === request.id ? updatedRequest : req));
     socket.emit('priceUpdated', updatedRequest);
+  };
+
+  const sendRequestToDrivers = (request) => {
+    socket.emit('sendToDrivers', request.id);
+    alert(`Request from ${request.from} to ${request.to} has been sent to drivers.`);
   };
 
   return (
@@ -57,11 +62,18 @@ const Secretary = () => {
               {request.price && <p><strong>Final Price:</strong> {request.price}</p>}
             </div>
           ) : (
-            <input
-              type="number"
-              placeholder="Enter price"
-              onBlur={(e) => updatePrice(request, e.target.value)}
-            />
+            <div>
+              <input
+                type="number"
+                placeholder="Enter price"
+                onBlur={(e) => updatePrice(request, e.target.value)}
+              />
+              {!request.priceUpdated ? (
+                <button disabled>Send</button>
+              ) : (
+                <button onClick={() => sendRequestToDrivers(request)}>Send</button>
+              )}
+            </div>
           )}
         </div>
       ))}
