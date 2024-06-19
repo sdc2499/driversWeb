@@ -46,3 +46,151 @@
     color: rgb(117, 211, 245);
     cursor: pointer;
 }
+
+/* Dropdown container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown text */
+.dropdown-text {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+/* עיצוב כללי */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* סגנונות של ראש העמוד */
+.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff; /* צבע רקע לדוגמה */
+    z-index: 1000; /* כדי לוודא שהתפריט יעמוד מעל כל התוכן */
+    border-bottom: 1px solid #ccc; /* קו תחתון */
+    transition: background-color 0.3s ease-in-out; /* אנימציה קלה לשינוי צבע רקע */
+}
+
+.sticky.hide {
+    transform: translateY(-100%);
+}
+
+/* סגנונות של ניווט */
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 60px; /* גובה ניווט */
+}
+
+nav a {
+    text-decoration: none;
+    color: #333333; /* צבע טקסט */
+    padding: 0 10px;
+    line-height: 60px; /* ליווי גובה */
+}
+
+nav a:hover {
+    color: #007bff; /* צבע טקסט בעת העכבר */
+}
+
+/* סגנונות של תפריט נפתח */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-text {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* סגנונות של כפתור חזור למעלה */
+.topBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff; /* צבע רקע */
+    color: #ffffff; /* צבע טקסט */
+    border: none;
+    border-radius: 50%; /* רינג עגול */
+    padding: 10px;
+    cursor: pointer;
+    display: none; /* תצוגה רק בעת גלילה */
+}
+
+.topBtn:hover {
+    background-color: #0056b3; /* צבע רקע בעת העכבר */
+}

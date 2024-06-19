@@ -6,6 +6,7 @@ import Register from './componnent/entrance/Register'
 import Login from './componnent/entrance/Loginn';
 // import Login from './componnent/entrance/Login'
 // import Layout from './componnent/Layout';
+import Layout from './componnent/Layout'
 import Error from './componnent/Error';
 import Info from './componnent/info/Info';
 import User from './componnent/user/User'
@@ -34,7 +35,7 @@ function App() {
     })
       .then(async response => {
         const data = await response.json();
-        console.log("data in app.jsx: "+data+data[0]+data.id+data[0])
+        console.log("data in app.jsx: " + data + data[0] + data.id + data[0])
         response.ok && setCurrentUser(() => user(data))
       })
   }, []);
@@ -46,11 +47,23 @@ function App() {
           <Routes >
             <Route path='/' element={<Navigate to={'/home'} />} />
             <Route path='/home' element={<Home />}>
-              <Route path='editDetails' element={<EditDetails/>} />
               <Route path='info' element={<Info />} />
-              <Route path='costumer/:id' element={<User />} />
+              <Route path='editDetails' element={<EditDetails />} />
+              {/* <Route path='costumer/:id' element={<User />} >
+              <Route path='editDetails' element={<EditDetails />} />
+              
+              </Route> */}
+
+              <Route path='costumer/:id' element={<Layout />} >
+                <Route index element={<User />} />
+              <Route path='editDetails' element={<EditDetails />} />
+
+              </Route>
+
               <Route path='secretary/:id' element={<Secretary />} />
-              <Route path='driver/:id' element={<Driver />} />
+              <Route path='driver/:id' element={<Driver />} >
+                <Route path='editDetails' element={<EditDetails />} />
+              </Route>
             </Route>
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
