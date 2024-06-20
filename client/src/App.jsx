@@ -13,6 +13,7 @@ import User from './componnent/user/User'
 import Secretary from './componnent/secretary/Secretary'
 import EditDetails from './componnent/editDetails/EditDetails'
 import Driver from './componnent/driver/Driver'
+import RequestRide from './componnent/requestRide/RequestRide';
 import './App.css'
 
 export const UserContext = createContext();
@@ -58,19 +59,20 @@ function App() {
                 <Route index element={<User />} />
                 <Route path='editDetails' element={<EditDetails />} />
                 <Route path='info' element={<Info />} />
-
+                <Route path='requestRide' element={<RequestRide />} />
               </Route>
 
               <Route path='driver/:id' element={<Layout />} >
                 <Route index element={<Driver />} />
-              <Route path='info' element={<Info />} />
-              <Route path='editDetails' element={<EditDetails />} />
+                <Route path='info' element={<Info />} />
+                <Route path='editDetails' element={<EditDetails />} />
+                <Route path='requestRide' element={<RequestRide />} />
               </Route>
 
               <Route path='secretary/:id' element={<Layout />} >
                 <Route index element={<Secretary />} />
-              <Route path='info' element={<Info />} />
-              <Route path='editDetails' element={<EditDetails />} />
+                <Route path='info' element={<Info />} />
+                <Route path='editDetails' element={<EditDetails />} />
               </Route>
 
               {/* 
@@ -78,12 +80,12 @@ function App() {
               <Route path='driver/:id' element={<Driver />} > */}
               <Route path='editDetails' element={<EditDetails />} />
             </Route>
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/error' element={<Error />} />
-        </Routes>
-      </Router>
-    </UserContext.Provider >
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/error' element={<Error />} />
+          </Routes>
+        </Router>
+      </UserContext.Provider >
     </>
   )
 }
