@@ -38,7 +38,7 @@ io.on('connection', (socket) => {
       io.emit('rideRequestClosed', requestId);
       pendingRequests = pendingRequests.filter(req => req.id !== requestId);
       
-      sendRatingEmail('L0583251093@gmail.com', request.driverId);
+      sendRatingEmail('rsorscher1@gmail.com', request.driverId);
     }
   });
 
