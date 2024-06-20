@@ -43,4 +43,19 @@ export default class CostumerController {
             next(err)
         }
     }
+    async changePswd(req, res, next){
+        try {
+            const costumerService = new CostumerService();
+            console.log("req.body in controller:::"+req.body)
+            await costumerService.changePswd(req.body, req.params.id);
+
+            return res.status(200).json({ status: 200, data: req.params.id });
+        }
+        catch (ex) {
+            const err = {}
+            err.statusCode = 500;
+            err.message = ex.message;
+            next(err)
+        }
+    }
 }

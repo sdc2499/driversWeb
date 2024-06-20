@@ -6,6 +6,7 @@ const costumerController = new CostumerController();
 usersRouter.get("/", costumerController.getUserByParam)
 usersRouter.put("/:id", costumerController.updateCostumer);
 usersRouter.put("/upgradeToDriver/:id", costumerController.upgradeToDriver);
+usersRouter.put("/changePassword/:id", costumerController.changePswd);
 
 export {
     usersRouter

@@ -15,7 +15,9 @@ export class QueryItem {
         return `START TRANSACTION; UPDATE db.users SET userType = 'driver' WHERE ID = ? ;  INSERT INTO db.drivers VALUES (${questionMarks}); COMMIT;`
     }
 
-
+    changePswdItemQuery(){
+        return `UPDATE db.passwords SET password = ? WHERE userId = ? and password=?;`
+    }
 
 
 
