@@ -149,7 +149,7 @@
 
 
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState,useEffect } from 'react';
 import { useParams, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../App';
 import { FaUser } from "react-icons/fa";
@@ -167,6 +167,7 @@ const Home = () => {
     }
 
     const [visible, setVisible] = useState(false);
+    
     const toggleVisible = () => {
         const scrolled = document.documentElement.scrollTop;
         if (scrolled > 150) {
@@ -194,13 +195,13 @@ const Home = () => {
                 <nav>
                     <div className="dropdown">
                         {currentUser.id ? <>
-                            <span className="dropdown-text">{currentUser.firstName}  <FaUser/></span>
+                            <span className="dropdown-text">{currentUser.firstName}  <FaUser /></span>
                             <div className="dropdown-content">
                                 <NavLink className='editPassword' to={`/home/${currentUser.userType}/${currentUser.id}/editDetails`}><FaUserEdit /></NavLink>
                                 <NavLink onClick={logout} to={'/login'} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Logout</NavLink>
                             </div>
                         </> : <>
-                            <span className="dropdown-text">הרשמה/התחברות  <FaUser/></span>
+                            <span className="dropdown-text">הרשמה/התחברות  <FaUser /></span>
                             <div className="dropdown-content">
                                 <NavLink to='/login'>Login</NavLink><br />
                                 <NavLink to='/register'>Register</NavLink><br />
@@ -208,7 +209,7 @@ const Home = () => {
                         </>}
                     </div>
                     <NavLink to={`/home/${currentUser.userType}/${currentUser.id}`}>home</NavLink>
-                    <NavLink to="/home/info" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Info</NavLink>
+                    <NavLink to={`/home/${currentUser.userType}/${currentUser.id}/info`} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Info</NavLink>
                 </nav>
             </header>
             <footer>

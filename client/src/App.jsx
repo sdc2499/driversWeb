@@ -32,7 +32,7 @@ function App() {
   useEffect(() => {
     const currntUser = JSON.parse(localStorage.getItem("currentUser"))
     currntUser && fetch(`http://localhost:8080/users?phone=${currntUser.phone}`, {
-      // headers: { Authorization: currntUser.token.token }
+      headers: { Authorization: currntUser.token.token }
     })
       .then(async response => {
         const data = await response.json();
@@ -48,7 +48,6 @@ function App() {
           <Routes >
             <Route path='/' element={<Navigate to={'/home'} />} />
             <Route path='/home' element={<Home />}>
-              <Route path='info' element={<Info />} />
               <Route path='editDetails' element={<EditDetails />} />
               {/* <Route path='costumer/:id' element={<User />} >
               <Route path='editDetails' element={<EditDetails />} />
@@ -58,16 +57,20 @@ function App() {
               <Route path='costumer/:id' element={<Layout />} >
                 <Route index element={<User />} />
                 <Route path='editDetails' element={<EditDetails />} />
+                <Route path='info' element={<Info />} />
+
               </Route>
 
               <Route path='driver/:id' element={<Layout />} >
                 <Route index element={<Driver />} />
-                <Route path='editDetails' element={<EditDetails />} />
+              <Route path='info' element={<Info />} />
+              <Route path='editDetails' element={<EditDetails />} />
               </Route>
 
               <Route path='secretary/:id' element={<Layout />} >
                 <Route index element={<Secretary />} />
-                <Route path='editDetails' element={<EditDetails />} />
+              <Route path='info' element={<Info />} />
+              <Route path='editDetails' element={<EditDetails />} />
               </Route>
 
               {/* 

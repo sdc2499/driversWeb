@@ -1,21 +1,22 @@
 // mailer.js
 import nodemailer from 'nodemailer';
+import 'dotenv/config';
 
 export const sendRatingEmail = async (userEmail, driverId) => {
-    console.log("👨🏼‍🦰"+userEmail+"   "+driverId)
+    console.log("👨🏼‍🦰" + userEmail + "   " + driverId)
     const transporter = nodemailer.createTransport({
         service: 'gmail', // השתמש בספק SMTP המתאים לך
         auth: {
-            user: 'sdc2499@gmail.com',
-            pass: 'mi7ra!cle'
+            user: process.env.EMAIL,
+            pass: process.env.EMAIL_PSWD
         }
     });
 
     const mailOptions = {
-        from: 'sdc2499@gmail.com',
+        from: process.env.EMAIL,
         to: userEmail,
-        subject: 'Rate Your Driver',
-        text: `Thank you for your ride! Please rate your driver by clicking the link below: \nhttp://your-frontend-url.com/rate/${driverId}`
+        subject: 'דרג את הנהג שלך',
+        text: `תודה על הנסיעה! אנא דרג את הנהג שלך על ידי לחיצה על הקישור הבא: \nhttp://your-frontend-url.com/rate/${driverId}`
     };
 
     try {
