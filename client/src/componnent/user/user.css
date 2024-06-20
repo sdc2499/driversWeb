@@ -92,3 +92,38 @@ form button:hover {
 .hidden {
     display: none;
 }
+
+
+
+.stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.step {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+}
+
+.step.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.line {
+    width: 50px;
+    height: 4px;
+    background-color: #ddd;
+}
+
+.line.active {
+    background-color: #4CAF50;
+}
