@@ -152,6 +152,7 @@
 import React, { useContext, useState } from 'react';
 import { useParams, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../App';
+import { FaUser } from "react-icons/fa";
 import { FaArrowCircleUp, FaUserEdit } from 'react-icons/fa';
 import './home.css';
 
@@ -193,13 +194,13 @@ const Home = () => {
                 <nav>
                     <div className="dropdown">
                         {currentUser.id ? <>
-                            <span className="dropdown-text">{currentUser.firstName}</span>
+                            <span className="dropdown-text">{currentUser.firstName}  <FaUser/></span>
                             <div className="dropdown-content">
                                 <NavLink className='editPassword' to={`/home/${currentUser.userType}/${currentUser.id}/editDetails`}><FaUserEdit /></NavLink>
                                 <NavLink onClick={logout} to={'/login'} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Logout</NavLink>
                             </div>
                         </> : <>
-                            <span className="dropdown-text">הרשמה/התחברות</span>
+                            <span className="dropdown-text">הרשמה/התחברות  <FaUser/></span>
                             <div className="dropdown-content">
                                 <NavLink to='/login'>Login</NavLink><br />
                                 <NavLink to='/register'>Register</NavLink><br />
