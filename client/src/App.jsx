@@ -57,21 +57,30 @@ function App() {
 
               <Route path='costumer/:id' element={<Layout />} >
                 <Route index element={<User />} />
-              <Route path='editDetails' element={<EditDetails />} />
-
-              </Route>
-
-              <Route path='secretary/:id' element={<Secretary />} />
-              <Route path='driver/:id' element={<Driver />} >
                 <Route path='editDetails' element={<EditDetails />} />
               </Route>
+
+              <Route path='driver/:id' element={<Layout />} >
+                <Route index element={<Driver />} />
+                <Route path='editDetails' element={<EditDetails />} />
+              </Route>
+
+              <Route path='secretary/:id' element={<Layout />} >
+                <Route index element={<Secretary />} />
+                <Route path='editDetails' element={<EditDetails />} />
+              </Route>
+
+              {/* 
+              <Route path='secretary/:id' element={<Secretary />} />
+              <Route path='driver/:id' element={<Driver />} > */}
+              <Route path='editDetails' element={<EditDetails />} />
             </Route>
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
-            <Route path='/error' element={<Error />} />
-          </Routes>
-        </Router>
-      </UserContext.Provider>
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/error' element={<Error />} />
+        </Routes>
+      </Router>
+    </UserContext.Provider >
     </>
   )
 }
