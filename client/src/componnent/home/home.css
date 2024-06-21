@@ -194,3 +194,101 @@ nav a:hover {
 .topBtn:hover {
     background-color: #0056b3; /* צבע רקע בעת העכבר */
 }
+/* Navbar.css */
+
+header.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #f8f8f8;
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 1000; /* כדי לוודא שה־nav תמיד עליון */
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%; /* כדי להבטיח שה-nav יתפשט לרוחב מקסימלי */
+    margin: 0 auto; /* למרכז את ה-nav באופן אוטומטי */
+    padding: 0 20px;
+}
+
+nav .dropdown {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* מרחק שווה בין האלמנטים בפנים של .dropdown */
+}
+
+nav .dropdown a {
+    text-decoration: none;
+    color: #333;
+}
+
+nav .dropdown .dropdown-text {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* מרחק שווה בין הטקסט לאייקון */
+    position: relative;
+}
+
+nav .dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+    right: 0;
+}
+
+nav .dropdown .dropdown-text:hover .dropdown-content {
+    display: block;
+}
+
+nav .dropdown .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: right;
+}
+
+nav .dropdown .dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.ride-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: auto; /* הזחה של הכפתור לימין */
+}
+
+.ride-button:hover {
+    background-color: #0056b3;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f8f8f8;
+    position: relative;
+}
+
+.topBtn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #007bff;
+}
+
+.topBtn:hover {
+    color: #0056b3;
+}

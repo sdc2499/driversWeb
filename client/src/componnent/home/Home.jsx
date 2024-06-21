@@ -170,7 +170,7 @@ const Home = () => {
     const logout = () => {
         localStorage.removeItem("currentUser");
         window.history.replaceState(null, null, '/');
-        setCurrentUser([]); // כדי לעדכן את ה-Context למשתמש לא רשום
+        setCurrentUser([]);
     }
 
     const [visible, setVisible] = useState(false);
@@ -196,34 +196,39 @@ const Home = () => {
             navigate(`/home/requestRide`);
         }
     };
-
     return (
         <>
             <header className={'sticky'}>
                 <nav>
                     <div className="dropdown">
-                        {console.log("😒"+currentUser.id)}
+                        <NavLink to={`/home/${currentUser.userType}/${currentUser.id}/contact`}>צור קשר</NavLink>
+                        <NavLink to={`/home/${currentUser.userType}/${currentUser.id}/aboutUs`}>קצת עלינו</NavLink>
+                        <NavLink to={`/home/${currentUser.userType}/${currentUser.id}/drivers`}>נהגים</NavLink>
                         {currentUser.id ? (
                             <>
-                                <span className="dropdown-text">{currentUser.firstName}  <FaUser /></span>
-                                <div className="dropdown-content">
-                                    <NavLink className='editPassword' to={`/home/${currentUser.userType}/${currentUser.id}/editDetails`}><FaUserEdit /></NavLink>
-                                    <NavLink to={`/home/${currentUser.userType}/${currentUser.id}/info`} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Info</NavLink>
-                                    <NavLink onClick={logout} to={'/home'} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Logout</NavLink>
-
-                                </div>
+                                <span className="dropdown-text">
+                                    {currentUser.firstName} <FaUser />
+                                    <div className="dropdown-content">
+                                        <NavLink className='editPassword' to={`/home/${currentUser.userType}/${currentUser.id}/editDetails`}><FaUserEdit /></NavLink>
+                                        <NavLink to={`/home/${currentUser.userType}/${currentUser.id}/info`} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>פרטים</NavLink>
+                                        <NavLink onClick={logout} to={'/home'} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>יציאה</NavLink>
+                                    </div>
+                                </span>
+                                <NavLink to={`/home/${currentUser.userType}/${currentUser.id}`}>ראשי</NavLink>
                             </>
                         ) : (
                             <>
-                                <span className="dropdown-text">הרשמה/התחברות  <FaUser /></span>
-                                <div className="dropdown-content">
-                                    <NavLink to='/login'>Login</NavLink><br />
-                                    <NavLink to='/register'>Register</NavLink><br />
-                                </div>
+                                <span className="dropdown-text">
+                                    הרשמה/התחברות<FaUser />
+                                    <div className="dropdown-content">
+                                        <NavLink to='/login'>התחברות</NavLink><br />
+                                        <NavLink to='/register'>הרשמה</NavLink><br />
+                                    </div>
+                                </span>
+                                <NavLink to={`/home`}>ראשי</NavLink>
                             </>
                         )}
                     </div>
-                    <NavLink to={`/home/${currentUser.userType}/${currentUser.id}`}>Home</NavLink>
                     <button onClick={handleRequestRideClick} className="ride-button">הזמנת נסיעה</button>
                 </nav>
             </header>
@@ -235,6 +240,5 @@ const Home = () => {
             <Outlet />
         </>
     );
-}
-
+};
 export default Home;

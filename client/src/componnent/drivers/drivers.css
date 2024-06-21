@@ -1,0 +1,46 @@
+/* components/drivers/Drivers.css */
+.container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    direction: rtl; /* כיוון הטקסט מימין לשמאל */
+  }
+  
+  .title {
+    color: #333;
+    text-align: center;
+  }
+  
+  .subtitle {
+    color: #555;
+  }
+  
+  .driver-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .driver-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .join-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .join-button:hover {
+    background-color: #0056b3;
+  }
+  

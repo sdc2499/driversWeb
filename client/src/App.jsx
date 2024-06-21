@@ -13,6 +13,9 @@ import User from './componnent/user/User'
 import Secretary from './componnent/secretary/Secretary'
 import EditDetails from './componnent/editDetails/EditDetails'
 import Driver from './componnent/driver/Driver'
+import AboutUs from './componnent/aboutUs/AboutUs'
+import Contact from './componnent/contact/Contact'
+import Drivers from './componnent/drivers/Driverss'
 import RequestRide from './componnent/requestRide/RequestRide';
 import './App.css'
 
@@ -56,14 +59,20 @@ function App() {
                 <Route index element={<User />} />
                 <Route path='editDetails' element={<EditDetails />} />
                 <Route path='info' element={<Info />} />
+                <Route path='aboutUs' element={<AboutUs />} />
+                <Route path='contact' element={<Contact />} />
                 <Route path='requestRide' element={<RequestRide />} />
+                <Route path='drivers' element={<Drivers />} />
               </Route>
 
               <Route path='driver/:id' element={<Layout />} >
+                <Route path='drivers' element={<Drivers />} />
                 <Route index element={<Driver />} />
                 <Route path='info' element={<Info />} />
                 <Route path='editDetails' element={<EditDetails />} />
                 <Route path='requestRide' element={<RequestRide />} />
+                <Route path='aboutUs' element={<AboutUs />} />
+                <Route path='contact' element={<Contact />} />
               </Route>
 
               <Route path='secretary/:id' element={<Layout />} >
