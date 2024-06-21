@@ -50,10 +50,7 @@ function App() {
             <Route path='/' element={<Navigate to={'/home'} />} />
             <Route path='/home' element={<Home />}>
               <Route path='editDetails' element={<EditDetails />} />
-              {/* <Route path='costumer/:id' element={<User />} >
-              <Route path='editDetails' element={<EditDetails />} />
-              
-              </Route> */}
+              <Route path='requestRide' element={<RequestRide />} />
 
               <Route path='costumer/:id' element={<Layout />} >
                 <Route index element={<User />} />
@@ -78,7 +75,7 @@ function App() {
               {/* 
               <Route path='secretary/:id' element={<Secretary />} />
               <Route path='driver/:id' element={<Driver />} > */}
-              <Route path='editDetails' element={<EditDetails />} />
+              {/* <Route path='editDetails' element={<EditDetails />} /> */}
             </Route>
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
