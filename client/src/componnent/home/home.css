@@ -2,27 +2,20 @@
     color: rgb(42, 41, 41);
     font-weight: bold;
     margin: 20px;
-
 }
 
 .active {
-
     color: red;
     text-decoration: underline red;
     font-weight: bolder;
-
 }
 
-.inactive:hover {
-    color: red;
-}
-
+.inactive:hover,
 .active:hover {
     color: red;
 }
 
 .topBtn {
-    display: none;
     position: fixed;
     bottom: 20px;
     right: 30px;
@@ -35,11 +28,9 @@
     cursor: pointer;
     padding: 15px;
     border-radius: 4px;
-
 }
 
 .editUser {
-
     font-size: 28px;
     border: none;
     outline: none;
@@ -93,50 +84,49 @@
     display: block;
 }
 
-
-/* עיצוב כללי */
+/* General styling */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* סגנונות של ראש העמוד */
+/* Styles for the header */
 .sticky {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #ffffff; /* צבע רקע לדוגמה */
-    z-index: 1000; /* כדי לוודא שהתפריט יעמוד מעל כל התוכן */
-    border-bottom: 1px solid #ccc; /* קו תחתון */
-    transition: background-color 0.3s ease-in-out; /* אנימציה קלה לשינוי צבע רקע */
+    background-color: #ffffff; /* Example background color */
+    z-index: 1000; /* Ensure menu stays above content */
+    border-bottom: 1px solid #ccc; /* Bottom border */
+    transition: background-color 0.3s ease-in-out; /* Smooth background color change */
 }
 
 .sticky.hide {
     transform: translateY(-100%);
 }
 
-/* סגנונות של ניווט */
+/* Navigation styles */
 nav {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: 60px; /* גובה ניווט */
+    height: 60px; /* Navigation height */
 }
 
 nav a {
     text-decoration: none;
-    color: #333333; /* צבע טקסט */
+    color: #333333; /* Text color */
     padding: 0 10px;
-    line-height: 60px; /* ליווי גובה */
+    line-height: 60px; /* Vertical alignment */
 }
 
 nav a:hover {
-    color: #007bff; /* צבע טקסט בעת העכבר */
+    color: #007bff; /* Text color on hover */
 }
 
-/* סגנונות של תפריט נפתח */
+/* Styles for dropdown menu */
 .dropdown {
     position: relative;
     display: inline-block;
@@ -173,122 +163,24 @@ nav a:hover {
     background-color: #f1f1f1;
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown-text:hover .dropdown-content {
     display: block;
 }
 
-/* סגנונות של כפתור חזור למעלה */
+/* Scroll to top button styles */
 .topBtn {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #007bff; /* צבע רקע */
-    color: #ffffff; /* צבע טקסט */
+    background-color: #007bff; /* Background color */
+    color: #ffffff; /* Text color */
     border: none;
-    border-radius: 50%; /* רינג עגול */
+    border-radius: 50%; /* Circle shape */
     padding: 10px;
     cursor: pointer;
-    display: none; /* תצוגה רק בעת גלילה */
+    display: none; /* Display only when scrolled */
 }
 
 .topBtn:hover {
-    background-color: #0056b3; /* צבע רקע בעת העכבר */
-}
-/* Navbar.css */
-
-header.sticky {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: #f8f8f8;
-    padding: 10px 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    z-index: 1000; /* כדי לוודא שה־nav תמיד עליון */
-}
-
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 100%; /* כדי להבטיח שה-nav יתפשט לרוחב מקסימלי */
-    margin: 0 auto; /* למרכז את ה-nav באופן אוטומטי */
-    padding: 0 20px;
-}
-
-nav .dropdown {
-    display: flex;
-    align-items: center;
-    gap: 20px; /* מרחק שווה בין האלמנטים בפנים של .dropdown */
-}
-
-nav .dropdown a {
-    text-decoration: none;
-    color: #333;
-}
-
-nav .dropdown .dropdown-text {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* מרחק שווה בין הטקסט לאייקון */
-    position: relative;
-}
-
-nav .dropdown .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    z-index: 1;
-    right: 0;
-}
-
-nav .dropdown .dropdown-text:hover .dropdown-content {
-    display: block;
-}
-
-nav .dropdown .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: right;
-}
-
-nav .dropdown .dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
-
-.ride-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-left: auto; /* הזחה של הכפתור לימין */
-}
-
-.ride-button:hover {
-    background-color: #0056b3;
-}
-
-footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #f8f8f8;
-    position: relative;
-}
-
-.topBtn {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 24px;
-    color: #007bff;
-}
-
-.topBtn:hover {
-    color: #0056b3;
+    background-color: #0056b3; /* Background color on hover */
 }

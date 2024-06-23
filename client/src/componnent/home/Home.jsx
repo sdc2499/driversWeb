@@ -160,6 +160,8 @@ import React, { useContext, useState, useEffect } from 'react';
 import { useParams, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../App';
 import { FaUser, FaArrowCircleUp, FaUserEdit } from 'react-icons/fa';
+import SecretaryDashboard from '../chat/chatS';
+import ChatRequestButton from '../chat/chat';
 import './home.css';
 
 const Home = () => {
@@ -232,6 +234,9 @@ const Home = () => {
                     <button onClick={handleRequestRideClick} className="ride-button">הזמנת נסיעה</button>
                 </nav>
             </header>
+            {console.log("👩🏽"+currentUser.userType)}
+            {currentUser.userType === 'costumer' ? <ChatRequestButton />:console.log("n "+currentUser.userType)}
+            {currentUser.userType === 'secretary' ? <SecretaryDashboard />:console.log("👩🏽n"+currentUser.userType)}
             <footer>
                 <button className='topBtn' style={{ display: visible ? 'inline' : 'none' }}>
                     <FaArrowCircleUp onClick={scrollToTop} />
