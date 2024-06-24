@@ -30,7 +30,8 @@ const RequestRide = () => {
             return;
         }
         
-        const rideRequest = { id: Date.now(), from, to, ...rideDetails, requestType };
+        
+            const rideRequest = { id: Date.now(),customerId:currentUser.id, from, to, ...rideDetails, requestType };
         socket.emit('newRideRequest', rideRequest);
         setRideStatus('Waiting for a driver to accept your request...');
         reset(); // איפוס השדות בטופס לאחר שליחה

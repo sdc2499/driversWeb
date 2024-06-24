@@ -54,3 +54,20 @@ CREATE TABLE `db`.`ratingdriver` (
     REFERENCES `db`.`drivers` (`driverId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+
+
+
+    CREATE TABLE db.rides (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    request_details TEXT,
+    price DECIMAL(10, 2),
+   status ENUM('request_opened', 'price_updated', 'request_closed_with_driver', 'request_closed_without_driver') DEFAULT 'request_opened',
+    driver_id VARCHAR(255),
+    customer_id VARCHAR(255),
+    pickup_location VARCHAR(255),
+    destination VARCHAR(255),
+    package_size VARCHAR(50),
+    passengers INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
