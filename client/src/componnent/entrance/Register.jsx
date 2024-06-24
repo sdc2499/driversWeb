@@ -16,7 +16,8 @@ const Register = () => {
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
-            phone: user.phone
+            phone: user.phone,
+            userType:"costumer"
         });
 
         localStorage.setItem('currentUser', JSON.stringify({ phone: user.phone, userId: data.id, token: data.dataToken }));
