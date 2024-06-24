@@ -60,7 +60,10 @@ io.on('connection', (socket) => {
     // Optionally send the message back to the sender (if needed for local state)
     socket.emit('receiveMessage', message);
   });
-
+  socket.on('disconnect', () => {
+    console.log(`User disconnected: ${socket.id}`);
+    // ניהול התנתקות: כאן ניתן להוסיף פעולות כגון מחיקת המשתמש מרשימות פעילות ועוד.
+  });
 });
 server.listen(process.env.PORT, () => {
   console.log(`Server listening on port: ${process.env.PORT}`);
