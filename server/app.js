@@ -14,9 +14,10 @@ app.use(cors());
 app.use(express.json());
 app.use('/entrance', entranceRouter);
 app.use('/users', usersRouter);
-app.use(authMiddleware);
+
 app.use('/ride', rideRouter);
 app.use('/drivers', driverRouter);
+app.use(authMiddleware);
 app.use(logErrors);
 
 export default app;

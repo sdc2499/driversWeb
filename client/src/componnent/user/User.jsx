@@ -4,7 +4,7 @@ import { UserContext } from '../../App';
 import { io } from 'socket.io-client';
 import './user.css';
 
-const socket = io('http://localhost:8080'); // ודא שהכתובת והפורט נכונים
+// const socket = io('http://localhost:8080'); // ודא שהכתובת והפורט נכונים
 
 const User = () => {
     const [currentUser, setCurrentUser] = useContext(UserContext);

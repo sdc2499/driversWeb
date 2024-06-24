@@ -31,14 +31,14 @@ io.on('connection', (socket) => {
   });
 
   socket.on('driverAccepted', (requestId) => {
-    console.log('Driver accepted request:', requestId);
-    const request = pendingRequests.find(req => req.id === requestId);
+    console.log('Driver accepted request:', requestId.request);
+    const request = pendingRequests.find(req => req.id === requestId.request);
     if (request) {
       io.to(request.socketId).emit('driverFound', { driverId: socket.id });
-      io.emit('rideRequestClosed', requestId);
-      pendingRequests = pendingRequests.filter(req => req.id !== requestId);
+      io.emit('rideRequestClosed', requestId.request);
+      pendingRequests = pendingRequests.filter(req => req.id !== requestId.request);
 
-      sendRatingEmail('rsorscher1@gmail.com', request.driverId);
+      sendRatingEmail('l0583251093@gmail.com', requestId.driverId);
     }
   });
 

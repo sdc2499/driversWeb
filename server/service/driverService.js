@@ -72,6 +72,15 @@ export class DriverService {
         return result
     }
 
+
+    async postRaitingDriver(obj) {
+        const queryItem = new QueryItem();
+        let queryUser = queryItem.postItemQuery("ratingDriver","NULL,"+"?,".repeat(Object.keys(obj).length-1 ) + "?");
+        const result = await query(queryUser, Object.values(obj));
+        return;
+    }
+
+
     // //אם לעשות חישוב בקלינט או בסרבר מה הדירוג
     // async updateDriverRating(body, id) {
     //     const queryItem = new QueryItem();

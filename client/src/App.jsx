@@ -17,6 +17,7 @@ import AboutUs from './componnent/aboutUs/AboutUs'
 import Contact from './componnent/contact/Contact'
 import Drivers from './componnent/drivers/Driverss'
 import RequestRide from './componnent/requestRide/RequestRide';
+import RatingPage from './componnent/rating/Rating'
 import './App.css'
 
 export const UserContext = createContext();
@@ -56,7 +57,10 @@ function App() {
               <Route path='requestRide' element={<RequestRide />} />
 
               <Route path='costumer/:id' element={<Layout />} >
+
                 <Route index element={<User />} />
+                <Route path='rating/:driverId' element={<RatingPage/>} />
+
                 <Route path='editDetails' element={<EditDetails />} />
                 <Route path='info' element={<Info />} />
                 <Route path='aboutUs' element={<AboutUs />} />

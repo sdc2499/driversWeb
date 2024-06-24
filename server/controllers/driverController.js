@@ -22,6 +22,30 @@ export default class DriverController {
     
     }
 
+
+
+
+    async rating(req, res, next) {
+        console.log("hi")
+
+        try {
+            console.log("👨🏼‍🦰" + req.body)
+            const driveService = new DriverService();
+            await driveService.postRaitingDriver(req.body);
+            return res.status(200).json({ status: 200 });
+        } catch (ex) {
+            const err = {};
+            switch (ex.message) {
+                default:
+                    err.statusCode = 500;
+                    break;
+            }
+            err.message = ex.message;
+            next(err);
+        }
+    }
+
+
     async getDriverById(req, res, next) {
         try {
             const driverService = new DriverService();

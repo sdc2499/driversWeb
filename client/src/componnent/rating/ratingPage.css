@@ -1,0 +1,19 @@
+.rating-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.rating-stars {
+  display: inline-block;
+  font-size: 0;
+}
+
+.star {
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.25s;
+}
+
+.star.filled {
+  color: gold;
+}
