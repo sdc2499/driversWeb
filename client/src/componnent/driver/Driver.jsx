@@ -41,16 +41,16 @@ const Driver = () => {
         {acceptedRequests.map((acceptedRequest, index) => (
           <div className="accepted-request" key={index}>
             <h2>Accepted Ride Details</h2>
-            <p><strong>From:</strong> {acceptedRequest.from}</p>
-            <p><strong>To:</strong> {acceptedRequest.to}</p>
-            <p><strong>Date:</strong> {acceptedRequest.date}</p>
-            <p><strong>Time:</strong> {acceptedRequest.time}</p>
+            <p><strong>מ:</strong> {acceptedRequest.from}</p>
+            <p><strong>ל:</strong> {acceptedRequest.to}</p>
+            <p><strong>תאריך:</strong> {acceptedRequest.date}</p>
+            <p><strong>שעה:</strong> {acceptedRequest.time}</p>
             {acceptedRequest.requestType === 'package' ? (
-              <p><strong>Package Size:</strong> {acceptedRequest.packageSize}</p>
+              <p><strong>גודל החבילה:</strong> {acceptedRequest.packageSize}</p>
             ) : (
               <div>
-                <p><strong>Number of Adults:</strong> {acceptedRequest.adults}</p>
-                <p><strong>Number of Infants:</strong> {acceptedRequest.infants}</p>
+                <p><strong>מספר מבוגרים:</strong> {acceptedRequest.adults}</p>
+                <p><strong>מספר ילדים מעל גיל חצי שנה:</strong> {acceptedRequest.infants}</p>
               </div>
             )}
           </div>
@@ -61,19 +61,19 @@ const Driver = () => {
         <h2>New Ride Requests</h2>
         {requests.map(request => (
           <div className="ride-request" key={request.id}>
-            <p><strong>From:</strong> {request.from}</p>
-            <p><strong>To:</strong> {request.to}</p>
-            <p><strong>Date:</strong> {request.date}</p>
-            <p><strong>Time:</strong> {request.time}</p>
+            <p><strong>מ:</strong> {request.from}</p>
+            <p><strong>ל:</strong> {request.to}</p>
+            <p><strong>תאריך:</strong> {request.date}</p>
+            <p><strong>תאריך:</strong> {request.time}</p>
             {request.requestType === 'package' ? (
-              <p><strong>Package Size:</strong> {request.packageSize}</p>
+              <p><strong>גודל החבילה:</strong> {request.packageSize}</p>
             ) : (
               <div>
-                <p><strong>Number of Adults:</strong> {request.adults}</p>
-                <p><strong>Number of Infants:</strong> {request.infants}</p>
+                <p><strong>מספר מבוגרים:</strong> {request.adults}</p>
+                <p><strong>מספרי ילדיים:</strong> {request.infants}</p>
               </div>
             )}
-            <button className="accept-button" onClick={() => acceptRequest(request)}>Accept</button>
+            <button className="accept-button" onClick={() => acceptRequest(request)}>אשר</button>
           </div>
         ))}
       </div>
@@ -82,43 +82,3 @@ const Driver = () => {
 };
 
 export default Driver;
-
-
-
-
-
-
-
-
-
-// import React, { useState, useEffect } from 'react';
-// import socket from './socket';
-// import { useNavigate } from "react-router-dom";
-
-// const Driver = () => {
-//   const [requests, setRequests] = useState([]);
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     socket.on('rideRequestForDrivers', (request) => {
-//       setRequests(prev => [...prev, request]);
-//     });
-//   }, []);
-
-//   const acceptRequest = (id) => {
-//     socket.emit('driverAccepted', id);
-//   };
-
-//   return (
-//     <div>
-//       {requests.map(request => (
-//         <div key={request.id}>
-//           <p>From: {request.from}, To: {request.to}, Price: {request.price}</p>
-//           <button onClick={() => acceptRequest(request.id)}>Accept</button>
-//         </div>
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default Driver;

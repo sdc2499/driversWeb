@@ -18,6 +18,7 @@
 
 //   socket.on('newRideRequest', (request) => {
 //     console.log('New ride request received:', request);
+//     console.log('socket.id:', socket.id);
 //     pendingRequests.push({ ...request, socketId: socket.id });
 //     io.emit('rideRequestForSecretary', request);
 //   });
@@ -34,6 +35,8 @@
 //     console.log('Driver accepted request:', requestId.request);
 //     const request = pendingRequests.find(req => req.id === requestId.request);
 //     if (request) {
+//       console.log("request.socketId     "+request.socketId)
+//       console.log("socket.id       "+socket.id)
 //       io.to(request.socketId).emit('driverFound', { driverId: socket.id });
 //       io.emit('rideRequestClosed', requestId.request);
 //       pendingRequests = pendingRequests.filter(req => req.id !== requestId.request);
@@ -171,11 +174,24 @@
 //   console.log(`Server listening on port: ${process.env.PORT}`);
 // });
 
+
+
+
+
+
+
+
+
+
+
+
+
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import app from './app.js'; // נניח שיש קובץ זה שמייצג את האפליקציה שלך
 import mysql from 'mysql2'; // יבוא של חבילת MySQL
 import { sendRatingEmail } from './mailer.js'; // נניח שיש פונקציה זו לשליחת אימיילים
+
 
 // יצירת שרת HTTP והגדרת שרת ה-socket.io
 const server = createServer(app);
@@ -194,6 +210,8 @@ const db = mysql.createConnection({
   database: 'db'
 });
 
+
+
 // התחברות לבסיס הנתונים
 db.connect((err) => {
   if (err) {
@@ -202,7 +220,7 @@ db.connect((err) => {
   }
   console.log('מחובר לבסיס הנתונים של MySQL');
 });
-
+  let i;
 // אירוע ה-connection של socket.io - מבצע פעולות כאשר משתמש מתחבר
 io.on('connection', (socket) => {
   console.log('משתמש מחובר:', socket.id);
@@ -223,13 +241,15 @@ io.on('connection', (socket) => {
   //     request.passengers
   //   ];
 
-
+  let pendingRequests = [];
 
   socket.on('newRideRequest', (request) => {
     console.log('קיבל בקשת נסיעה חדשה:', request);
 
+    pendingRequests.push({ ...request, socketId: socket.id });
+    i = socket.id
     let sql, values;
-
+    console.log('i     ', i);
     // בדיקה אם הבקשה היא למשלוח חבילה או להסעת אנשים
     if (request.requestType === 'package') {
       // שאילתת הכנסה לבסיס הנתונים של MySQL לשמירת הבקשה למשלוח חבילה
@@ -287,16 +307,15 @@ io.on('connection', (socket) => {
   // אירוע שהנהג אישר את הבקשה
   socket.on('driverAccepted', (requestId) => {
     console.log('הנהג אישר את הבקשה:', requestId.request);
-
-    // שאילתת עדכון בבסיס הנתונים של MySQL לעדכון סטטוס הנסיעה ל-"request_closed_with_driver" ושמירת מזהה הנהג
     const sql = 'UPDATE rides SET status = ?, driver_id = ? WHERE id = ?';
     const values = ['request_closed_with_driver', socket.id, requestId.request];
-
     db.query(sql, values, (err, result) => {
       if (err) {
         console.error('שגיאה בעדכון סטטוס הנסיעה ב-MYSQL:', err);
         return;
       }
+      console.log("ii     "+i)
+      io.to(i).emit('driverFound', { driverId: socket.id });
       io.emit('rideRequestClosed', requestId.request); // שליחת אירוע שהבקשה הושלמה
       sendRatingEmail('l0583251093@gmail.com', socket.id); // שליחת אימייל לדרכי דרך
     });

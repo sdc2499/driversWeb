@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
-import './ratingPage.css'; // קובץ ה-CSS שלנו
+import './ratingPage.css';
 import { useParams } from 'react-router-dom';
 const RatingPage = () => {
+    const navigate = useNavigate();
+
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
-    const { driverId, id} = useParams();
+    const { driverId, id } = useParams();
     const stars = Array.from({ length: 5 }, (_, index) => index + 1);
 
     const handleStarClick = (star) => {
@@ -14,27 +17,28 @@ const RatingPage = () => {
     };
 
     const handleSubmit = (event) => {
-        console.log("id "+id+"   driverId  "+driverId)
+        console.log("id " + id + "   driverId  " + driverId)
         event.preventDefault();
         console.log(`דירוג: ${rating}`);
         console.log(`תגובה: ${comment}`);
-        const ratingDriver={
-            driverId:driverId,
-            stars:rating,
-            ratingMsg:comment,
-            userPhone:id
+        const ratingDriver = {
+            driverId: driverId,
+            stars: rating,
+            ratingMsg: comment,
+            userPhone: id
         }
 
         fetch(`http://localhost:8080/drivers/rating`, {
             method: 'POST',
             body: JSON.stringify(ratingDriver),
             headers: { 'Content-Type': 'application/json; charset=UTF-8' }
+            // headers: { Authorization: currntUser.token.token }
         }).then(response => {
             if (response.status === 200) {
                 alert("הדירוג בוצע בהצלחה תודה לך!!!");
-
+                navigate(`/home/costumer/${id}/thank`);
             } else {
-                console.log("res"+response)
+                console.log("res" + response)
                 alert("Oops, something went wrong... Please try again!");
             }
         }).catch(error => {

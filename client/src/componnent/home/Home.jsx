@@ -146,16 +146,6 @@
 
 // // export default Home;
 
-
-
-
-
-
-
-
-
-
-
 import React, { useContext, useState, useEffect } from 'react';
 import { useParams, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../App';
@@ -234,9 +224,8 @@ const Home = () => {
                     <button onClick={handleRequestRideClick} className="ride-button">הזמנת נסיעה</button>
                 </nav>
             </header>
-            {console.log("👩🏽"+currentUser.userType)}
-            {currentUser.userType === 'costumer' ? <ChatRequestButton />:console.log("n "+currentUser.userType)}
-            {currentUser.userType === 'secretary' ? <SecretaryDashboard />:console.log("👩🏽n"+currentUser.userType)}
+            {currentUser.userType === 'costumer' && <ChatRequestButton />}
+            {currentUser.userType === 'secretary' && <SecretaryDashboard />}
             <footer>
                 <button className='topBtn' style={{ display: visible ? 'inline' : 'none' }}>
                     <FaArrowCircleUp onClick={scrollToTop} />

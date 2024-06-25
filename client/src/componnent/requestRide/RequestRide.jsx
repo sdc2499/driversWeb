@@ -67,8 +67,8 @@ const RequestRide = () => {
 
     const nextStep = () => {
         if (!isFromValid || !isToValid) {
-            setError("from", { type: "manual", message: "Please select a valid address from the autocomplete options." });
-            setError("to", { type: "manual", message: "Please select a valid address from the autocomplete options." });
+            setError("from", { type: "manual", message: "אנא בחר כתובת חוקית מתוך אפשרויות ההשלמה האוטומטית" });
+            setError("to", { type: "manual", message: "אנא בחר כתובת חוקית מתוך אפשרויות ההשלמה האוטומטית" });
             return;
         }
         setStep(step + 1);
@@ -97,7 +97,7 @@ const RequestRide = () => {
                                         clearErrors("from");
                                     } else {
                                         setIsFromValid(false);
-                                        setError("from", { type: "manual", message: "Please select a valid address from the autocomplete options." });
+                                        setError("from", { type: "manual", message: "אנא בחר כתובת חוקית מתוך אפשרויות ההשלמה האוטומטית." });
                                     }
                                 }}
                                 types={['address']}
@@ -105,7 +105,7 @@ const RequestRide = () => {
                             >
                                 <input
                                     type='text'
-                                    placeholder='From'
+                                    placeholder='מ'
                                     value={from}
                                     onChange={(e) => {
                                         setFrom(e.target.value);
@@ -127,7 +127,7 @@ const RequestRide = () => {
                                         clearErrors("to");
                                     } else {
                                         setIsToValid(false);
-                                        setError("to", { type: "manual", message: "Please select a valid address from the autocomplete options." });
+                                        setError("to", { type: "manual", message: "אנא בחר כתובת חוקית מתוך אפשרויות ההשלמה האוטומטית." });
                                     }
                                 }}
                                 types={['address']}
@@ -135,7 +135,7 @@ const RequestRide = () => {
                             >
                                 <input
                                     type='text'
-                                    placeholder='To'
+                                    placeholder='ל'
                                     value={to}
                                     onChange={(e) => {
                                         setTo(e.target.value);
@@ -151,7 +151,7 @@ const RequestRide = () => {
                                 min={currentDate}
                                 max={maxDateString}
                                 {...register("date", {
-                                    required: "Date is required.",
+                                    required: "יש להכניס תאריך",
                                 })}
                             />
                             {errors.date && <span>{errors.date.message}</span>}
@@ -160,12 +160,12 @@ const RequestRide = () => {
                                 type='time'
                                 name='time'
                                 {...register("time", {
-                                    required: "Time is required.",
+                                    required: "יש להכניס זמן",
                                 })}
                             />
                             {errors.time && <span>{errors.time.message}</span>}
 
-                            <button type="submit">Next</button>
+                            <button type="submit">הבא</button>
                         </form>
                     )}
 
@@ -180,7 +180,7 @@ const RequestRide = () => {
                                         checked={requestType === 'package'}
                                         onChange={() => setRequestType('package')}
                                     />
-                                    Package Delivery
+                                   משלוח חבילה
                                 </label>
                                 <label>
                                     <input
@@ -190,14 +190,14 @@ const RequestRide = () => {
                                         checked={requestType === 'people'}
                                         onChange={() => setRequestType('people')}
                                     />
-                                    People Transportation
+                                    הסעות אנשים
                                 </label>
                             </div>
 
                             {requestType === 'package' && (
                                 <div>
-                                    <select {...register("packageSize", { required: "Package size is required." })}>
-                                        <option value="">Select Package Size</option>
+                                    <select {...register("packageSize", { required: "יש להכניס גודל חבילה" })}>
+                                        <option value="">גודל חבילה:</option>
                                         <option value="small">Small</option>
                                         <option value="medium">Medium</option>
                                         <option value="large">Large</option>
@@ -211,22 +211,22 @@ const RequestRide = () => {
                                     <input
                                         type='number'
                                         name='adults'
-                                        placeholder='Number of Adults'
-                                        {...register("adults", { required: "Number of adults is required." })}
+                                        placeholder='מספר מבוגרים'
+                                        {...register("adults", { required: "יש להכניס מספר מבוגרים" })}
                                     />
                                     {errors.adults && <span>{errors.adults.message}</span>}
                                     <input
                                         type='number'
                                         name='infants'
-                                        placeholder='Number of Infants'
-                                        {...register("infants", { required: "Number of infants is required." })}
+                                        placeholder='מספר ילדיםs'
+                                        {...register("infants", { required: "יש להכניס מספר ילדים" })}
                                     />
                                     {errors.infants && <span>{errors.infants.message}</span>}
                                 </div>
                             )}
 
-                            <button type="button" onClick={prevStep}>Back</button>
-                            <input type="submit" value="Request Ride" />
+                            <button type="button" onClick={prevStep}>חזור</button>
+                            <input type="submit" value="הזמן נסיעה" />
                         </form>
                     )}
 

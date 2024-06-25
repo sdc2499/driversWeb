@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../App';
 import socketIOClient from 'socket.io-client';
-import './Chat.css'; // Import the CSS file
+import './Chat.css'; 
 
 const ChatRequestButton = () => {
   const [currentUser] = useContext(UserContext);

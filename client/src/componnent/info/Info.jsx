@@ -6,12 +6,12 @@ const Info = () => {
   return (
     <>
       <div className="info_item">
-        <h1>info</h1>
-        <p><span>id:</span> {currentUser.id}</p>
-        <p><span>name:</span> {currentUser.firstName}</p>
-        <p><span>username:</span> {currentUser.lastName}</p>
-        <p><span>email:</span> {currentUser.email}</p>
-        <p><span>phone: </span>{currentUser.phone}</p>
+        <h1>פרטיים</h1>
+        <p><span>מזהה:</span> {currentUser.id}</p>
+        <p><span>שם פרטי:</span> {currentUser.firstName}</p>
+        <p><span>שם משפחה:</span> {currentUser.lastName}</p>
+        <p><span>מייל:</span> {currentUser.email}</p>
+        <p><span>פלאפון: </span>{currentUser.phone}</p>
       </div>
     </>
   )
