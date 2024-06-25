@@ -191,6 +191,7 @@ import { Server } from 'socket.io';
 import app from './app.js'; // נניח שיש קובץ זה שמייצג את האפליקציה שלך
 import mysql from 'mysql2'; // יבוא של חבילת MySQL
 import { sendRatingEmail } from './mailer.js'; // נניח שיש פונקציה זו לשליחת אימיילים
+import 'dotenv/config';
 
 
 // יצירת שרת HTTP והגדרת שרת ה-socket.io
@@ -206,8 +207,8 @@ const io = new Server(server, {
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'Leahsh1093',
-  database: 'db'
+  password: process.env.PASSWORD,
+  database: process.env.DB_NAME
 });
 
 

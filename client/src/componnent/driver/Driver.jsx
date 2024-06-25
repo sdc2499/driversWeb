@@ -12,8 +12,18 @@ const Driver = () => {
 
   useEffect(() => {
 
+    const fetchOpenRides = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/rides/waitingForDriver`);
+        const data = await response.json();
+        console.log('Fetched waitingForDriver rides:', data.data);
+        setRequests(data.data);
+      } catch (error) {
+        console.error('Error fetching waitingForDriver rides:', error);
+      }
+    };
 
-
+    fetchOpenRides();
 
     const handleNewRequest = (request) => {
       setRequests(prev => [...prev, request]);
@@ -65,8 +75,8 @@ const Driver = () => {
         <h2>New Ride Requests</h2>
         {requests.map(request => (
           <div className="ride-request" key={request.id}>
-            <p><strong>מ:</strong> {request.from}</p>
-            <p><strong>ל:</strong> {request.to}</p>
+            <p><strong>מ:</strong> {request.from||request.pickup_location}</p>
+            <p><strong>ל:</strong> {request.destination||request.to}</p>
             <p><strong>תאריך:</strong> {request.date}</p>
             <p><strong>תאריך:</strong> {request.time}</p>
             {request.requestType === 'package' ? (

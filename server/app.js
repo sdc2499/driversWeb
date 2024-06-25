@@ -15,7 +15,7 @@ app.use(express.json());
 app.use('/entrance', entranceRouter);
 // app.use(authMiddleware);
 app.use('/users', usersRouter);
-app.use('/ride', rideRouter);
+app.use('/rides', rideRouter);
 app.use('/drivers', driverRouter);
 app.use(logErrors);
 

@@ -8,6 +8,18 @@ const Secretary = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchOpenRides = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/rides/waitingForPrice`);
+        const data = await response.json();
+        console.log('Fetched waitingForPrice rides:', data.data);
+        setRequests(data.data);
+      } catch (error) {
+        console.error('Error fetching waitingForPrice rides:', error);
+      }
+    };
+
+    fetchOpenRides();
     const handleNewRequest = (request) => {
       setRequests(prev => [...prev, { ...request, closed: false, priceUpdated: false }]);
     };
@@ -43,7 +55,7 @@ const Secretary = () => {
       <h1 className="page-title">Hello Secretary</h1>
       {requests.map(request => (
         <div className="request-item" key={request.id}>
-          <p><strong>From:</strong> {request.from}</p>
+          <p><strong>From:</strong> {request.from||request.pickup_location}</p>
           <p><strong>To:</strong> {request.to}</p>
           <p><strong>Date:</strong> {request.date}</p>
           <p><strong>Time:</strong> {request.time}</p>

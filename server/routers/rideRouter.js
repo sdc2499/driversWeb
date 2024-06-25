@@ -4,6 +4,8 @@ const rideRouter = express.Router();
 const rideController = new RideController();
 //fljngae
 // rideRouter.post("/booking",rideController.booking )
+rideRouter.get("/waitingForPrice",rideController.waitingForPrice )
+rideRouter.get("/waitingForDriver",rideController.waitingForDriver )
 
 export {
     rideRouter 
