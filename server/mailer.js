@@ -16,7 +16,7 @@ export const sendRatingEmail = async (userEmail, driverId) => {
         from: process.env.EMAIL,
         to: userEmail,
         subject: 'דרג את הנהג שלך',
-        text: `תודה על הנסיעה! אנא דרג את הנהג שלך על ידי לחיצה על הקישור הבא:  \nhttp://localhost:5173/home/costumer/11/rating/${driverId}`
+        text: `תודה על הנסיעה! אנא דרג את הנהג שלך על ידי לחיצה על הקישור הבא:  \nhttp://localhost:5173/costumer/11/rating/${driverId}`
     };
 
     try {

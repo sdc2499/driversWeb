@@ -36,7 +36,7 @@ const RatingPage = () => {
         }).then(response => {
             if (response.status === 200) {
                 alert("הדירוג בוצע בהצלחה תודה לך!!!");
-                navigate(`/home/costumer/${id}/thank`);
+                navigate(`/costumer/${id}/thank`);
             } else {
                 console.log("res" + response)
                 alert("Oops, something went wrong... Please try again!");

@@ -63,8 +63,7 @@ function App() {
               </Route>
               <Route path='costumer/:id' element={<Layout />} >
                 <Route index element={<User />} />
-                <Route path='rating/:driverId' element={<RatingPage />} />
-                <Route path='thank' element={<ThankYou />} />
+
                 {/* 
                 <Route path='editDetails' element={<EditDetails />} />
                 <Route path='info' element={<Info />} /> */}
@@ -95,6 +94,8 @@ function App() {
               <Route path='driver/:id' element={<Driver />} > */}
               {/* <Route path='editDetails' element={<EditDetails />} /> */}
             </Route>
+            <Route path='/costumer/:id/rating/:driverId' element={<RatingPage />} />
+            <Route path='/costumer/:id/thank' element={<ThankYou />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/error' element={<Error />} />

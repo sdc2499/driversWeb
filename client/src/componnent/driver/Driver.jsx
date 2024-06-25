@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import socket from '../../socket';
 import { useNavigate } from 'react-router-dom';
 import './driver.css'
@@ -11,6 +11,10 @@ const Driver = () => {
   const [currentUser, setCurrentUser] = useContext(UserContext);
 
   useEffect(() => {
+
+
+
+
     const handleNewRequest = (request) => {
       setRequests(prev => [...prev, request]);
     };
@@ -30,7 +34,7 @@ const Driver = () => {
 
   const acceptRequest = (request) => {
     setAcceptedRequests(prev => [...prev, request]);
-    socket.emit('driverAccepted',{request:request.id,driverId:currentUser.id} );
+    socket.emit('driverAccepted', { request: request.id, driverId: currentUser.id });
   };
 
   return (
