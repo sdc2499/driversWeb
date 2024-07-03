@@ -12,19 +12,11 @@ export default class EntranceController {
             if (result.result == undefined) {
                 throw new Error("No elements found");
             }
-            return res.status(200).json({ data: result.result, token: result.token, status: 200 });
+            return res.json({ data: result.result, token: result.token, status: 200 });
 
         } catch (ex) {
-            const err = {};
-            switch (ex.message) {
-                case "No elements found":
-                    err.statusCode = 404;
-                    break;
-                default:
-                    err.statusCode = 500;
-                    break;
-            }
-
+            const err = {}
+            err.statusCode = 500;
             err.message = ex.message;
             next(err);
         }

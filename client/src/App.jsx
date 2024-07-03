@@ -5,7 +5,6 @@ import Register from './componnent/entrance/Register'
 import Login from './componnent/entrance/Loginn';
 import Layout from './componnent/Layout'
 import Error from './componnent/Error';
-// import Info from './componnent/info/Info'
 import User from './componnent/user/User'
 import Secretary from './componnent/secretary/Secretary'
 import EditDetails from './componnent/editDetails/EditDetails'
