@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import socket from '../../socket';
 import { useNavigate } from 'react-router-dom';
 import './driver.css'
-import { UserContext } from '../../App';
+import { UserContext } from "../../App";
 
 const Driver = () => {
   const [requests, setRequests] = useState([]);
@@ -11,10 +11,12 @@ const Driver = () => {
   const [currentUser, setCurrentUser] = useContext(UserContext);
 
   useEffect(() => {
-
+console.log("currentUser  "+currentUser)
     const fetchOpenRides = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/rides/waitingForDriver`);
+        const response = await fetch(`http://localhost:8080/rides/waitingForDriver`,{
+          headers: { Authorization: currentUser.token }
+        });
         const data = await response.json();
         console.log('Fetched waitingForDriver rides:', data.data);
         setRequests(data.data);
@@ -44,7 +46,7 @@ const Driver = () => {
 
   const acceptRequest = (request) => {
     setAcceptedRequests(prev => [...prev, request]);
-    socket.emit('driverAccepted', { request: request.id, driverId: currentUser.id });
+    socket.emit('driverAccepted', { request: request.id,socketId:request.socketId, driverId: currentUser.id });
   };
 
   return (

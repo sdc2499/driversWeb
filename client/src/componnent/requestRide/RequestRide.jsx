@@ -29,9 +29,10 @@ const RequestRide = () => {
             setError("to", { type: "manual", message: "Please select a valid address from the autocomplete options." });
             return;
         }
-        
-        
-            const rideRequest = { id: Date.now(),customerId:currentUser.id, from, to, ...rideDetails, requestType };
+
+
+        // const rideRequest = { id: Date.now(), customerId: currentUser.id, from, to, ...rideDetails, requestType };
+        const rideRequest = {customerId: currentUser.id, from, to, ...rideDetails, requestType };
         socket.emit('newRideRequest', rideRequest);
         setRideStatus('Waiting for a driver to accept your request...');
         reset(); // איפוס השדות בטופס לאחר שליחה
@@ -180,7 +181,7 @@ const RequestRide = () => {
                                         checked={requestType === 'package'}
                                         onChange={() => setRequestType('package')}
                                     />
-                                   משלוח חבילה
+                                    משלוח חבילה
                                 </label>
                                 <label>
                                     <input

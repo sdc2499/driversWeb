@@ -4,7 +4,7 @@ export default class CostumerController {
         try {
             const costumerService = new CostumerService();
             const result = await costumerService.getUserByParam(req);
-            console.log(result+result[0].id)
+            // console.log(result[0].id)
             return res.status(200).json({ data: result[0], status: 200 });
         }
         catch (ex) {

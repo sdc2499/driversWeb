@@ -1,11 +1,7 @@
 import { RideService } from '../service/rideService.js';
-// const twilio = require('twilio');
-// const accountSid = 'YOUR_TWILIO_ACCOUNT_SID';
-// const authToken = 'YOUR_TWILIO_AUTH_TOKEN';
-// const client = twilio(accountSid, authToken);
-
-
+//נראה לי אנחנו לא משתמשות בכלום מפה 
 export default class RideController {
+
 async waitingForPrice(req, res, next){
     try {
         const rideService = new RideService();

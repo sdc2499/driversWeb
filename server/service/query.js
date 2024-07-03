@@ -26,27 +26,27 @@ async function query(query, params) {
     return results;
 }
 
-async function transactionQuery(query1, query2) {
+// async function transactionQuery(query1, query2) {
 
-    const connection = await pool.getConnection()
+//     const connection = await pool.getConnection()
 
-    try {
-        await connection.beginTransaction()
+//     try {
+//         await connection.beginTransaction()
 
-        await connection.query(query1)
+//         await connection.query(query1)
 
-        await connection.query(query2)
-        /* etcetera etcetera */
-        await connection.commit()
-    }
-    catch (error) {
-        await connection.rollback()
-        pool.releaseConnection()
-        res.status(400).send({ something })
-    }
-    pool.releaseConnection()
+//         await connection.query(query2)
+//         /* etcetera etcetera */
+//         await connection.commit()
+//     }
+//     catch (error) {
+//         await connection.rollback()
+//         pool.releaseConnection()
+//         res.status(400).send({ something })
+//     }
+//     pool.releaseConnection()
 
-}
+// }
 
 export {
     query

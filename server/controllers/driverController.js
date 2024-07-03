@@ -1,14 +1,19 @@
 import { DriverService } from "../service/driverService.js";
+
 export default class DriverController {
+
     async getDrivers(req, res, next) {
+
         try {
             const driverService = new DriverService();
             const result = await driverService.getDrivers(req);
             return res.status(200).json({ data: result, status: 200 });
-        }         
+        }  
+
         catch (ex) {
             const err = {};
             switch (ex.message) {
+                //לבדוק אם אין נהגים לזרוק שגיאה או פשוט אין מחזיר מערך ריק?
                 case "No elements found":
                     err.statusCode = 404;
                     break;
@@ -22,14 +27,9 @@ export default class DriverController {
     
     }
 
-
-
-
     async rating(req, res, next) {
-        console.log("hi")
 
         try {
-            console.log("👨🏼‍🦰" + req.body)
             const driveService = new DriverService();
             await driveService.postRaitingDriver(req.body);
             return res.status(200).json({ status: 200 });

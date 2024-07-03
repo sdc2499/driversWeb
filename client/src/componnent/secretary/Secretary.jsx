@@ -1,16 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import socket from '../../socket';
+import { UserContext } from "../../App";
+
 import { useNavigate } from 'react-router-dom';
-import './secretary.css'; // ייבוא קובץ ה-CSS המכיל את עיצוב המזכירה
+import './secretary.css';
 
 const Secretary = () => {
   const [requests, setRequests] = useState([]);
   const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useContext(UserContext);
 
   useEffect(() => {
     const fetchOpenRides = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/rides/waitingForPrice`);
+        const response = await fetch(`http://localhost:8080/rides/waitingForPrice`,{
+          headers: { Authorization: currentUser.token }
+        });
         const data = await response.json();
         console.log('Fetched waitingForPrice rides:', data.data);
         setRequests(data.data);
@@ -21,7 +26,10 @@ const Secretary = () => {
 
     fetchOpenRides();
     const handleNewRequest = (request) => {
+      console.log("b   "+requests)
       setRequests(prev => [...prev, { ...request, closed: false, priceUpdated: false }]);
+      console.log("a   "+requests)
+
     };
 
     const handleRequestClosed = (requestId) => {

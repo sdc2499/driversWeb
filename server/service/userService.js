@@ -10,7 +10,12 @@ export class UserService {
         user.password = sha256(user.password)
         let queryUser = queryItem.loginQuery()
         const result = await query(queryUser, Object.values(user));
-        const token = jwt.sign(result[0], process.env.JWT_SECRET, {
+        console.log("result[0].id,   "+process.env.JWT_SECRET)
+        const userT ={
+            id:result[0].id,
+            phone:user.phone
+        }
+        const token = jwt.sign(userT, process.env.JWT_SECRET, {
             expiresIn: '1h',
         });
         return {result:result[0],token:token};

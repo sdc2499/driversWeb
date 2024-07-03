@@ -4,8 +4,6 @@ import { UserContext } from '../../App';
 import { io } from 'socket.io-client';
 import './user.css';
 
-// const socket = io('http://localhost:8080'); // ודא שהכתובת והפורט נכונים
-
 const User = () => {
     const [currentUser, setCurrentUser] = useContext(UserContext);
     const [openForm, setOpenForm] = useState(false);
@@ -16,7 +14,6 @@ const User = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
     const registerDriver = (driverDetails) => {
-        console.log("userId:::::" + currentUser.id);
         fetch(`http://localhost:8080/users/upgradeToDriver/${currentUser.id}`, {
             method: 'PUT',
             body: JSON.stringify({ gender: driverDetails.gender, religiousSector: driverDetails.religiousSector }),

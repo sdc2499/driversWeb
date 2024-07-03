@@ -22,25 +22,26 @@ export const UserContext = createContext();
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
-  const user = (data) => {
+  const user = (data,token) => {
     return {
       id: data.id,
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
-      phone: data.phone
+      phone: data.phone,
+      token:token
     }
   }
 
   useEffect(() => {
     const currntUser = JSON.parse(localStorage.getItem("currentUser"))
-    currntUser && fetch(`http://localhost:8080/users?phone=${currntUser.phone}`, {
-      headers: { Authorization: currntUser.token.token }
+    currntUser && fetch(`http://localhost:8080/users?id=${currntUser.userId}`, {
+      headers: { Authorization: currntUser.token }
     })
       .then(async response => {
         const data = await response.json();
-        console.log("data in app.jsx: " + data + data[0] + data.id + data[0])
-        response.ok && setCurrentUser(() => user(data))
+        console.log("data in app.jsx: "+data)
+        response.ok && setCurrentUser(() => user(data.data,currntUser.token))
       })
   }, []);
 

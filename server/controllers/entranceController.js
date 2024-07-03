@@ -1,27 +1,19 @@
 import { UserService } from '../service/userService.js';
-import jwt from 'jsonwebtoken';
 import 'dotenv/config'
 
+
 export default class EntranceController {
+
     async login(req, res, next) {
+
         try {
             const userService = new UserService();
             const result = await userService.login(req.body);
             if (result.result == undefined) {
                 throw new Error("No elements found");
             }
-            // const authorizedUser = {
-            //     userId: resultUsers[0].userId,
-            //     name: resultUsers[0].name,
-            //     username: resultUsers[0].username,
-            //     email: resultUsers[0].email,
-            //     phone: resultUsers[0].phone,
-            // };
-            // const token = jwt.sign(result, process.env.JWT_SECRET, {
-            //     expiresIn: '1h',
-            // });
-            // return res.status(200).json({ data: authorizedUser, token: { token }, status: 200 });
-            return res.status(200).json({ data: result.result,token:result.token, status: 200 });
+            return res.status(200).json({ data: result.result, token: result.token, status: 200 });
+
         } catch (ex) {
             const err = {};
             switch (ex.message) {
@@ -32,22 +24,20 @@ export default class EntranceController {
                     err.statusCode = 500;
                     break;
             }
+
             err.message = ex.message;
             next(err);
         }
     }
 
     async register(req, res, next) {
+
         try {
             const userService = new UserService();
-            console.log(req.body+req.body.firstName)
-            const result =await userService.register(req.body);
-            // const token = jwt.sign(result ,process.env.JWT_SECRET, {
-            //     expiresIn: '1h',
-            // });
-            return res.status(200).json({id:result.userId,token:result.token, status: 200 });
-            // return res.status(200).json({id:result,token: { token }, status: 200 });
-        } catch (ex) {
+            const result = await userService.register(req.body);
+            return res.status(200).json({ id: result.userId, token: result.token, status: 200 });
+        } 
+        catch (ex) {
             const err = {};
             switch (ex.message) {
                 default:
