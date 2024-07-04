@@ -5,7 +5,7 @@ export default class CostumerController {
             const costumerService = new CostumerService();
             const result = await costumerService.getUserByParam(req);
             // console.log(result[0].id)
-            return res.status(200).json({ data: result[0], status: 200 });
+            return res.json({ data: result[0], status: 200 });
         }
         catch (ex) {
             const err = {}
@@ -19,7 +19,7 @@ export default class CostumerController {
             const costumerService = new CostumerService();
             console.log("in costumer controler:::"+req.body+req.body.gender+req.params.id)
             await costumerService.upgradeToDriver(req.body, req.params.id);
-            return res.status(200).json({ status: 200, data: req.params.id });
+            return res.json({ status: 200, data: req.params.id });
         }
         catch (ex) {
             const err = {}
@@ -34,7 +34,7 @@ export default class CostumerController {
             console.log("req.body in controller:::"+req.body)
             await costumerService.updateCostumer(req.body, req.params.id);
 
-            return res.status(200).json({ status: 200, data: req.params.id });
+            return res.json({ status: 200, data: req.params.id });
         }
         catch (ex) {
             const err = {}
@@ -49,7 +49,7 @@ export default class CostumerController {
             console.log("req.body in controller:::"+req.body)
             await costumerService.changePswd(req.body, req.params.id);
 
-            return res.status(200).json({ status: 200, data: req.params.id });
+            return res.json({ status: 200, data: req.params.id });
         }
         catch (ex) {
             const err = {}
