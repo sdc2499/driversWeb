@@ -38,7 +38,7 @@ const RatingPage = () => {
                 navigate(`/thank`);
             } else {
                 console.log("res" + response)
-                alert("Oops, something went wrong... Please try again!");
+                alert("אין לדרג יותר מפעם אחת");
             }
         }).catch(error => {
             console.error('Error updating user:', error);

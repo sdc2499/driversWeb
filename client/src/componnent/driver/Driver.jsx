@@ -11,10 +11,10 @@ const Driver = () => {
   const [currentUser, setCurrentUser] = useContext(UserContext);
 
   useEffect(() => {
-console.log("currentUser  "+currentUser)
+    console.log("currentUser  " + currentUser)
     const fetchOpenRides = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/rides/waitingForDriver`,{
+        const response = await fetch(`http://localhost:8080/rides/waitingForDriver`, {
           headers: { Authorization: currentUser.token }
         });
         const data = await response.json();
@@ -46,7 +46,10 @@ console.log("currentUser  "+currentUser)
 
   const acceptRequest = (request) => {
     setAcceptedRequests(prev => [...prev, request]);
-    socket.emit('driverAccepted', { request: request.id,socketId:request.socketId, driverId: currentUser.id });
+    console.log("req   " + request.customerId)
+    console.log("req   " + request.id)
+    console.log("req   " +currentUser.id )
+    socket.emit('driverAccepted', { costumerId:request.customerId,request: request.id, socketId: request.socketId, driverId: currentUser.id });
   };
 
   return (
@@ -65,7 +68,7 @@ console.log("currentUser  "+currentUser)
               <p><strong>גודל החבילה:</strong> {acceptedRequest.packageSize}</p>
             ) : (
               <div>
-                {console.log("vh  "+acceptedRequest)}
+                {console.log("vh  " + acceptedRequest)}
                 <p><strong>מספר נוסעים:</strong> {acceptedRequest.passengers}</p>
               </div>
             )}
@@ -75,10 +78,12 @@ console.log("currentUser  "+currentUser)
 
       <div className="new-ride-requests">
         <h2>New Ride Requests</h2>
-        {requests&&requests.map(request => (
+        {requests && requests.map(request => (
+
           <div className="ride-request" key={request.id}>
-            <p><strong>מ:</strong> {request.from||request.pickup_location}</p>
-            <p><strong>ל:</strong> {request.destination||request.to}</p>
+            {console.log(request)}
+            <p><strong>מ:</strong> {request.from || request.pickup_location}</p>
+            <p><strong>ל:</strong> {request.destination || request.to}</p>
             <p><strong>תאריך:</strong> {request.date}</p>
             <p><strong>תאריך:</strong> {request.time}</p>
             {request.requestType === 'package' ? (

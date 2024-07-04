@@ -90,27 +90,20 @@ export class DriverService {
 
 
     async postRaitingDriver(tokenFromEmail, rating) {
-        console.log(rating)
-        console.log(Object.keys(rating))
         const decodedToken = verifyToken(tokenFromEmail);
         const queryItem = new QueryItem();
-
-        const checkRatedQuery = queryItem.getByParamQuery("rides", "id");
+        const checkRatedQuery = queryItem.getByParamQuery("rides", "id=?");
         const resultRated = await query(checkRatedQuery, [decodedToken.rideId]);
-
-
-        if (resultRated && !resultRated.isRated) {
-
-            // הוספת דירוג חדש לנהג
+        if (resultRated && !(resultRated[0].isRated)) {
             const insertRatingQuery = queryItem.postItemQuery("ratingDriver", "NULL," + "?,?,?,?");
-            const insertResult = await query(insertRatingQuery, [decodedToken.driverId, rating.stars, rating.ratingMsg, decodedToken.userId]);
-
-
+            const insertResult = await query(insertRatingQuery, [decodedToken.driverId, rating.stars, rating.ratingMsg, decodedToken.costumerId]);
             const updateRatedQuery = queryItem.updateItemQuery("rides", "isRated=?");
-            const updateResult = await query(updateRatedQuery, [ 1,decodedToken.rideId]);
-
-
+            const updateResult = await query(updateRatedQuery, [1, decodedToken.rideId]);
+            return { alreadyRated: false }
         }
+        else
+            return { alreadyRated: true }
+
         // const queryItem = new QueryItem();
         // let checkRated = queryItem.getByParamQuery("ride", "id");
         // const resultRated = await query(checkRated, [obj.id]);

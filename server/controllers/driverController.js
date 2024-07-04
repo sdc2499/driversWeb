@@ -8,7 +8,7 @@ export default class DriverController {
             const driverService = new DriverService();
             const result = await driverService.getDrivers(req);
             return res.json({ data: result, status: 200 });
-        }  
+        }
 
         catch (ex) {
             const err = {};
@@ -24,25 +24,29 @@ export default class DriverController {
             err.message = ex.message;
             next(err);
         }
-    
+
     }
 
     async rating(req, res, next) {
         const { stars, ratingMsg } = req.body;
-console.log(stars)
-console.log(ratingMsg)
         try {
             const driveService = new DriverService();
-            await driveService.postRaitingDriver(req.query.token,req.body);
+            const result = await driveService.postRaitingDriver(req.query.token, req.body);
+            if(result.alreadyRated)
+                throw('This ride has already been rated.')
+                // return res.status(400).json({ status: 400, message: 'This ride has already been rated.' });
             return res.json({ status: 200 });
-        } catch (ex) {
+        } catch (message) {
             const err = {};
-            switch (ex.message) {
+            switch (message) {
+                case 'This ride has already been rated.':
+                    err.statusCode = 400;
+                    break;
                 default:
                     err.statusCode = 500;
                     break;
             }
-            err.message = ex.message;
+            err.message = message;
             next(err);
         }
     }
@@ -53,7 +57,7 @@ console.log(ratingMsg)
             const driverService = new DriverService();
             const result = await driverService.getDriverById(req.params.id);
             return res.json({ data: result, status: 200 });
-        }         
+        }
         catch (ex) {
             const err = {};
             switch (ex.message) {
@@ -67,7 +71,7 @@ console.log(ratingMsg)
             err.message = ex.message;
             next(err);
         }
-    
+
     }
 
 
@@ -76,7 +80,7 @@ console.log(ratingMsg)
             const driverService = new DriverService();
             const result = await driverService.getMainDetails(req.params.id);
             return res.json({ data: result, status: 200 });
-        }         
+        }
         catch (ex) {
             const err = {};
             switch (ex.message) {
@@ -90,11 +94,11 @@ console.log(ratingMsg)
             err.message = ex.message;
             next(err);
         }
-    
+
     }
 
 
-    async addDriver(req,res,next){
+    async addDriver(req, res, next) {
         try {
             const driveService = new DriverService();
             await driveService.postDriver(req.body);
@@ -113,9 +117,9 @@ console.log(ratingMsg)
 
 
 
-    async updateDriverById(req, res,next) {
+    async updateDriverById(req, res, next) {
         try {
-            console.log(req.body.firstName+"    "+ req.params.id)
+            console.log(req.body.firstName + "    " + req.params.id)
             const driverService = new DriverService();
             await driverService.updateDriver(req.body, req.params.id);
             return res.json({ status: 200, data: req.params.id });
@@ -128,7 +132,7 @@ console.log(ratingMsg)
         }
     }
 
-    async updateDriverRating(req, res,next) {
+    async updateDriverRating(req, res, next) {
         try {
             const driverService = new DriverService();
             await driverService.postRaitingDriver(req.params.token);

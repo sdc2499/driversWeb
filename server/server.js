@@ -64,12 +64,13 @@ io.on('connection', (socket) => {
   });
 
   socket.on('driverAccepted', async (requestId) => {
+    console.log()
     driverAccepted(requestId)
     io.to(requestId.socketId).emit('driverFound', { driverId: requestId.driverId });
     console.log(requestId)
     console.log(requestId.request)
     io.emit('rideRequestClosed', requestId.request);
-    sendRatingEmail('l0583251093@gmail.com', socket.id);
+    sendRatingEmail('l0583251093@gmail.com', {costumerId:requestId.costumerId,driverId:requestId.driverId,rideId:requestId.request});
   });
 
 
