@@ -76,9 +76,10 @@ const Home = () => {
                     </div>
                     <button onClick={handleRequestRideClick} className="ride-button">הזמנת נסיעה</button>
                     {currentUser.userType === 'secretary' && <NavLink to={`/home/secretary/${currentUser.id}/travelRequests`}>בקשות נסיעה</NavLink>}
-                    {currentUser.userType === 'secretary' && <NavLink to={`/home/secretary/${currentUser.id}/callRequests`}>בקשות שיחה</NavLink>}
                 </nav>
             </header>
+            {currentUser.userType === 'secretary' && <SecretaryDashboard/>}
+
             {currentUser.userType === 'costumer' && <ChatRequestButton />}
             <footer>
                 <button className='topBtn' style={{ display: visible ? 'inline' : 'none' }}>

@@ -10,15 +10,13 @@ const SecretaryDashboard = () => {
   const [activeChat, setActiveChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [messageInput, setMessageInput] = useState('');
+  const [handlingRequest, setHandlingRequest] = useState(false); // משתנה סוג בוליאני לניהול בקשת שיחה בלבד
 
   useEffect(() => {
     const handleChatRequest = (data) => {
-      setChatRequests((prevRequests) => {
-        if (prevRequests.some(request => request.customerSocketId === data.customerSocketId)) {
-          return prevRequests;
-        }
-        return [...prevRequests, data];
-      });
+      if (!handlingRequest) { // בדיקה האם כבר קיימת בקשת שיחה בטיפול
+        setChatRequests((prevRequests) => [...prevRequests, data]);
+      }
     };
 
     socket.on('chatRequestForSecretary', handleChatRequest);
@@ -35,11 +33,13 @@ const SecretaryDashboard = () => {
       socket.off('chatRequestForSecretary', handleChatRequest);
       socket.off('receiveMessage', handleIncomingMessage);
     };
-  }, [socket, activeChat]);
+  }, [socket, activeChat, handlingRequest]);
 
   const handleResponse = (customerSocketId, accepted) => {
     const response = accepted ? 'המזכירה אישרה את השיחה' : 'המזכירה דחתה את הבקשה';
     socket.emit('respondToChatRequest', { customerSocketId, accepted, message: response, secretarySocketId: socket.id });
+
+    setHandlingRequest(true); // סימון שכרגע יש בטיפול בבקשת שיחה
 
     setChatRequests((prevRequests) => prevRequests.filter(req => req.customerSocketId !== customerSocketId));
 
@@ -81,15 +81,14 @@ const SecretaryDashboard = () => {
     setTimeout(() => {
       setActiveChat(null);
       setMessages([]);
-    }, 500); // Delay to ensure the message is sent before closing the chat
+      setHandlingRequest(false); // סיום טיפול בבקשת שיחה
+    }, 500); // השהייה כדי לוודא שהודעת הסגירה תשלח לפני סגירת השיחה
   };
 
   return (
     <div>
-      <h2>בקשות שיחה</h2>
-      {chatRequests.length === 0 && <p>אין בקשות שיחה כרגע.</p>}
       {chatRequests.map((request, index) => (
-        <div key={index}>
+        <div className="notification show" key={index}>
           <p>{request.userName} רוצה להתחיל שיחה</p>
           <button onClick={() => handleResponse(request.customerSocketId, true)}>אשר</button>
           <button onClick={() => handleResponse(request.customerSocketId, false)}>דחה</button>

@@ -16,17 +16,18 @@ const Secretary = () => {
       setNotification(true);
       timer = setTimeout(() => {
         setNotification(false);
-      }, 3000); // מוסיף זמן לאחר 2 שניות
+      }, 3000); 
     });
 
     return () => {
       socket.off('rideRequestForSecretary');
-      clearTimeout(timer); // מבטל טיימר אם תחליט לא ללכת לדף הבקשות
+      clearTimeout(timer);
     };
   }, []);
 
   return (
     <div>
+      <h1>אני מזכירה תותחיתתתת</h1>
       {notification && (
         <div className="notification show">
           יש בקשה חדשה!{' '}
@@ -34,7 +35,6 @@ const Secretary = () => {
           לעבור לעמוד הבקשות.
         </div>
       )}
-      <h1>אני מזכירה תותחיתתתת</h1>
     </div>
   );
 }
