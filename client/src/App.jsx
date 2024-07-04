@@ -19,6 +19,7 @@ import SecretaryTravelRequests from './componnent/secretary/SecretaryTravelReque
 import './App.css'
 import ThankYou from './componnent/thankYou/ThankYou';
 import SecretaryDashboard from './componnent/chat/chatS';
+import ForgotPasswordModal from './componnent/forgotPasswordModal/ForgotPasswordModal';
 
 export const UserContext = createContext();
 
@@ -102,6 +103,12 @@ function App() {
             </Route>
             <Route path='/costumer/:id/rating/:driverId' element={<RatingPage />} />
             <Route path='/thank' element={<ThankYou />} />
+            {/* <Route path='/login' element={<Layout />} >
+            <Route index element={<Login />} />
+            <Route path='forgotPasswordModal' element={<ForgotPasswordModal/>} />
+          
+            </Route> */}
+
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/error' element={<Error />} />

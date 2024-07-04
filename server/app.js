@@ -13,6 +13,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/entrance', entranceRouter);
+app.use('/passwordReset', passwordResetRouter);
 app.use(authMiddleware);
 app.use('/users', usersRouter);
 app.use('/rides', rideRouter);

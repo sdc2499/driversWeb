@@ -3,11 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
 import { useForm } from 'react-hook-form';
+import ForgotPasswordModal from '../forgotPasswordModal/ForgotPasswordModal';
+// import ForgotPasswordModal from './ForgotPasswordModal';
 import './login.css';
 
 const Login = () => {
     const [currentUser, setCurrentUser] = useContext(UserContext);
     const [exist, setExist] = useState(true);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     const navigate = useNavigate();
     const {
         register,
@@ -16,25 +19,22 @@ const Login = () => {
     } = useForm();
 
     const goToHome = (data, token_) => {
-        console.log("data.userType"+data.userType)
+        console.log("data.userType" + data.userType);
 
         switch (data.userType) {
-
             case '1':
-
-                data.userType="costumer"
+                data.userType = "costumer";
                 break;
             case '2':
-                console.log("driver")
-
-                data.userType="driver"
+                console.log("driver");
+                data.userType = "driver";
                 break;
             case '3':
-                console.log("secretry")
-                data.userType="secretary"
+                console.log("secretry");
+                data.userType = "secretary";
                 break;
-
         }
+
         setCurrentUser({
             id: data.id,
             firstName: data.firstName,
@@ -65,6 +65,14 @@ const Login = () => {
         }
     };
 
+    const openModal = () => {
+        setModalIsOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
+
     return (
         <div className="container">
             <h1>כניסה</h1>
@@ -84,6 +92,11 @@ const Login = () => {
 
                 <input type="submit" value="כניסה" />
             </form>
+            
+            {/* כפתור לפתיחת חלונית שחזור סיסמה */}
+            <button onClick={openModal}>שכחתי סיסמה</button>
+            <ForgotPasswordModal isOpen={modalIsOpen} closeModal={closeModal} />
+
             <div className="link"> משתמש חדש? <Link to={'/register'}>להרשמה</Link></div>
         </div>
     );
