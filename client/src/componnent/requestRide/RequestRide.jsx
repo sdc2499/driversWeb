@@ -4,11 +4,11 @@ import { UserContext } from '../../App';
 import { io } from 'socket.io-client';
 import { LoadScript, Autocomplete } from '@react-google-maps/api';
 
-const socket = io('http://localhost:8080'); 
+const socket = io('http://localhost:8080');
 const libraries = ['places'];
 
 const RequestRide = () => {
-    const [driverFound,setDriverFound]=useState(false)
+    const [driverFound, setDriverFound] = useState(false)
     const [currentUser, setCurrentUser] = useContext(UserContext);
     const [rideStatus, setRideStatus] = useState(null);
     const [noDriverMessage, setNoDriverMessage] = useState('');
@@ -44,7 +44,7 @@ const RequestRide = () => {
     };
 
     const calculatePrice = (distance) => {
-        const minPricePerKm = 10; 
+        const minPricePerKm = 10;
         const maxPricePerKm = 15;
         const minPrice = distance * minPricePerKm;
         const maxPrice = distance * maxPricePerKm;
@@ -61,10 +61,10 @@ const RequestRide = () => {
         const rideRequest = { customerId: currentUser.id, from, to, ...rideDetails, requestType, priceRange };
         socket.emit('newRideRequest', rideRequest);
         setRideStatus('Waiting for a driver to accept your request...');
-        reset(); 
+        reset();
 
-        timerRef=setTimeout(() => {
-            setNoDriverMessage('No driver accepted your request within 3 minutes. Please call us for assistance.');
+        setTimeout(() => {
+            !driverFound && setNoDriverMessage('No driver accepted your request within 3 minutes. Please call us for assistance.');
         }, 180000);
     };
 
@@ -72,7 +72,7 @@ const RequestRide = () => {
         socket.on('driverFound', (data) => {
             setRideStatus(`Driver found! Driver ID: ${data.driverId}`);
             setDriverFound(true);
-            setNoDriverMessage(''); 
+            setNoDriverMessage('');
         });
 
         socket.on('noDriverFound', (data) => {
@@ -163,7 +163,7 @@ const RequestRide = () => {
                                     }
                                 }}
                                 types={['address']}
-                                componentRestrictions={{ country: "IL" }} 
+                                componentRestrictions={{ country: "IL" }}
                             >
                                 <input
                                     type='text'

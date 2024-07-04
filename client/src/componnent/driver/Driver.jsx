@@ -75,7 +75,7 @@ console.log("currentUser  "+currentUser)
 
       <div className="new-ride-requests">
         <h2>New Ride Requests</h2>
-        {requests.map(request => (
+        {requests&&requests.map(request => (
           <div className="ride-request" key={request.id}>
             <p><strong>מ:</strong> {request.from||request.pickup_location}</p>
             <p><strong>ל:</strong> {request.destination||request.to}</p>

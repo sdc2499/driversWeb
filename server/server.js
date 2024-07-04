@@ -4,6 +4,7 @@ import app from './app.js';
 import { sendRatingEmail } from './mailer.js';
 import 'dotenv/config';
 import { query } from '../server/service/query.js'
+import { QueryItem } from "../server/service/queryItem.js";
 
 const server = createServer(app);
 const io = new Server(server, {
@@ -14,25 +15,28 @@ const io = new Server(server, {
 });
 
 async function updateRidePrice(updatedRequest) {
-  const sql = 'UPDATE rides SET price = ?, status = ? WHERE id = ?';
+  const queryItem = new QueryItem();
+  const updateQuery = queryItem.updateItemQuery("rides", "price = ?, status = ?");
   const values = [updatedRequest.price, 'price_updated', updatedRequest.id];
-  const result = await query(sql, values)
+  const result = await query(updateQuery, values)
   return
-} 
+}
 
 async function driverAccepted(requestId) {
-  const sql = 'UPDATE rides SET status = ?, driver_id = ? WHERE id = ?';
+  const queryItem = new QueryItem();
+  const updateQuery = queryItem.updateItemQuery("rides", "status = ?, driver_id = ?");
   const values = ['request_closed_with_driver', requestId.driverId, requestId.request];
-  const result = await query(sql, values)
+  const result = await query(updateQuery, values)
 
   return
 }
 
 async function newRideRequest(request) {
+  const queryItem = new QueryItem();
   let t;
   let tt;
   request.requestType === 'package' ? (t = "package_size", tt = request.packageSize) : (t = "passengers", tt = request.passengers)
-  let sql = `INSERT INTO rides (price, customer_id, status, pickup_location, destination, ${t},isRated) VALUES ( ?, ?, ?, ?, ?, ?,?)`;
+  const postQuery=queryItem.postItemQuery("rides","?, ?, ?, ?, ?, ?,?",`(price, customer_id, status, pickup_location, destination, ${t},isRated)`);
   let values = [
     null,
     request.customerId,
@@ -42,9 +46,10 @@ async function newRideRequest(request) {
     tt,
     0
   ];
-  const result = await query(sql, values)
+  const result = await query(postQuery, values)
   return result.insertId
 }
+
 io.on('connection', (socket) => {
   socket.on('newRideRequest', async (request) => {
     const result = await newRideRequest(request)
@@ -52,7 +57,7 @@ io.on('connection', (socket) => {
     io.emit('rideRequestForSecretary', { ...request, socketId: socket.id });
   });
 
- 
+
   socket.on('priceUpdated', async (updatedRequest) => {
     updateRidePrice(updatedRequest)
     io.emit('rideRequestForDrivers', updatedRequest);
