@@ -65,6 +65,8 @@ const Driver = () => {
             <p><strong>ל:</strong> {request.destination || request.to}</p>
             <p><strong>תאריך:</strong> {request.date}</p>
             <p><strong>תאריך:</strong> {request.time}</p>
+            <p><strong>מחיר:</strong> {request.price}</p>
+            {request.guestPhone&&<p><strong>טלפון(לקוח לא רשום):</strong> {request.guestPhone}</p>}
             {request.requestType === 'package' ? (
               <p><strong>גודל החבילה:</strong> {request.packageSize}</p>
             ) : (

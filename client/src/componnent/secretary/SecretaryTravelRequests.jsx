@@ -72,6 +72,7 @@ const SecretaryTravelRequests = () => {
       <h1 className="page-title">Hello Secretary</h1>
       {sortedRequests.map(request => (
         <div className="request-item" key={request.id}>
+          { request.guestPhone&&<p><strong>טלפון(לקוח לא רשום):</strong> {request.guestPhone}</p>}
           <p><strong>From:</strong> {request.from || request.pickup_location}</p>
           <p><strong>To:</strong> {request.to}</p>
           <p><strong>Date:</strong> {request.date}</p>

@@ -57,7 +57,7 @@ const RequestRide = () => {
             return;
         }
 
-        const rideRequest = { customerId: currentUser.id, from, to, ...rideDetails, requestType, priceRange };
+        const rideRequest = { customerId: currentUser.id||rideDetails.guestPhone, from, to, ...rideDetails, requestType, priceRange};
         socket.emit('newRideRequest', rideRequest);
         setRideStatus('Waiting for a driver to accept your request...');
         reset();
@@ -95,6 +95,18 @@ const RequestRide = () => {
             <h1>הזמן נסיעה</h1>
             <LoadScript googleMapsApiKey="AIzaSyAOADq1o80YyWo4Tvp5vlbzimVXDYpJVWA" libraries={libraries}>
                 <form noValidate onSubmit={handleSubmit(requestRide)}>
+                    {!currentUser.id && <input type='tel' name='phone' placeholder='טלפון' {...register("guestPhone", {
+                        required: "יש להכניס טלפון",
+                    })} />}
+                    {!currentUser.id &&<input type="email" name="email" placeholder="מייל"
+                    {...register("email", {
+                        required: "יש להכניס מייל",
+                        pattern: {
+                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                            message: "יש להכניס מייל תקין"
+                        },
+                    })} />}
+                    {errors.phone && <p>{errors.phone.message}</p>}
                     <Autocomplete
                         onLoad={autocomplete => {
                             fromInputRef.current = autocomplete;
