@@ -27,7 +27,7 @@ export default class EntranceController {
         try {
             const userService = new UserService();
             const result = await userService.register(req.body);
-            return res.status(200).json({ id: result.userId, token: result.token, status: 200 });
+            return res.json({ id: result.userId, token: result.token, status: 200 });
         } 
         catch (ex) {
             const err = {};

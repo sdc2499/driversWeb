@@ -7,7 +7,7 @@ async waitingForPrice(req, res, next){
         const rideService = new RideService();
         const result = await rideService.getWaitingForPrice();
         console.log(result+result[0])
-        return res.status(200).json({ data: result, status: 200 });
+        return res.json({ data: result, status: 200 });
     }
     catch (ex) {
         const err = {}
@@ -22,7 +22,7 @@ async waitingForDriver(req, res, next){
         const rideService = new RideService();
         const result = await rideService.getWaitingForDriver();
         console.log(result+result[0])
-        return res.status(200).json({ data: result, status: 200 });
+        return res.json({ data: result, status: 200 });
     }
     catch (ex) {
         const err = {}
@@ -60,7 +60,7 @@ async waitingForDriver(req, res, next){
 //                     }
 //                 })
 
-//                 res.status(200).json({ message: 'הודעה נשלחה בהצלחה' });
+//                 res.json({ message: 'הודעה נשלחה בהצלחה' });
 //             })
 //             .catch((error) => {
 //                 console.error('שגיאה בשליחת הודעה: ', error);
@@ -135,7 +135,7 @@ async waitingForDriver(req, res, next){
 //     //     try {
 //     //         const rideService = new RideService();
 //     //         await rideService.booking(req.body);
-//     //         return res.status(200).json({ status: 200 });
+//     //         return res.json({ status: 200 });
 //     //     } catch (ex) {
 //     //         const err = {};
 //     //         switch (ex.message) {
