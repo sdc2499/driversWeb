@@ -33,6 +33,9 @@ const Secretary = () => {
     };
 
     const handleRequestClosed = (requestId) => {
+      console.log(requests)
+      console.log(requestId)
+
       setRequests(prev => prev.map(req =>
         req.id === requestId ? { ...req, closed: true } : req
       ));
@@ -72,8 +75,8 @@ const Secretary = () => {
             <p><strong>Package Size:</strong> {request.packageSize}</p>
           ) : (
             <>
-              <p><strong>Adults:</strong> {request.adults}</p>
-              <p><strong>Infants:</strong> {request.infants}</p>
+              <p><strong>מספר נוסעים:</strong> {request.passengers}</p>
+              {/* <p><strong>Infants:</strong> {request.infants}</p> */}
             </>
           )}
           {request.closed ? (

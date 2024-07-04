@@ -1,10 +1,9 @@
 import { createServer } from 'http';
 import { Server } from 'socket.io';
-import app from './app.js'; // נניח שיש קובץ זה שמייצג את האפליקציה שלך
-import { sendRatingEmail } from './mailer.js'; // נניח שיש פונקציה זו לשליחת אימיילים
+import app from './app.js';
+import { sendRatingEmail } from './mailer.js';
 import 'dotenv/config';
 import { query } from '../server/service/query.js'
-
 
 const server = createServer(app);
 const io = new Server(server, {
@@ -14,80 +13,77 @@ const io = new Server(server, {
   }
 });
 
+async function updateRidePrice(updatedRequest) {
+  const sql = 'UPDATE rides SET price = ?, status = ? WHERE id = ?';
+  const values = [updatedRequest.price, 'price_updated', updatedRequest.id];
+  const result = await query(sql, values)
+  return
+} 
+
+async function driverAccepted(requestId) {
+  const sql = 'UPDATE rides SET status = ?, driver_id = ? WHERE id = ?';
+  const values = ['request_closed_with_driver', requestId.driverId, requestId.request];
+  const result = await query(sql, values)
+
+  return
+}
+
+async function newRideRequest(request) {
+  let t;
+  let tt;
+  request.requestType === 'package' ? (t = "package_size", tt = request.packageSize) : (t = "passengers", tt = request.passengers)
+  let sql = `INSERT INTO rides (price, customer_id, status, pickup_location, destination, ${t},isRated) VALUES ( ?, ?, ?, ?, ?, ?,?)`;
+  let values = [
+    null,
+    request.customerId,
+    'request_opened',
+    request.from,
+    request.to,
+    tt,
+    0
+  ];
+  const result = await query(sql, values)
+  return result.insertId
+}
 io.on('connection', (socket) => {
-
   socket.on('newRideRequest', async (request) => {
-    console.log('new ride request:', request);
-    let sql, values;
-    // בדיקה אם הבקשה היא למשלוח חבילה או להסעת אנשים
-    if (request.requestType === 'package') {
-      sql = 'INSERT INTO rides (price, customer_id, status, pickup_location, destination, package_size) VALUES ( ?, ?, ?, ?, ?, ?)';
-      values = [
-        null,
-        request.customerId,
-        'request_opened',
-        request.from,
-        request.to,
-        request.packageSize
-      ];
-    } else if (request.requestType === 'people') {
-      sql = 'INSERT INTO rides (request_details, price, customer_id, status, pickup_location, destination, passengers) VALUES (?, ?, ?, ?, ?, ?, ?)';
-      values = [
-        JSON.stringify(request),
-        null,
-        request.customerId,
-        'request_opened',
-        request.from,
-        request.to,
-        request.passengers
-      ];
-    }
-    const result = await query(sql, values)
-    request.id = result.insertId; // הוספת מזהה ייחודי שנוצר לבקשה לאובייקט הבקשה
-    io.emit('rideRequestForSecretary', { ...request, socketId: socket.id }); // שליחת אירוע לסקרטריה
+    const result = await newRideRequest(request)
+    request.id = result
+    io.emit('rideRequestForSecretary', { ...request, socketId: socket.id });
   });
 
-
+ 
   socket.on('priceUpdated', async (updatedRequest) => {
-    console.log('price updated:', updatedRequest);
-    const sql = 'UPDATE rides SET price = ?, status = ? WHERE id = ?';
-    const values = [updatedRequest.price, 'price_updated', updatedRequest.id];
-    const result = await query(sql, values)
-    io.emit('rideRequestForDrivers', updatedRequest); // שליחת אירוע לנהגים
+    updateRidePrice(updatedRequest)
+    io.emit('rideRequestForDrivers', updatedRequest);
   });
-
-
-
 
   socket.on('driverAccepted', async (requestId) => {
-    console.log('driver accepted:', requestId);
-    const sql = 'UPDATE rides SET status = ?, driver_id = ? WHERE id = ?';
-    const values = ['request_closed_with_driver', requestId.driverId, requestId.request];
-    const result = await query(sql, values)
+    driverAccepted(requestId)
     io.to(requestId.socketId).emit('driverFound', { driverId: requestId.driverId });
+    console.log(requestId)
+    console.log(requestId.request)
     io.emit('rideRequestClosed', requestId.request);
-    sendRatingEmail('l0583251093@gmail.com',socket.id);
+    sendRatingEmail('l0583251093@gmail.com', socket.id);
   });
 
-  // אירוע לבקשת צ'אט חדשה לסקרטריה
+
+
   socket.on('requestChat', (data) => {
     io.emit('chatRequestForSecretary', data);
   });
 
-  // אירוע למענה לבקשת צ'אט מהלקוח
   socket.on('respondToChatRequest', (data) => {
     io.to(data.customerSocketId).emit('chatRequestResponse', data);
   });
 
-  // אירוע לשליחת הודעה חדשה
   socket.on('sendMessage', (message) => {
-    io.to(message.recipientId).emit('receiveMessage', message); // שליחת הודעה לנמען
-    socket.emit('receiveMessage', message); // אם נדרש, שליחת הודעה גם לשולח
+    io.to(message.recipientId).emit('receiveMessage', message);
+    socket.emit('receiveMessage', message);
   });
 
 });
 
-// הפעלת השרת על פורט שהוגדר בסביבת הפעולה
 server.listen(process.env.PORT, () => {
-  console.log(`השרת פועל על פורט: ${process.env.PORT}`);
+  console.log(`The server is running on port: ${process.env.PORT}`);
 });

@@ -65,8 +65,8 @@ console.log("currentUser  "+currentUser)
               <p><strong>גודל החבילה:</strong> {acceptedRequest.packageSize}</p>
             ) : (
               <div>
-                <p><strong>מספר מבוגרים:</strong> {acceptedRequest.adults}</p>
-                <p><strong>מספר ילדים מעל גיל חצי שנה:</strong> {acceptedRequest.infants}</p>
+                {console.log("vh  "+acceptedRequest)}
+                <p><strong>מספר נוסעים:</strong> {acceptedRequest.passengers}</p>
               </div>
             )}
           </div>
@@ -85,8 +85,7 @@ console.log("currentUser  "+currentUser)
               <p><strong>גודל החבילה:</strong> {request.packageSize}</p>
             ) : (
               <div>
-                <p><strong>מספר מבוגרים:</strong> {request.adults}</p>
-                <p><strong>מספרי ילדיים:</strong> {request.infants}</p>
+                <p><strong>מספר נוסעים:</strong> {request.passengers}</p>
               </div>
             )}
             <button className="accept-button" onClick={() => acceptRequest(request)}>אשר</button>

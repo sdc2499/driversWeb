@@ -75,6 +75,26 @@ const ChatRequestButton = () => {
     setMessageInput('');
   };
 
+  const closeChat = () => {
+    const closingMessage = {
+      senderId: socket.id,
+      recipientId: secretarySocketId,
+      userName: currentUser.firstName,
+      text: 'הלקוח סיים את השיחה',
+      timestamp: new Date().toISOString()
+    };
+
+    socket.emit('sendMessage', closingMessage);
+    setMessages((prevMessages) => [...prevMessages, closingMessage]);
+
+    setTimeout(() => {
+      setActiveChat(false);
+      setMessages([]);
+      setResponse('');
+      setWaitingForApproval(false);
+    }, 500); // Delay to ensure the message is sent before closing the chat
+  };
+
   return (
     <div>
       <button className="chat-request-button" onClick={handleRequestChat}>
@@ -84,6 +104,7 @@ const ChatRequestButton = () => {
       {(waitingForApproval || activeChat) && (
         <div className="chat-window">
           <h3>שיחה עם המזכירה</h3>
+          <button className="close-chat-button" onClick={closeChat}>❎</button>
           <div className="chat-messages">
             {messages.map((msg, index) => (
               <div key={index} className={msg.userName === currentUser.firstName ? 'message sent' : 'message received'}>
@@ -109,124 +130,3 @@ const ChatRequestButton = () => {
 };
 
 export default ChatRequestButton;
-
-
-
-
-
-
-
-// import React, { useContext, useEffect, useState } from 'react';
-// import { UserContext } from '../../App';
-// import socketIOClient from 'socket.io-client';
-
-// const ChatRequestButton = () => {
-//   const [currentUser] = useContext(UserContext);
-//   const [socket] = useState(socketIOClient('http://localhost:8080'));
-//   const [response, setResponse] = useState('');
-//   const [activeChat, setActiveChat] = useState(false);
-//   const [messages, setMessages] = useState([]);
-//   const [messageInput, setMessageInput] = useState('');
-
-//   useEffect(() => {
-//     socket.on('chatRequestResponse', (response) => {
-//       setResponse(response.message);
-//       if (response.accepted) {
-//         setActiveChat(true);
-//       }
-//     });
-
-//     const handleIncomingMessage = (message) => {
-//       setMessages((prevMessages) => [...prevMessages, message]);
-//     };
-
-//     socket.on('receiveMessage', handleIncomingMessage);
-
-//     return () => {
-//       socket.off('chatRequestResponse');
-//       socket.off('receiveMessage', handleIncomingMessage);
-//     };
-//   }, [socket]);
-
-//   const handleRequestChat = () => {
-//     socket.emit('requestChat', { userId: currentUser.id, userName: currentUser.firstName, userType: 'customer', customerSocketId: socket.id });
-//   };
-
-//   const sendMessage = () => {
-//     if (messageInput.trim() === '') return;
-
-//     const message = {
-//       customerSocketId: socket.id,
-//       userName: currentUser.firstName,
-//       text: messageInput,
-//       timestamp: new Date().toISOString()
-//     };
-
-//     socket.emit('sendMessage', message);
-//     setMessages((prevMessages) => [...prevMessages, message]);
-//     setMessageInput('');
-//   };
-
-//   return (
-//     <div>
-//       {!activeChat ? (
-//         <>
-//           <button onClick={handleRequestChat}>בקשת שיחה</button>
-//           {response && <p>{response}</p>}
-//         </>
-//       ) : (
-//         <div className="chat-window">
-//           <h3>שיחה עם המזכירה</h3>
-//           <div className="chat-messages">
-//             {messages.map((msg, index) => (
-//               <div key={index} className={msg.userName === currentUser.firstName ? 'message sent' : 'message received'}>
-//                 <p><strong>{msg.userName}</strong>: {msg.text}</p>
-//                 <p className="timestamp">{new Date(msg.timestamp).toLocaleTimeString()}</p>
-//               </div>
-//             ))}
-//           </div>
-//           <div className="chat-input">
-//             <input 
-//               type="text" 
-//               value={messageInput} 
-//               onChange={(e) => setMessageInput(e.target.value)} 
-//               placeholder="הקלד הודעה..." 
-//             />
-//             <button onClick={sendMessage}>שלח</button>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default ChatRequestButton;
-
-
-// // // ChatRequestButton.jsx
-// // import React, { useContext, useState } from 'react';
-// // import { UserContext } from '../../App';
-// // import socketIOClient from 'socket.io-client';
-
-// // const ChatRequestButton = () => {
-// //   const [currentUser] = useContext(UserContext);
-// //   const [socket] = useState(socketIOClient('http://localhost:8080'));
-// //   const [response, setResponse] = useState('');
-
-// //   const handleRequestChat = () => {
-// //     socket.emit('requestChat', { userId: currentUser.id, userName: currentUser.firstName, userType: 'customer', customerSocketId: socket.id });
-    
-// //     socket.on('chatRequestResponse', (response) => {
-// //       setResponse(response.message);
-// //     });
-// //   };
-
-// //   return (
-// //     <div>
-// //       <button onClick={handleRequestChat}>בקשת שיחה</button>
-// //       {response && <p>{response}</p>}
-// //     </div>
-// //   );
-// // };
-
-// // export default ChatRequestButton;

@@ -43,11 +43,11 @@ export class DriverService {
     async postDriver(driver) {
         const queryItem = new QueryItem();
         const { password, ...userWithoutPassword } = driver.user;
-        let queryUser = queryItem.postItemQuery("users", "NULL," + "?,".repeat(Object.keys(userWithoutPassword).length ) + "?");
-        const result = await query(queryUser, [...Object.values(userWithoutPassword),"driver"]);
+        let queryUser = queryItem.postItemQuery("users", "NULL," + "?,".repeat(Object.keys(userWithoutPassword).length) + "?");
+        const result = await query(queryUser, [...Object.values(userWithoutPassword), "driver"]);
         const driverId = result.insertId;
         const queryDriver = queryItem.postItemQuery("drivers", "?,".repeat(Object.keys(driver.driver).length + 1) + "?")
-        await query(queryDriver, [driverId, ...Object.values(driver.driver),0]);
+        await query(queryDriver, [driverId, ...Object.values(driver.driver), 0]);
         let queryUserPswd = queryItem.postItemQuery("passwords", driverId + ",?");
         await query(queryUserPswd, [driver.user.password]);
         return;
@@ -74,10 +74,18 @@ export class DriverService {
 
 
     async postRaitingDriver(obj) {
+        //לשלוח לפה מזהה נסיעה
         const queryItem = new QueryItem();
-        let queryUser = queryItem.postItemQuery("ratingDriver","NULL,"+"?,".repeat(Object.keys(obj).length-1 ) + "?");
-        const result = await query(queryUser, Object.values(obj));
+        let checkRated = queryItem.getByParamQuery("ride", "id");
+        const resultRated = await query(checkRated, [obj.id]);
+        if (!resultRated.isRated) {
+            let queryUser = queryItem.postItemQuery("ratingDriver", "NULL," + "?,".repeat(Object.keys(obj).length - 2) + "?");
+            let query = queryItem.updateItemQuery("rides", "isRated");
+            const result = await query(queryUser, Object.values(obj));
+            const result1 = await query(query, [1]);
+        }
         return;
+
     }
 
 

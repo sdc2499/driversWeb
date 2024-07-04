@@ -1,5 +1,4 @@
 import React from 'react';
-// import { useHistory } from 'react-router-dom';
 import './thankYou.css';
 
 import { useNavigate ,useParams,NavLink} from 'react-router-dom';

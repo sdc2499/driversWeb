@@ -129,7 +129,7 @@ export default class DriverController {
     async updateDriverRating(req, res,next) {
         try {
             const driverService = new DriverService();
-            await driverService.updateDriverRating(req.body, req.params.id);
+            await driverService.postRaitingDriver(req.body, req.params.id);
             return res.status(200).json({ status: 200, data: req.params.id });
         }
         catch (ex) {
