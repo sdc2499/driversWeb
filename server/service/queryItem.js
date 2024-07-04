@@ -21,8 +21,8 @@ export class QueryItem {
 
 
 
-    postItemQuery(tableName, questionMarks) {
-        const query = `INSERT INTO db.${tableName} VALUES( ${questionMarks}) `;
+    postItemQuery(tableName,questionMarks,columns="") {
+        const query = `INSERT INTO db.${tableName} ${columns} VALUES( ${questionMarks}) `;
         return query;
     }
 
