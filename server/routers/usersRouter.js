@@ -1,5 +1,6 @@
 import express from "express";
 import CostumerController from "../controllers/costumerController.js"
+
 const usersRouter = express.Router();
 const costumerController = new CostumerController();
 
