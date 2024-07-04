@@ -51,6 +51,8 @@ function App() {
         <Router>
           <Routes >
             <Route path='/' element={<Navigate to={'/home'} />} />
+            <Route path='/rating/:token' element={<RatingPage/>} />
+
             <Route path='/home' element={<Home />}>
               {/* <Route path='editDetails' element={<EditDetails />} /> */}
               <Route path='requestRide' element={<RequestRide />} />
@@ -96,7 +98,7 @@ function App() {
               {/* <Route path='editDetails' element={<EditDetails />} /> */}
             </Route>
             <Route path='/costumer/:id/rating/:driverId' element={<RatingPage />} />
-            <Route path='/costumer/:id/thank' element={<ThankYou />} />
+            <Route path='/thank' element={<ThankYou />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/error' element={<Error />} />

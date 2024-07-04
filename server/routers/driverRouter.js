@@ -10,7 +10,7 @@ driverRouter.post("/rating",driverController.rating)
 
 // driverRouter.post("/",driverController.addDriver)
 driverRouter.put("/:id",driverController.updateDriverById);
-driverRouter.put("/rating/:id",driverController.updateDriverRating);
+// driverRouter.put("/rating/:id",driverController.updateDriverRating);
 
 export {
     driverRouter 

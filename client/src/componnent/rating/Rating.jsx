@@ -6,10 +6,10 @@ import './ratingPage.css';
 import { useParams } from 'react-router-dom';
 const RatingPage = () => {
     const navigate = useNavigate();
-
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"))
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
-    const { driverId, id } = useParams();
+    const { token } = useParams();
     const stars = Array.from({ length: 5 }, (_, index) => index + 1);
 
     const handleStarClick = (star) => {
@@ -17,26 +17,25 @@ const RatingPage = () => {
     };
 
     const handleSubmit = (event) => {
-        console.log("id " + id + "   driverId  " + driverId)
+        // console.log("id " + id + "   driverId  " + driverId)
         event.preventDefault();
         console.log(`דירוג: ${rating}`);
         console.log(`תגובה: ${comment}`);
         const ratingDriver = {
-            driverId: driverId,
+            // driverId: driverId,
             stars: rating,
             ratingMsg: comment,
-            userPhone: id
+            // userPhone: id
         }
-
-        fetch(`http://localhost:8080/drivers/rating`, {
+        console.log(currentUser.token)
+        fetch(`http://localhost:8080/drivers/rating?token=${token}`, {
             method: 'POST',
-            body: JSON.stringify(ratingDriver),
-            headers: { 'Content-Type': 'application/json; charset=UTF-8' }
-            // headers: { Authorization: currntUser.token.token }
+            body: JSON.stringify({ stars: rating, ratingMsg: comment }),
+            headers: { 'Content-type': 'application/json; charset=UTF-8' }
         }).then(response => {
             if (response.status === 200) {
                 alert("הדירוג בוצע בהצלחה תודה לך!!!");
-                navigate(`/costumer/${id}/thank`);
+                navigate(`/thank`);
             } else {
                 console.log("res" + response)
                 alert("Oops, something went wrong... Please try again!");

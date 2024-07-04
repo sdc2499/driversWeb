@@ -28,10 +28,12 @@ export default class DriverController {
     }
 
     async rating(req, res, next) {
-
+        const { stars, ratingMsg } = req.body;
+console.log(stars)
+console.log(ratingMsg)
         try {
             const driveService = new DriverService();
-            await driveService.postRaitingDriver(req.body);
+            await driveService.postRaitingDriver(req.query.token,req.body);
             return res.json({ status: 200 });
         } catch (ex) {
             const err = {};
@@ -129,7 +131,7 @@ export default class DriverController {
     async updateDriverRating(req, res,next) {
         try {
             const driverService = new DriverService();
-            await driverService.postRaitingDriver(req.body, req.params.id);
+            await driverService.postRaitingDriver(req.params.token);
             return res.json({ status: 200, data: req.params.id });
         }
         catch (ex) {
