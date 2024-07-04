@@ -15,8 +15,10 @@ import Contact from './componnent/contact/Contact'
 import Drivers from './componnent/drivers/Driverss'
 import RequestRide from './componnent/requestRide/RequestRide';
 import RatingPage from './componnent/rating/Rating'
+import SecretaryTravelRequests from './componnent/secretary/SecretaryTravelRequests';
 import './App.css'
 import ThankYou from './componnent/thankYou/ThankYou';
+import SecretaryDashboard from './componnent/chat/chatS';
 
 export const UserContext = createContext();
 
@@ -88,8 +90,9 @@ function App() {
 
               <Route path='secretary/:id' element={<Layout />} >
                 <Route index element={<Secretary />} />
-                {/* <Route path='info' element={<Info />} />
-                <Route path='editDetails' element={<EditDetails />} /> */}
+                <Route path='travelRequests' element={<SecretaryTravelRequests />} />
+                <Route path='callRequests' element={<SecretaryDashboard />} />
+                {/* <Route path='editDetails' element={<EditDetails />} /> */}
               </Route>
 
               {/* 

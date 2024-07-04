@@ -48,7 +48,7 @@ const Home = () => {
                         <NavLink to={`/home/${currentUser.userType}/${currentUser.id}/contact`}>צור קשר</NavLink>
                         <NavLink to={`/home/${currentUser.userType}/${currentUser.id}/aboutUs`}>קצת עלינו</NavLink>
                         <NavLink to={`/home/${currentUser.userType}/${currentUser.id}/drivers`}>נהגים</NavLink>
-                       {console.log(currentUser)}
+                        {console.log(currentUser)}
                         {currentUser.id ? (
                             <>
                                 <span className="dropdown-text">
@@ -75,10 +75,11 @@ const Home = () => {
                         )}
                     </div>
                     <button onClick={handleRequestRideClick} className="ride-button">הזמנת נסיעה</button>
+                    {currentUser.userType === 'secretary' && <NavLink to={`/home/secretary/${currentUser.id}/travelRequests`}>בקשות נסיעה</NavLink>}
+                    {currentUser.userType === 'secretary' && <NavLink to={`/home/secretary/${currentUser.id}/callRequests`}>בקשות שיחה</NavLink>}
                 </nav>
             </header>
             {currentUser.userType === 'costumer' && <ChatRequestButton />}
-            {currentUser.userType === 'secretary' && <SecretaryDashboard />}
             <footer>
                 <button className='topBtn' style={{ display: visible ? 'inline' : 'none' }}>
                     <FaArrowCircleUp onClick={scrollToTop} />
