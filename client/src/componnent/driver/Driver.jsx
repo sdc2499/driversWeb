@@ -55,27 +55,6 @@ const Driver = () => {
   return (
     <div className="driver-container">
       <h1 className="page-title">Hello Driver</h1>
-
-      <div className="accepted-requests">
-        {acceptedRequests.map((acceptedRequest, index) => (
-          <div className="accepted-request" key={index}>
-            <h2>Accepted Ride Details</h2>
-            <p><strong>מ:</strong> {acceptedRequest.from}</p>
-            <p><strong>ל:</strong> {acceptedRequest.to}</p>
-            <p><strong>תאריך:</strong> {acceptedRequest.date}</p>
-            <p><strong>שעה:</strong> {acceptedRequest.time}</p>
-            {acceptedRequest.requestType === 'package' ? (
-              <p><strong>גודל החבילה:</strong> {acceptedRequest.packageSize}</p>
-            ) : (
-              <div>
-                {console.log("vh  " + acceptedRequest)}
-                <p><strong>מספר נוסעים:</strong> {acceptedRequest.passengers}</p>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-
       <div className="new-ride-requests">
         <h2>New Ride Requests</h2>
         {requests && requests.map(request => (
@@ -97,6 +76,27 @@ const Driver = () => {
           </div>
         ))}
       </div>
+      <div className="accepted-requests">
+        {acceptedRequests.map((acceptedRequest, index) => (
+          <div className="accepted-request" key={index}>
+            <h2>Accepted Ride Details</h2>
+            <p><strong>מ:</strong> {acceptedRequest.from}</p>
+            <p><strong>ל:</strong> {acceptedRequest.to}</p>
+            <p><strong>תאריך:</strong> {acceptedRequest.date}</p>
+            <p><strong>שעה:</strong> {acceptedRequest.time}</p>
+            {acceptedRequest.requestType === 'package' ? (
+              <p><strong>גודל החבילה:</strong> {acceptedRequest.packageSize}</p>
+            ) : (
+              <div>
+                {console.log("vh  " + acceptedRequest)}
+                <p><strong>מספר נוסעים:</strong> {acceptedRequest.passengers}</p>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+     
     </div>
   );
 };
