@@ -8,7 +8,7 @@ const socket = io('http://localhost:8080');
 const libraries = ['places'];
 
 const RequestRide = () => {
-    const [driverFount,setDriverFound]=useState(false)
+    const [driverFound,setDriverFound]=useState(false)
     const [currentUser, setCurrentUser] = useContext(UserContext);
     const [rideStatus, setRideStatus] = useState(null);
     const [noDriverMessage, setNoDriverMessage] = useState('');
@@ -24,7 +24,6 @@ const RequestRide = () => {
 
     const fromInputRef = useRef(null);
     const toInputRef = useRef(null);
-    let timerRef = useRef(null);
     const calculateDistance = (from, to) => {
         const service = new window.google.maps.DistanceMatrixService();
         service.getDistanceMatrix({
@@ -260,7 +259,7 @@ const RequestRide = () => {
                     )}
 
                     {rideStatus && <p>{rideStatus}</p>}
-                    {!driverFount && (noDriverMessage && <p>{noDriverMessage}</p>)}
+                    {!driverFound && (noDriverMessage && <p>{noDriverMessage}</p>)}
                 </div>
             </LoadScript>
         </>
