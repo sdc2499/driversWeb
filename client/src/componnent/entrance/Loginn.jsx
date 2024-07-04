@@ -49,7 +49,7 @@ const Login = () => {
     return (
         <div className="container">
             <h1>כניסה</h1>
-            {!exist && <div>הפרטיים אינם מדויקים</div>}
+            {!exist && <div>הפרטים שהזנת אינם קיימים במערכת. אנא בדוק ונסה שוב, או הירשם כלקוח חדש.</div>}
             <form noValidate onSubmit={handleSubmit(logIn)}>
                 <input type='tel' name='phone' placeholder='טלפון'
                     {...register("phone", {
@@ -65,7 +65,7 @@ const Login = () => {
 
                 <input type="submit" value="כניסה" />
             </form>
-            <div className="link">אתה משתמש חדש? <Link to={'/register'}> בבקשה תרשם </Link></div>
+            <div className="link"> משתמש חדש? <Link to={'/register'}>להרשמה</Link></div>
         </div>
     );
 };
