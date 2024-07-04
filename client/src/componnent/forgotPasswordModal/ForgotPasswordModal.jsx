@@ -14,12 +14,11 @@ const ForgotPasswordModal = ({ isOpen, closeModal }) => {
 
   const handleSendPassword = async () => {
     try {
-      const response = await fetch('/api/send-temp-password', {
+      const response = await fetch(`http://localhost:8080/passwordReset/passwordReset`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ phone })
+        body: JSON.stringify({phone: phone }),
+        headers: { 'Content-type': 'application/json; charset=UTF-8' }
+
       });
       
       if (response.ok) {

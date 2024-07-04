@@ -7,7 +7,7 @@ import { entranceRouter } from "./routers/entranceRouter.js";
 import { rideRouter } from "./routers/rideRouter.js";
 import { driverRouter } from "./routers/driverRouter.js";
 import { usersRouter } from "./routers/usersRouter.js";
-
+import { passwordResetRouter } from "./routers/passwordResetRouter.js";
 const app = express();
 
 app.use(cors());

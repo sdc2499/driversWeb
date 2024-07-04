@@ -1,5 +1,7 @@
 import express from "express";
-import PasswordResetController from "../controllers/passwordResetController";
+import PasswordResetController from '../controllers/passwordResetController.js'
+// import PasswordResetController frome '../controler/pa'
+// import PasswordResetController from "../controllers/passwordResetController.js";
 const passwordResetRouter = express.Router();
 const passResetController = new PasswordResetController();
 

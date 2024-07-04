@@ -1,4 +1,4 @@
-import { PasswordResetService } from "../service/passwordResetService";
+import { PasswordResetService } from "../service/passwordResetService.js";
 
 
 export default class PasswordResetController {
@@ -24,7 +24,8 @@ export default class PasswordResetController {
     async passwordReset(req, res, next) {
         try {
             const passwordResetService = new PasswordResetService();
-            const result = await passwordResetService.passwordReset();
+            console.log(req.body.phone)
+            const result = await passwordResetService.passwordReset(req.body.phone);
             return res.json({ data: result, status: 200 });
         }
         catch (ex) {
