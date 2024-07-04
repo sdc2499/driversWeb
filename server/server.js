@@ -24,7 +24,7 @@ async function updateRidePrice(updatedRequest) {
 
 async function driverAccepted(requestId) {
   const queryItem = new QueryItem();
-  const updateQuery = queryItem.updateItemQuery("rides", "status = ?, driver_id = ?");
+  const updateQuery = queryItem.updateItemQuery("rides", "status = ?, driverId = ?");
   const values = [3, requestId.driverId, requestId.request];
   const result = await query(updateQuery, values)
 
@@ -35,8 +35,8 @@ async function newRideRequest(request) {
   const queryItem = new QueryItem();
   let t;
   let tt;
-  request.requestType === 'package' ? (t = "package_size", tt = request.packageSize) : (t = "passengers", tt = request.passengers)
-  const postQuery=queryItem.postItemQuery("rides","?, ?, ?, ?, ?, ?,?",`(price, customer_id, status, pickup_location, destination, ${t},isRated)`);
+  request.requestType === 'package' ? (t = "packageSize", tt = request.packageSize) : (t = "passengers", tt = request.passengers)
+  const postQuery=queryItem.postItemQuery("rides","?, ?, ?, ?, ?, ?,?",`(price, customerId, status, pickupLocation, destination, ${t},isRated)`);
   let values = [
     null,
     request.customerId,
