@@ -97,7 +97,11 @@ const ChatRequestButton = () => {
 
   return (
     <div>
-      <button className="chat-request-button" onClick={handleRequestChat}>
+      <button 
+        className={`chat-request-button ${activeChat || waitingForApproval ? 'disabled' : ''}`} 
+        onClick={handleRequestChat} 
+        disabled={activeChat || waitingForApproval}
+      >
         התחל צ'אט עם מזכירה
       </button>
       {response && !activeChat && !waitingForApproval && <p>{response}</p>}

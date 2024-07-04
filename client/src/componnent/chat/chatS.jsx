@@ -56,7 +56,7 @@ const SecretaryDashboard = () => {
     const message = {
       senderId: socket.id,
       recipientId: activeChat.customerSocketId,
-      userName: currentUser.name,
+      userName: currentUser.firstName,
       text: messageInput,
       timestamp: new Date().toISOString()
     };
@@ -64,6 +64,24 @@ const SecretaryDashboard = () => {
     socket.emit('sendMessage', message);
     setMessages((prevMessages) => [...prevMessages, message]);
     setMessageInput('');
+  };
+
+  const closeChat = () => {
+    const closingMessage = {
+      senderId: socket.id,
+      recipientId: activeChat.customerSocketId,
+      userName: currentUser.firstName,
+      text: 'המזכירה סיימה את השיחה',
+      timestamp: new Date().toISOString()
+    };
+
+    socket.emit('sendMessage', closingMessage);
+    setMessages((prevMessages) => [...prevMessages, closingMessage]);
+
+    setTimeout(() => {
+      setActiveChat(null);
+      setMessages([]);
+    }, 500); // Delay to ensure the message is sent before closing the chat
   };
 
   return (
@@ -81,9 +99,10 @@ const SecretaryDashboard = () => {
       {activeChat && (
         <div className="chat-window">
           <h3>שיחה עם {activeChat.userName} ({activeChat.customerSocketId})</h3>
+          <button className="close-chat-button" onClick={closeChat}>❎</button>
           <div className="chat-messages">
             {messages.map((msg, index) => (
-              <div key={index} className={msg.userName === currentUser.name ? 'message sent' : 'message received'}>
+              <div key={index} className={msg.userName === currentUser.firstName ? 'message sent' : 'message received'}>
                 <p><strong>{msg.userName}</strong>: {msg.text}</p>
                 <p className="timestamp">{new Date(msg.timestamp).toLocaleTimeString()}</p>
               </div>

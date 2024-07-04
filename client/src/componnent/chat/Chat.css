@@ -88,4 +88,19 @@
     background-color: #007bff;
     color: white;
   }
+
+  /* Chat.css */
+.chat-request-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.chat-request-button.disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
   
