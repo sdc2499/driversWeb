@@ -58,7 +58,7 @@ export class DriverService {
         const queryItem = new QueryItem();
         const { password, ...userWithoutPassword } = driver.user;
         let queryUser = queryItem.postItemQuery("users", "NULL," + "?,".repeat(Object.keys(userWithoutPassword).length) + "?");
-        const result = await query(queryUser, [...Object.values(userWithoutPassword), "driver"]);
+        const result = await query(queryUser, [...Object.values(userWithoutPassword), 2]);
         const driverId = result.insertId;
         const queryDriver = queryItem.postItemQuery("drivers", "?,".repeat(Object.keys(driver.driver).length + 1) + "?")
         await query(queryDriver, [driverId, ...Object.values(driver.driver), 0]);

@@ -34,7 +34,7 @@ export class CostumerService {
         let queryUser = queryItem.updateItemQuery("users", "userType=?")
         let queryDriver = queryItem.postItemQuery("drivers", "?,".repeat(Object.keys(driverDetails).length + 2) + "?")
         console.log("values::: " + [...Object.values(driverDetails)])
-        await query(queryUser, ["driver", id])
+        await query(queryUser, [2, id])
         const result = await query(queryDriver, [id, ...Object.values(driverDetails), 0, 0]);
         return;
     }

@@ -16,6 +16,25 @@ const Login = () => {
     } = useForm();
 
     const goToHome = (data, token_) => {
+        console.log("data.userType"+data.userType)
+
+        switch (data.userType) {
+
+            case '1':
+
+                data.userType="costumer"
+                break;
+            case '2':
+                console.log("driver")
+
+                data.userType="driver"
+                break;
+            case '3':
+                console.log("secretry")
+                data.userType="secretary"
+                break;
+
+        }
         setCurrentUser({
             id: data.id,
             firstName: data.firstName,
@@ -23,7 +42,7 @@ const Login = () => {
             email: data.email,
             phone: data.phone,
             userType: data.userType,
-            token:token_
+            token: token_
         });
         localStorage.setItem('currentUser', JSON.stringify({ phone: data.phone, userId: data.id, token: token_ }));
         navigate(`/home/${data.userType}/${data.id}`);

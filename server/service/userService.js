@@ -29,7 +29,7 @@ export class UserService {
         let pswd = sha256(user.password);
         let queryUser = queryItem.postItemQuery("users", "NULL," + "?,".repeat(Object.keys(user).length - 1) + "?");
         const { password, ...userWithoutPassword } = user;
-        const result = await query(queryUser, [...Object.values(userWithoutPassword), "costumer"]);
+        const result = await query(queryUser, [...Object.values(userWithoutPassword),1]);
         let queryUserPswd = queryItem.postItemQuery("passwords", "?,?");
         await query(queryUserPswd, [result.insertId, pswd]);
         //  const result = await query([

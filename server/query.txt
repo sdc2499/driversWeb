@@ -71,3 +71,24 @@ CREATE TABLE `db`.`ratingdriver` (
     passengers INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+
+INSERT INTO `db`.`customerstatus` (`code`, `status`) VALUES ('1', 'costumer');
+INSERT INTO `db`.`customerstatus` (`code`, `status`) VALUES ('2', 'driver');
+INSERT INTO `db`.`customerstatus` (`code`, `status`) VALUES ('3', 'secretary');
+
+
+
+
+CREATE TABLE `db`.`travelstatus` (
+  `code` INT NOT NULL,
+  `travelStatus` VARCHAR(65) NOT NULL,
+  PRIMARY KEY (`code`),
+  UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE,
+  UNIQUE INDEX `travelStatus_UNIQUE` (`travelStatus` ASC) VISIBLE);
+
+
+INSERT INTO `db`.`travelstatus` (`code`, `travelStatus`) VALUES ('1', 'requestOpened');
+INSERT INTO `db`.`travelstatus` (`code`, `travelStatus`) VALUES ('2', 'priceUpdated');
+INSERT INTO `db`.`travelstatus` (`code`, `travelStatus`) VALUES ('3', 'request_closedWithDriver');

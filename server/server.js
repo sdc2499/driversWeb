@@ -17,7 +17,7 @@ const io = new Server(server, {
 async function updateRidePrice(updatedRequest) {
   const queryItem = new QueryItem();
   const updateQuery = queryItem.updateItemQuery("rides", "price = ?, status = ?");
-  const values = [updatedRequest.price, 'price_updated', updatedRequest.id];
+  const values = [updatedRequest.price, 2, updatedRequest.id];
   const result = await query(updateQuery, values)
   return
 }
@@ -25,7 +25,7 @@ async function updateRidePrice(updatedRequest) {
 async function driverAccepted(requestId) {
   const queryItem = new QueryItem();
   const updateQuery = queryItem.updateItemQuery("rides", "status = ?, driver_id = ?");
-  const values = ['request_closed_with_driver', requestId.driverId, requestId.request];
+  const values = [3, requestId.driverId, requestId.request];
   const result = await query(updateQuery, values)
 
   return
@@ -40,7 +40,7 @@ async function newRideRequest(request) {
   let values = [
     null,
     request.customerId,
-    'request_opened',
+    1,
     request.from,
     request.to,
     tt,
