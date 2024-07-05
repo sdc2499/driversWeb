@@ -3,6 +3,7 @@ import { query } from "./query.js";
 import nodemailer from 'nodemailer';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
+import { sha256 } from 'js-sha256';
 
 
 
@@ -35,82 +36,37 @@ export class PasswordResetService {
             const mailOptions = {
                 from: 'sdc2499@gmail.com',
                 to: result[0].email,
-                subject: 'סיסמה חד פעמית לשחזור סיסמה',
-                text: `הסיסמה החד פעמית שלך היא:\n ${otp}`
+                subject: 'שחזור סיסמה - סיסמה חד פעמית',
+                html: `
+                    <div style="font-family: Arial, sans-serif; text-align: center; font-size: 17px;">
+                        <h2 style="color: #4CAF50;">שחזור סיסמה</h2>
+                        <p>,שלום</p>
+                        <p>:קיבלת סיסמה חד פעמית לשחזור הסיסמה שלך באתר שלנו</p>
+                        <p style="font-size: 35px; font-weight: bold; color: #333;">${otp}</p>
+                        <p>.אנא השתמש בסיסמה זו כדי להיכנס לחשבונך ולהגדיר סיסמה חדשה</p>
+                        <p>,בברכה</p>
+                        <p>צוות התמיכה</p>
+                        <p style="font-size: 14px; color: #888;">אם לא ביקשת לשחזר את הסיסמה שלך, אנא התעלם מהודעה זו.</p>
+                    </div>
+                `
             };
+            
             await transporter.sendMail(mailOptions);
-            return;
+            return result[0].id;
         } catch (error) {
-            throw ("dfsf")
-            return;
+            throw ('')
         }
     }
 
-    async passwordUpdate() {
-        const queryItem = new QueryItem();
-        
-        // let queryDriver = queryItem.upgradeToDriverQuery("?,".repeat(Object.keys(driverDetails).length + 2) + "?");
-        // const result = await query(queryDriver, [id, id, ...Object.values(driverDetails), 0, 0]);
-        return;
+    async passwordUpdate(userId, sentPassword, newPassword) {
+        const result = await query("SELECT otp FROM db.passwords WHERE userId = ?;", [userId]);
+        const match = await bcrypt.compare(sentPassword, result[0].otp);
+        if (match) {
+            const hashedNewPassword = sha256(newPassword)
+            await query('UPDATE db.passwords SET password = ?, otp = 0 WHERE userId = ?', [hashedNewPassword, userId]);
+            return
+        } else {
+            throw new Error('The passwords do not match');
+        }
     }
-
 }
-
-
-// const express = require('express');
-// const router = express.Router();
-// const nodemailer = require('nodemailer');
-// const bcrypt = require('bcrypt');
-// const crypto = require('crypto');
-// const db = require('./db'); // כאן הוסף את חיבור ה-DB שלך
-
-// // פונקציה ליצירת סיסמה חד פעמית
-// const generateOTP = () => {
-//     return crypto.randomBytes(4).toString('hex');
-// };
-
-// // הגדרת nodemailer
-// const transporter = nodemailer.createTransport({
-//     service: 'gmail',
-//     auth: {
-//         user: 'youremail@gmail.com', // החלף באימייל שלך
-//         pass: 'yourpassword' // החלף בסיסמא שלך
-//     }
-// });
-
-// // מסלול לשליחת סיסמה חד פעמית למייל
-// router.post('/send-temp-password', async (req, res) => {
-//     const { phone } = req.body;
-
-//     try {
-//         // חפש את המשתמש לפי מספר הטלפון
-//         const [user] = await db.query('SELECT * FROM users WHERE phone = ?', [phone]);
-//         if (!user) {
-//             return res.status(404).json({ message: 'המשתמש לא נמצא' });
-//         }
-
-//         // יצירת סיסמה חד פעמית והצפנתה
-//         const otp = generateOTP();
-//         const hashedOTP = await bcrypt.hash(otp, 10);
-
-//         // עדכון טבלת המשתמשים עם הסיסמה החד פעמית
-//         await db.query('UPDATE users SET otp = ? WHERE phone = ?', [hashedOTP, phone]);
-
-//         // שליחת מייל עם הסיסמה החד פעמית
-//         const mailOptions = {
-//             from: 'youremail@gmail.com', // החלף באימייל שלך
-//             to: user.email,
-//             subject: 'סיסמה חד פעמית לשחזור סיסמה',
-//             text: `הסיסמה החד פעמית שלך היא: ${otp}`
-//         };
-
-//         await transporter.sendMail(mailOptions);
-
-//         res.status(200).json({ message: 'סיסמה זמנית נשלחה בהצלחה.' });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ message: 'שגיאה בשליחת סיסמה זמנית.' });
-//     }
-// });
-
-// module.exports = router;
