@@ -3,7 +3,7 @@ import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 
 //לסדר את הקישור ולסדר את ההבטחה בדירוג נהג
-export const sendRatingEmail = async (userEmail,obj) => {
+export const sendRatingEmail = async (userEmail, obj) => {
     // console.log("ddd   " + rideId)
     const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -17,7 +17,7 @@ export const sendRatingEmail = async (userEmail,obj) => {
         return jwt.sign(data, process.env.JWT_SECRET, { expiresIn: '1h' });
     }
 
-console.log("ff  "+obj.costumerId)
+    console.log("ff  " + obj.costumerId)
     const data = { costumerId: obj.costumerId, driverId: obj.driverId, rideId: obj.rideId };
     const token = generateToken(data);
 
@@ -49,10 +49,17 @@ console.log("ff  "+obj.costumerId)
                     בברכה,<br>
                     צוות השירות
                 </p>
-                
+                  <img src="cid:logo" alt="לוגו" style="max-width: 200px; height: auto; margin-top: 20px;" />
             </div>
         </div>
-    `
+    `,
+        attachments: [
+            {
+                filename: 'logo.png', // Replace with your logo's filename
+                path: 'C:/Users/The user/Desktop/פר/driversWeb/server/logo.png', // Replace with the path to your logo file
+                cid: 'logo' // Use the same cid value as used in the img src attribute
+            }
+        ]
     };
 
     try {

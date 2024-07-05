@@ -38,19 +38,28 @@ export class PasswordResetService {
                 to: result[0].email,
                 subject: 'שחזור סיסמה - סיסמה חד פעמית',
                 html: `
-                    <div style="font-family: Arial, sans-serif; text-align: center; font-size: 17px;">
-                        <h2 style="color: #4CAF50;">שחזור סיסמה</h2>
-                        <p>,שלום</p>
-                        <p>:קיבלת סיסמה חד פעמית לשחזור הסיסמה שלך באתר שלנו</p>
-                        <p style="font-size: 35px; font-weight: bold; color: #333;">${otp}</p>
-                        <p>.אנא השתמש בסיסמה זו כדי להיכנס לחשבונך ולהגדיר סיסמה חדשה</p>
-                        <p>,בברכה</p>
-                        <p>צוות התמיכה</p>
-                        <p style="font-size: 14px; color: #888;">אם לא ביקשת לשחזר את הסיסמה שלך, אנא התעלם מהודעה זו.</p>
-                    </div>
-                `
+                  <div style="font-family: Arial, sans-serif; text-align: center; font-size: 17px;">
+                    <h2 style="color: #4CAF50;">שחזור סיסמה</h2>
+                    <p>,שלום</p>
+                    <p>:קיבלת סיסמה חד פעמית לשחזור הסיסמה שלך באתר שלנו</p>
+                    <p style="font-size: 35px; font-weight: bold; color: #333;">${otp}</p>
+                    <p>.אנא השתמש בסיסמה זו כדי להיכנס לחשבונך ולהגדיר סיסמה חדשה</p>
+                    <p>,בברכה</p>
+                    <p>צוות התמיכה</p>
+                    <p style="font-size: 14px; color: #888;">אם לא ביקשת לשחזר את הסיסמה שלך, אנא התעלם מהודעה זו.</p>
+                    <img src="cid:logo" alt="לוגו" style="max-width: 200px; height: auto; margin-top: 20px;" />
+
+                  </div>
+                `,
+                attachments: [
+                    {
+                        filename: 'logo.png', // Replace with your logo's filename
+                        path: 'C:/Users/The user/Desktop/פר/driversWeb/server/logo.png', // Replace with the path to your logo file
+                        cid: 'logo' // Use the same cid value as used in the img src attribute
+                    }
+                ]
             };
-            
+
             await transporter.sendMail(mailOptions);
             return result[0].id;
         } catch (error) {
