@@ -13,11 +13,12 @@ export class RideService {
         let queryPrice = queryItem.getByParamQuery("rides", `status=?`)
         const result = await query(queryPrice, [2])
         return result;
+    }  
+    
+    async getAcceptedRequests(id) {
+        const queryItem = new QueryItem();
+        let queryPrice = queryItem.getByParamQuery("rides", `driverId=?`)
+        const result = await query(queryPrice, [id])
+        return result;
     }
-    // async booking(user) {
-    //     user.password = sha256(user.password)
-    //     let queryUser = QueryItem.loginQuery()
-    //     const result = await query(queryUser, Object.values(user));
-    //     return result;
-    // }
 }

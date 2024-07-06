@@ -1,106 +1,74 @@
 import React, { useState, useEffect, useContext } from 'react';
 import socket from '../../socket';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import './driver.css'
 import { UserContext } from "../../App";
 
 const Driver = () => {
-  const [requests, setRequests] = useState([]);
-  const [acceptedRequests, setAcceptedRequests] = useState([]);
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useContext(UserContext);
+  const [notification, setNotification] = useState(false);
 
   useEffect(() => {
-    console.log("currentUser  " + currentUser)
-    const fetchOpenRides = async () => {
-      try {
-        const response = await fetch(`http://localhost:8080/rides/waitingForDriver`, {
-          headers: { Authorization: currentUser.token }
-        });
-        const data = await response.json();
-        console.log('Fetched waitingForDriver rides:', data.data);
-        setRequests(data.data);
-      } catch (error) {
-        console.error('Error fetching waitingForDriver rides:', error);
-      }
-    };
-
-    fetchOpenRides();
-
     const handleNewRequest = (request) => {
-      setRequests(prev => [...prev, request]);
+      setNotification(true);
+      let timer = setTimeout(() => {
+        setNotification(false);
+      }, 3000);
     };
-
-    const handleRequestClosed = (requestId) => {
-      setRequests(prev => prev.filter(req => req.id !== requestId));
-    };
-
     socket.on('rideRequestForDrivers', handleNewRequest);
-    socket.on('rideRequestClosed', handleRequestClosed);
-
     return () => {
       socket.off('rideRequestForDrivers', handleNewRequest);
-      socket.off('rideRequestClosed', handleRequestClosed);
     };
   }, []);
-
-  const acceptRequest = (request) => {
-    setAcceptedRequests(prev => [...prev, request]);
-    console.log("req   " + request.customerId)
-    console.log("req   " + request.id)
-    console.log("req   " +currentUser.id )
-    socket.emit('driverAccepted', { costumerId:request.customerId,request: request.id, socketId: request.socketId, driverId: currentUser.id });
-  };
-
   return (
-    <div className="driver-container">
-      <h1 className="page-title">Hello Driver</h1>
-      <div className="new-ride-requests">
-        <h2>New Ride Requests</h2>
-        {requests && requests.map(request => (
 
-          <div className="ride-request" key={request.id}>
-            {console.log(request)}
-            <p><strong>מ:</strong> {request.from || request.pickup_location}</p>
-            <p><strong>ל:</strong> {request.destination || request.to}</p>
-            <p><strong>תאריך:</strong> {request.date}</p>
-            <p><strong>תאריך:</strong> {request.time}</p>
-            <p><strong>מחיר:</strong> {request.price}</p>
-            {request.guestPhone&&<p><strong>טלפון(לקוח לא רשום):</strong> {request.guestPhone}</p>}
-            {request.requestType === 'package' ? (
-              <p><strong>גודל החבילה:</strong> {request.packageSize}</p>
-            ) : (
-              <div>
-                <p><strong>מספר נוסעים:</strong> {request.passengers}</p>
-              </div>
-            )}
-            <button className="accept-button" onClick={() => acceptRequest(request)}>אשר</button>
-          </div>
-        ))}
-      </div>
-      <div className="accepted-requests">
-        {acceptedRequests.map((acceptedRequest, index) => (
-          <div className="accepted-request" key={index}>
-            <h2>Accepted Ride Details</h2>
-            <p><strong>מ:</strong> {acceptedRequest.from}</p>
-            <p><strong>ל:</strong> {acceptedRequest.to}</p>
-            <p><strong>תאריך:</strong> {acceptedRequest.date}</p>
-            <p><strong>שעה:</strong> {acceptedRequest.time}</p>
-            {acceptedRequest.requestType === 'package' ? (
-              <p><strong>גודל החבילה:</strong> {acceptedRequest.packageSize}</p>
-            ) : (
-              <div>
-                {console.log("vh  " + acceptedRequest)}
-                <p><strong>מספר נוסעים:</strong> {acceptedRequest.passengers}</p>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+    <>
+      <h1 className="page-title">שלום לך נהג - {currentUser.firstName}</h1>
+      {notification && (
+        <div className="notification show">
+          יש בקשה חדשה!{' '}
+          <NavLink to={`/home/driver/${currentUser.id}/ridesAvailable`}>לחצו כאן</NavLink>
+          לעבור לעמוד הבקשות.
+        </div>
 
-     
-    </div>
+
+
+
+      )}
+
+      <div className="driver-welcome-container">
+        <h1>ברוך הבא, נהג יקר!</h1>
+        <p>
+          אנחנו שמחים לראות אותך כאן. כמוביל בשירות התחבורה שלנו, יש לך את הכוח והיכולת לספק חוויית נסיעה בטוחה, נעימה ומקצועית לכל הנוסעים.
+        </p>
+        <h2>מה ניתן לעשות בעמוד זה?</h2>
+        <ul>
+          <li>בדוק בקשות נסיעה זמינות: ראה את כל הבקשות הנסיעה הממתינות לקבלתך.</li>
+          <li>ניהול נסיעות מאושרות: עקוב אחר כל הנסיעות שקיבלת והתחל את הנסיעה בזמן המיועד.</li>
+          <li>פרופיל אישי: עדכן את פרטיך האישיים ונהל את חשבונך בקלות.</li>
+          <li>היסטוריית נסיעות: צפה ברשימת הנסיעות הקודמות שלך ובביקורות שקיבלת.</li>
+        </ul>
+        <h2>טיפים לשירות טוב:</h2>
+        <ol>
+          <li>הקפד על בטיחות: וודא שהרכב שלך במצב תקין ושמור על כללי התעבורה.</li>
+          <li>דייק בזמנים: נסה להגיע בזמן המיועד לכל נסיעה.</li>
+          <li>תקשורת ברורה: תתקשר עם הנוסעים בנעימות וענה על כל שאלותיהם.</li>
+          <li>שמור על נקיון: שמור על רכב נקי ומסודר לנוחות הנוסעים.</li>
+        </ol>
+        <p>
+          אנחנו כאן לתמוך בך בכל שלב. אם נתקלת בבעיה או יש לך שאלה, אל תהסס לפנות אלינו דרך דף התמיכה או שירות הלקוחות שלנו.
+        </p>
+        <p>
+          נסיעה בטוחה ומהנה!
+        </p>
+      </div>
+    </>
   );
 };
 
 export default Driver;
+
+
+
+

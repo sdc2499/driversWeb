@@ -27,11 +27,14 @@ const RatingPage = () => {
             ratingMsg: comment,
             // userPhone: id
         }
-        console.log(currentUser.token)
+        console.log(ratingDriver)
         fetch(`http://localhost:8080/drivers/rating?token=${token}`, {
             method: 'POST',
-            body: JSON.stringify({ stars: rating, ratingMsg: comment }),
-            headers: { 'Content-type': 'application/json; charset=UTF-8' }
+            body: JSON.stringify(ratingDriver),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': currentUser.token
+            }
         }).then(response => {
             if (response.status === 200) {
                 alert("הדירוג בוצע בהצלחה תודה לך!!!");

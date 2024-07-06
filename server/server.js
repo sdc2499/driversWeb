@@ -31,28 +31,32 @@ async function driverAccepted(requestId) {
   return
 }
 
-async function newRideRequest(request) {
+async function newRideRequest(request,socketId) {
   const queryItem = new QueryItem();
   let t;
   let tt;
   request.requestType === 'package' ? (t = "packageSize", tt = request.packageSize) : (t = "passengers", tt = request.passengers)
-  const postQuery=queryItem.postItemQuery("rides","?, ?, ?, ?, ?, ?,?",`(price, customerId, status, pickupLocation, destination, ${t},isRated)`);
+  const postQuery = queryItem.postItemQuery("rides", "?,?, ?, ?, ?, ?, ?,?,?,?", `(price, costumerId, status, pickupLocation, destination, ${t},isRated,date,time,socketId)`);
   let values = [
     null,
-    request.customerId,
+    request.costumerId,
     1,
     request.from,
     request.to,
     tt,
-    0
+    0,
+    request.date,
+    request.time,
+    socketId
   ];
   const result = await query(postQuery, values)
+
   return result.insertId
 }
 
 io.on('connection', (socket) => {
   socket.on('newRideRequest', async (request) => {
-    const result = await newRideRequest(request)
+    const result = await newRideRequest(request,socket.id )
     request.id = result
     io.emit('rideRequestForSecretary', { ...request, socketId: socket.id });
   });
@@ -64,13 +68,14 @@ io.on('connection', (socket) => {
   });
 
   socket.on('driverAccepted', async (requestId) => {
-    console.log()
+    console.log("hi driver")
+    console.log(requestId.socketId)
     driverAccepted(requestId)
     io.to(requestId.socketId).emit('driverFound', { driverId: requestId.driverId });
     console.log(requestId)
     console.log(requestId.request)
     io.emit('rideRequestClosed', requestId.request);
-    sendRatingEmail('l0583251093@gmail.com', {costumerId:requestId.costumerId,driverId:requestId.driverId,rideId:requestId.request});
+    sendRatingEmail(requestId.costumerEmail, { costumerId: requestId.costumerId, driverId: requestId.driverId, rideId: requestId.request });
   });
 
 

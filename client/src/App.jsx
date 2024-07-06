@@ -18,21 +18,38 @@ import RatingPage from './componnent/rating/Rating'
 import SecretaryTravelRequests from './componnent/secretary/SecretaryTravelRequests';
 import './App.css'
 import ThankYou from './componnent/thankYou/ThankYou';
-import SecretaryDashboard from './componnent/chat/chatS';
 import ForgotPasswordModal from './componnent/forgotPasswordModal/ForgotPasswordModal';
-
+import AcceptedRequests from './componnent/driver/AcceptedRequests';
+import RidesAvailable from './componnent/driver/RidesAvailable';
+import SecretaryChat from './componnent/chat/SecretaryChat';
 export const UserContext = createContext();
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
-  const user = (data,token) => {
+  const user = (data, token) => {
+    //לבדוק שבאמת עובד
+    switch (data.userType) {
+      case '1':
+        data.userType = "costumer";
+        break;
+      case '2':
+        console.log("driver");
+        data.userType = "driver";
+        break;
+      case '3':
+        console.log("secretry");
+        data.userType = "secretary";
+        break;
+    }
+
     return {
       id: data.id,
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
       phone: data.phone,
-      token:token
+      userType: data.userType,
+      token: token
     }
   }
 
@@ -43,8 +60,8 @@ function App() {
     })
       .then(async response => {
         const data = await response.json();
-        console.log("data in app.jsx: "+data)
-        response.ok && setCurrentUser(() => user(data.data,currntUser.token))
+        console.log("data in app.jsx: " + data)
+        response.ok && setCurrentUser(() => user(data.data, currntUser.token))
       })
   }, []);
 
@@ -54,7 +71,7 @@ function App() {
         <Router>
           <Routes >
             <Route path='/' element={<Navigate to={'/home'} />} />
-            <Route path='/rating/:token' element={<RatingPage/>} />
+            <Route path='/rating/:token' element={<RatingPage />} />
 
             <Route path='/home' element={<Home />}>
               {/* <Route path='editDetails' element={<EditDetails />} /> */}
@@ -80,8 +97,12 @@ function App() {
               </Route>
 
               <Route path='driver/:id' element={<Layout />} >
+                {/* <Route index element={<AcceptedRequests />} /> */}
                 <Route path='drivers' element={<Drivers />} />
                 <Route index element={<Driver />} />
+                <Route path='acceptedRequests' element={<AcceptedRequests />} />
+                <Route path='ridesAvailable' element={<RidesAvailable />} />
+
                 {/* <Route path='info' element={<Info />} />
                 <Route path='editDetails' element={<EditDetails />} /> */}
                 {/* <Route path='requestRide' element={<RequestRide />} /> */}
@@ -92,7 +113,7 @@ function App() {
               <Route path='secretary/:id' element={<Layout />} >
                 <Route index element={<Secretary />} />
                 <Route path='travelRequests' element={<SecretaryTravelRequests />} />
-                <Route path='callRequests' element={<SecretaryDashboard />} />
+                <Route path='callRequests' element={<SecretaryChat />} />
                 {/* <Route path='editDetails' element={<EditDetails />} /> */}
               </Route>
 

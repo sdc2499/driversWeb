@@ -31,6 +31,21 @@ async waitingForDriver(req, res, next){
         next(err)
     }
 }
+
+async acceptedRequests(req, res, next){
+    try {
+        const rideService = new RideService();
+        const result = await rideService.getAcceptedRequests(req.params.id);
+        console.log(result+result[0])
+        return res.json({ data: result, status: 200 });
+    }
+    catch (ex) {
+        const err = {}
+        err.statusCode = 500;
+        err.message = ex.message;
+        next(err)
+    }
+}
 //     async booking(req, res, next) {
 //         const tripDetails = req.body.tripDetails;
 

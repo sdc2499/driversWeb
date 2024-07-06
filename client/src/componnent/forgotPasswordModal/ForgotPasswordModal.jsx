@@ -3,6 +3,8 @@ import Modal from 'react-modal';
 import './ForgotPasswordModal.css';
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
+import { IoMdClose } from "react-icons/io";
+
 Modal.setAppElement('#root');
 
 const ForgotPasswordModal = ({ isOpen, closeModal }) => {
@@ -101,7 +103,7 @@ const ForgotPasswordModal = ({ isOpen, closeModal }) => {
       className="Modal"
       overlayClassName="Overlay"
     >
-      <button className="close-button" onClick={closeModal}>❌</button>
+      <button className="close-button" onClick={closeModal}><IoMdClose/></button>
       <div className="modal-content">
         <h2>שחזור סיסמה</h2>
         <form>
@@ -167,10 +169,7 @@ const ForgotPasswordModal = ({ isOpen, closeModal }) => {
                   {showPassword.confirmNewPassword ?  <FaEyeSlash/> : <FaEye/>}
                 </span>
               </div>
-          <input
-            type="password" value={confirmNewPassword} onChange={handleConfirmNewPasswordChange}
-            required disabled={!emailSentSuccessfully} placeholder="אימות סיסמא חדשה"
-          />
+
 
           <button className={`btnSend ${emailSentSuccessfully ? 'disabled' : ''}`} disabled={emailSentSuccessfully} type="button" onClick={handleSendPassword}> קבלת סיסמה חד פעמית</button>
           <div className="button-row">

@@ -47,6 +47,7 @@ const RequestRide = () => {
         const maxPricePerKm = 15;
         const minPrice = distance * minPricePerKm;
         const maxPrice = distance * maxPricePerKm;
+        //לעשות מינימום הזמנה
         return `₪${minPrice.toFixed(2)} - ₪${maxPrice.toFixed(2)}`;
     };
 
@@ -57,7 +58,7 @@ const RequestRide = () => {
             return;
         }
 
-        const rideRequest = { customerId: currentUser.id||rideDetails.guestPhone, from, to, ...rideDetails, requestType, priceRange};
+        const rideRequest = { costumerId: currentUser.id || rideDetails.guestPhone, costumerEmail: currentUser.email || rideDetails.email, from, to, ...rideDetails, requestType, priceRange, date: rideDetails.date, time: rideDetails.time };
         socket.emit('newRideRequest', rideRequest);
         setRideStatus('Waiting for a driver to accept your request...');
         reset();
@@ -69,6 +70,7 @@ const RequestRide = () => {
 
     useEffect(() => {
         socket.on('driverFound', (data) => {
+            console.log("hi driver")
             setRideStatus(`Driver found! Driver ID: ${data.driverId}`);
             setDriverFound(true);
             setNoDriverMessage('');
@@ -98,14 +100,14 @@ const RequestRide = () => {
                     {!currentUser.id && <input type='tel' name='phone' placeholder='טלפון' {...register("guestPhone", {
                         required: "יש להכניס טלפון",
                     })} />}
-                    {!currentUser.id &&<input type="email" name="email" placeholder="מייל"
-                    {...register("email", {
-                        required: "יש להכניס מייל",
-                        pattern: {
-                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                            message: "יש להכניס מייל תקין"
-                        },
-                    })} />}
+                    {!currentUser.id && <input type="email" name="email" placeholder="מייל"
+                        {...register("email", {
+                            required: "יש להכניס מייל",
+                            pattern: {
+                                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                                message: "יש להכניס מייל תקין"
+                            },
+                        })} />}
                     {errors.phone && <p>{errors.phone.message}</p>}
                     <Autocomplete
                         onLoad={autocomplete => {

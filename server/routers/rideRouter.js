@@ -6,6 +6,8 @@ const rideController = new RideController();
 // rideRouter.post("/booking",rideController.booking )
 rideRouter.get("/waitingForPrice",rideController.waitingForPrice )
 rideRouter.get("/waitingForDriver",rideController.waitingForDriver )
+rideRouter.get("/acceptedRequests/:id",rideController.acceptedRequests )
+
 
 export {
     rideRouter 

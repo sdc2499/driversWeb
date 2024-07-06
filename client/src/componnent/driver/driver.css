@@ -49,3 +49,87 @@
     background-color: #45a049;
   }
   
+
+  .notification {
+    position: fixed;
+    top: 15%;
+    left: 70%;
+    background-color: rgba(87, 155, 211, 0.8); /* גוון רקע */
+    color: #ffffff; /* צבע טקסט לבן */
+    padding: 20px;
+    border-radius: 10px; /* רדיוס הפינה */
+    font-size: 20px; /* גודל הפונט */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* צל משופר */
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    animation: slideInFromRight 0.5s forwards;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.notification.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+
+.driver-welcome-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  line-height: 1.6;
+}
+
+.driver-welcome-container h1 {
+  font-size: 28px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.driver-welcome-container h2 {
+  font-size: 22px;
+  color: #444;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.driver-welcome-container p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.driver-welcome-container ul,
+.driver-welcome-container ol {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.driver-welcome-container li {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #555;
+}
+
+.driver-welcome-container ul li::before {
+  content: "• ";
+  color: #007BFF;
+  font-weight: bold;
+}
+
+.driver-welcome-container ol li {
+  font-weight: bold;
+}

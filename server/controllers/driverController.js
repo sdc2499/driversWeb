@@ -1,4 +1,5 @@
 import { DriverService } from "../service/driverService.js";
+import CostumerController from "./costumerController.js";
 
 export default class DriverController {
 
@@ -29,6 +30,10 @@ export default class DriverController {
 
     async rating(req, res, next) {
         const { stars, ratingMsg } = req.body;
+        //למה לא מכיר
+        console.log("f  "+stars)
+        console.log("f  "+req.body.ratingMsg)
+
         try {
             const driveService = new DriverService();
             const result = await driveService.postRaitingDriver(req.query.token, req.body);

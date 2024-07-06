@@ -11,7 +11,6 @@ const Secretary = () => {
 
   useEffect(() => {
     let timer;
-    
     socket.on('rideRequestForSecretary', () => {
       setNotification(true);
       timer = setTimeout(() => {
