@@ -52,13 +52,14 @@ const RidesAvailable = () => {
     return (<>
 
         <div className="new-ride-requests">
-            {requests==[] ? requests.map(request => (
+
+            {(requests.length!=0)? requests.map(request => (
                 <div className="ride-request" key={request.id}>
                     {console.log(request)}
                     <RequestDetails request={request} />
                     <button className="accept-button" onClick={() => acceptRequest(request)}>אשר</button>
                 </div>
-            )):<h1>אין בקשות זמינות כרגע</h1>}
+            )) : <h1>אין בקשות זמינות כרגע</h1>}
         </div>
 
     </>)

@@ -67,15 +67,15 @@ io.on('connection', (socket) => {
     io.emit('rideRequestForDrivers', updatedRequest);
   });
 
-  socket.on('driverAccepted', async (requestId) => {
+  socket.on('driverAccepted', async (request) => {
     console.log("hi driver")
-    console.log(requestId.socketId)
-    driverAccepted(requestId)
-    io.to(requestId.socketId).emit('driverFound', { driverId: requestId.driverId });
-    console.log(requestId)
-    console.log(requestId.request)
-    io.emit('rideRequestClosed', requestId.request);
-    sendRatingEmail(requestId.costumerEmail, { costumerId: requestId.costumerId, driverId: requestId.driverId, rideId: requestId.request });
+    console.log(request.socketId)
+    driverAccepted(request)
+    io.to(request.socketId).emit('driverFound', { driverId: request.driverId });
+    console.log(request)
+    console.log(request.request)
+    io.emit('rideRequestClosed', request.request);
+    sendRatingEmail(request.costumerEmail, { costumerId: request.costumerId, driverId: request.driverId, rideId: request.request });
   });
 
   socket.on('requestChat', (data) => {

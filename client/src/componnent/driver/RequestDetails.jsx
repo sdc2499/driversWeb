@@ -6,6 +6,7 @@ const RequestDetails = ({ request }) => {
 
     return (
         <>
+      
             <p><strong>מ:</strong> {request.from || request.pickupLocation}</p>
             <p><strong>ל:</strong> {request.destination || request.to}</p>
             <p><strong>תאריך:</strong> {request.date}</p>

@@ -52,9 +52,9 @@ export class PasswordResetService {
                 `,
                 attachments: [
                     {
-                        filename: 'logo.png', // Replace with your logo's filename
-                        path: 'C:/Users/The user/Desktop/פר/driversWeb/server/logo.png', // Replace with the path to your logo file
-                        cid: 'logo' // Use the same cid value as used in the img src attribute
+                        filename: 'logo.png', 
+                        path: 'C:/Users/The user/Desktop/פר/driversWeb/server/logo.png',
+                        cid: 'logo' 
                     }
                 ]
             };

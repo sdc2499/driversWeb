@@ -50,3 +50,12 @@ body {
 
     right: 80px; 
   }
+  .image{
+    margin-top: 10%;
+    margin-right: 50%;
+    margin-left: -200px;
+    top: 50%; /* ממוקם בחציון למעלה */
+    width: 1700px;
+height: 500px;
+    right: 80px; 
+  }

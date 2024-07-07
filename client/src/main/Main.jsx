@@ -15,9 +15,11 @@ const Main = () => {
                     אנחנו מחברים בין אנשים למטרה משותפת של בטיחות, נוחות ואמינות.
                     בצד הנוסעים, או הנהגים, או שניהם, תמצאו אצלנו את המענה המושלם
                     לצרכיכם, וזהו מה שהופך את שירותנו לשווה ביותר.
-                </p><div className="right-side-box">
-              
+                </p>
+                <div className="right-side-box">
                     <img src="../../button.png" alt="Additional Image" className="additional-image" /></div>
+                 
+                    <img src="../../imgg.png" alt="Additional Image"  className="image" />
             </div>
         </div>
     );

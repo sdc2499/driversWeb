@@ -31,44 +31,7 @@ const Home = () => {
 
     return (
         <>
-            <header className={'sticky'}>
-                <nav>
-                    <div className="dropdown">
-                        <NavLink to={`/home/${currentUser.userType}/${currentUser.id}/contact`}>צור קשר</NavLink>
-                        <NavLink to={`/home/${currentUser.userType}/${currentUser.id}/aboutUs`}>קצת עלינו</NavLink>
-                        <NavLink to={`/home/${currentUser.userType}/${currentUser.id}/drivers`}>נהגים</NavLink>
-                        {currentUser.id ? (
-                            <>
-                                <span className="dropdown-text">
-                                    {currentUser.firstName} <FaUser />
-                                    <div className="dropdown-content">
-                                        <NavLink className='editPassword' to={`/home/${currentUser.userType}/${currentUser.id}/editDetails`}><FaUserEdit /></NavLink>
-                                        <NavLink to={`/home/${currentUser.userType}/${currentUser.id}/info`} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>פרטים</NavLink>
-                                        <NavLink onClick={logout} to={'/home'} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>יציאה</NavLink>
-                                    </div>
-                                </span>
-                                <NavLink to={`/home/${currentUser.userType}/${currentUser.id}`}>ראשי</NavLink>
-                            </>
-                        ) : (
-                            <>
-                                <span className="dropdown-text">
-                                    הרשמה/התחברות<FaUser />
-                                    <div className="dropdown-content">
-                                        <NavLink to='/login'>התחברות</NavLink><br />
-                                        <NavLink to='/register'>הרשמה</NavLink><br />
-                                    </div>
-                                </span>
-                                <NavLink to={`/home`}>ראשי</NavLink>
-                            </>
-                        )}
-                    </div>
-                    <button onClick={handleRequestRideClick} className="ride-button">הזמנת נסיעה</button>
-                    {currentUser.userType === 'secretary' && <NavLink to={`/home/secretary/${currentUser.id}/travelRequests`}>בקשות נסיעה</NavLink>}
-                    {currentUser.userType === 'driver' && (<><NavLink to={`/home/${currentUser.userType}/${currentUser.id}/acceptedRequests`}>נסיעות שנלקחו על ידי</NavLink>
-                        <NavLink to={`/home/${currentUser.userType}/${currentUser.id}/ridesAvailable`}>בקשות נסיעה</NavLink></>)}
-                </nav>
-            </header>
-
+            <Header currentUser={currentUser} logout={logout} />
             {currentUser.userType === 'secretary' && <SecretaryChat />}
             {currentUser.userType === 'customer' && <UserChat />}
             <footer>
@@ -80,7 +43,6 @@ const Home = () => {
 };
 
 export default Home;
-
 
 // import React, { useContext, useState, useEffect } from 'react';
 // import { useParams, NavLink, Outlet, useNavigate } from 'react-router-dom';
