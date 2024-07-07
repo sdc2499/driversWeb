@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { UserContext } from '../../App';
 import { useNavigate } from 'react-router-dom';
-import './editDetails.css'; 
+import { putRequest } from '../../fetch';
+import './editDetails.css';
 
 const EditDetails = () => {
     const [currentUser, setCurrentUser] = useContext(UserContext);
@@ -10,7 +11,7 @@ const EditDetails = () => {
     const [passwordError, setPasswordError] = useState('');
     const navigate = useNavigate();
 
-    const editDetails = (element) => {
+    const editDetails =async (element) => {
         element.preventDefault();
         const updatedUser = {
             firstName: element.target[0].value,
@@ -19,12 +20,9 @@ const EditDetails = () => {
             email: element.target[3].value
         };
 
-        fetch(`http://localhost:8080/users/${currentUser.id}`, {
-            method: 'PUT',
-            body: JSON.stringify(updatedUser),
-            headers: { 'Content-Type': 'application/json; charset=UTF-8' }
-        }).then(response => {
-            if (response.status === 200) {
+        try {
+            const response = await putRequest(`users/${currentUser.id}`, updatedUser)
+            if (response.ok) {
                 setUpdateSuccess(true);
                 setCurrentUser({
                     ...currentUser,
@@ -33,14 +31,34 @@ const EditDetails = () => {
                     email: updatedUser.email,
                     phone: updatedUser.phone
                 });
-            } else {
-                alert("Oops, something went wrong... Please try again!");
             }
-        }).catch(error => {
-            console.error('Error updating user:', error);
-            alert("Oops, something went wrong... Please try again!");
-        });
-    };
+        } catch {
+            console.error('Error fetching waitingForDriver rides:', error);
+        }
+
+        // fetch(`http://localhost:8080/users/${currentUser.id}`, {
+        //     method: 'PUT',
+        //     body: JSON.stringify(updatedUser),
+        //     //cd
+        //     headers: { 'Content-Type': 'application/json; charset=UTF-8' }
+        // }).then(response => {
+        //     if (response.status === 200) {
+        //         setUpdateSuccess(true);
+        //         setCurrentUser({
+        //             ...currentUser,
+        //             firstName: updatedUser.firstName,
+        //             lastName: updatedUser.lastName,
+        //             email: updatedUser.email,
+        //             phone: updatedUser.phone
+        //         });
+        //     } else {
+        //         alert("Oops, something went wrong... Please try again!");
+        //     }
+        // }).catch(error => {
+        //     console.error('Error updating user:', error);
+        //     alert("Oops, something went wrong... Please try again!");
+        // });
+    }
 
     const handlePasswordChange = (e) => {
         e.preventDefault();
@@ -56,6 +74,7 @@ const EditDetails = () => {
         fetch(`http://localhost:8080/users/changePassword/${currentUser.id}`, {
             method: 'PUT',
             body: JSON.stringify({ currentPassword, newPassword }),
+            //לשנות להדר
             headers: { 'Content-Type': 'application/json; charset=UTF-8' }
         }).then(response => {
             if (response.status === 200) {

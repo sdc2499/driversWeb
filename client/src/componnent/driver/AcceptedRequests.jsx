@@ -1,24 +1,26 @@
 import { useState, useEffect, useContext } from "react";
 import RequestDetails from "./RequestDetails"
 import { UserContext } from "../../App";
-
+import { getTokenFromCookie } from '../cookies/cookies';
+import { getRequest } from "../../fetch";
 const AcceptedRequests = () => {
-
     const [currentUser, setCurrentUser] = useContext(UserContext);
     const [acceptedRequests, setAcceptedRequests] = useState([])
     useEffect(() => {
         const fetchAcceptedRequests = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/rides/acceptedRequests/${currentUser.id}`, {
-                    headers: { Authorization: currentUser.token }
-                });
-                const data = await response.json();
-                setAcceptedRequests(data.data);
-            } catch (error) {
+                const response = await getRequest(`rides/acceptedRequests/${currentUser.id}`)
+                if (response.ok) {
+                    const data = await response.json();
+                    setAcceptedRequests(data.data);
+                }
+            } catch {
                 console.error('Error fetching waitingForDriver rides:', error);
             }
         };
+
         fetchAcceptedRequests();
+
     }, []);
 
     return (

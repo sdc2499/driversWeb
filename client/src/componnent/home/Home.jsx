@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useParams, useNavigate, Outlet } from 'react-router-dom';
+import { useParams, useNavigate, Outlet ,NavLink, Link} from 'react-router-dom';
 import { UserContext } from '../../App';
 import Header from './Header';
 import SecretaryChat from '../chat/SecretaryChat';
@@ -19,6 +19,9 @@ const Home = () => {
             setVisible(window.scrollY > 150);
         };
         window.addEventListener('scroll', handleScroll);
+        // if(currentUser.id)
+        //     if(currentUser.id!=id)
+        // <NavLink className="editPassword" to={`/erorr`}></NavLink>
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 

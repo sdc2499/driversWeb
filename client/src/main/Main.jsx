@@ -1,10 +1,7 @@
 import React from 'react';
-import './main.css'; // קובץ ה-CSS
+import './main.css'; 
 
 const Main = () => {
-
-
-
     return (
         <div className="main-container">
             <div className="background-image" />

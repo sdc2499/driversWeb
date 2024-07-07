@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { UserContext } from '../../App';
 import { useNavigate } from 'react-router-dom';
+import { setTokenCookie } from '../cookies/cookies';
+import { postFetch } from '../../fetch';
 import './register.css';
 
 const Register = () => {
@@ -19,13 +21,13 @@ const Register = () => {
             userType: "costumer"
         });
 
-        localStorage.setItem('currentUser', JSON.stringify({ phone: user.phone, userId: data.id, token: data.dataToken }));
+        localStorage.setItem('currentUser', JSON.stringify({ phone: user.phone, userId: data.id }));
         navigate(`/home/costumer/${data.id}`);
     };
 
     const { register, handleSubmit, formState: { errors }, trigger } = useForm();
 
-    const addDetails = (data) => {
+    const addDetails = async (data) => {
         if (data.password !== data.passwordVerification) {
             setExist("הפרטים שגואים ו/או לא תואמים");
             return;
@@ -37,23 +39,21 @@ const Register = () => {
             email: data.email,
             password: data.password
         };
-
-        fetch('http://localhost:8080/entrance/register', {
-            method: 'POST',
-            body: JSON.stringify(user),
-            headers: { 'Content-type': 'application/json; charset=UTF-8' }
-        })
-            .then(async response => {
+        try {
+            const response = await postFetch(`entrance/register`, user)
+            if (response.ok) {
                 const data = await response.json();
-                if (data.status === 200)
-                    goToHome(user, data);
-                else
-                    throw new Error(response);
-            }).catch(response => {
-                (response.status === 409) ?
-                    alert("משתמש קיים") :
-                    alert("oops somthing went wrong... please try again!");
-            });
+                setTokenCookie(data.dataToken)
+                goToHome(user, data);
+            } else
+                throw new Error(response);
+        }
+        catch (error) {
+            (error.status === 409) ?
+                alert("משתמש קיים") :
+                alert("oops somthing went wrong... please try again!");
+
+        }
     };
 
     return (

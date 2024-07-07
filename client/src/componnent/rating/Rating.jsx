@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-
+import { getTokenFromCookie } from '../cookies/cookies';
 import './ratingPage.css';
 import { useParams } from 'react-router-dom';
+import { postRequest } from '../../fetch';
 const RatingPage = () => {
     const navigate = useNavigate();
     const currentUser = JSON.parse(localStorage.getItem("currentUser"))
@@ -16,37 +17,25 @@ const RatingPage = () => {
         setRating(star);
     };
 
-    const handleSubmit = (event) => {
-        // console.log("id " + id + "   driverId  " + driverId)
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(`דירוג: ${rating}`);
-        console.log(`תגובה: ${comment}`);
         const ratingDriver = {
-            // driverId: driverId,
             stars: rating,
             ratingMsg: comment,
-            // userPhone: id
         }
-        console.log(ratingDriver)
-        fetch(`http://localhost:8080/drivers/rating?token=${token}`, {
-            method: 'POST',
-            body: JSON.stringify(ratingDriver),
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': currentUser.token
-            }
-        }).then(response => {
-            if (response.status === 200) {
+
+        try {
+            const response = await postRequest(`drivers/rating?token=${token}`,ratingDriver)
+            console.log(response)
+            if (response.ok) {
                 alert("הדירוג בוצע בהצלחה תודה לך!!!");
                 navigate(`/thank`);
             } else {
-                console.log("res" + response)
                 alert("אין לדרג יותר מפעם אחת");
             }
-        }).catch(error => {
-            console.error('Error updating user:', error);
-            alert("Oops, something went wrong... Please try again!");
-        });
+        } catch {
+            console.error('Error fetching waitingForDriver rides:');
+        }
     };
 
     return (

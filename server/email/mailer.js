@@ -10,6 +10,11 @@ const transporter = nodemailer.createTransport({
 });
 
 export const sendEmail = async ({ to, subject, htmlContent, attachments }) => {
+    console.log("to"+to)
+    console.log("subject"+subject)
+    console.log("htmlContent"+htmlContent)
+    console.log("attachments"+attachments)
+
     const mailOptions = {
         from: process.env.EMAIL,
         to:to,

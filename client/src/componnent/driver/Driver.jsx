@@ -24,7 +24,8 @@ const Driver = () => {
   }, []);
   return (
     <>
-      <h1 className="page-title">שלום לך נהג - {currentUser.firstName}</h1>
+      <Main />
+
       {notification && (
         <div className="notification show">
           יש בקשה חדשה!{' '}
@@ -32,7 +33,6 @@ const Driver = () => {
           לעבור לעמוד הבקשות.
         </div>
       )}
-      <Main/>
     </>
   );
 };

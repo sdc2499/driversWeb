@@ -13,8 +13,8 @@ const RequestDetails = ({ request }) => {
             <p><strong>שעה:</strong> {request.time}</p>
             <p><strong>מחיר:</strong> {request.price}</p>
             {request.guestPhone && <p><strong>טלפון(לקוח לא רשום):</strong> {request.guestPhone}</p>}
-            {request.requestType === 'package' ? (
-                <p><strong>גודל החבילה:</strong> {request.packageSize}</p>
+            {request.requestType === 'package'||request.packageSize !=null ? (
+                <p>{request.packageSize}<strong> :גודל החבילה</strong> </p>
             ) : (
                 <div>
                     <p><strong>מספר נוסעים:</strong> {!request.passengers?0:request.passengers}</p>

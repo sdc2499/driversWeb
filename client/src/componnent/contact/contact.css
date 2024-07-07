@@ -61,3 +61,106 @@
 .contact-container a:hover {
     text-decoration: underline;
 }
+body {
+    direction: rtl; /* מיישר את כל התוכן מימין לשמאל */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.customer-service-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    width: 1700px;
+    margin-left: 500px;
+    margin-right: -160px;
+    background-color: #fad947;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.customer-service-text {
+    flex: 1;
+    margin-right: 20px;
+    max-width: 50%;
+}
+
+.customer-service-text h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.customer-service-text p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.customer-service-form {
+    flex: 1;
+    max-width: 50%;
+}
+
+.customer-service-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.customer-service-form input[type="text"],
+.customer-service-form input[type="tel"],
+.customer-service-form textarea {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 60%;
+}
+
+.customer-service-form textarea {
+    height: 100px;
+    resize: none;
+}
+
+.customer-service-form input[type="submit"] {
+    background-color: #977705;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    width: 60%;
+
+    transition: background-color 0.3s ease;
+}
+
+.customer-service-form input[type="submit"]:hover {
+    background-color: #0056b3;
+    width: 60%;
+
+}
+
+@media (max-width: 768px) {
+    .customer-service-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .customer-service-text {
+        margin-right: 0;
+        margin-bottom: 20px;
+        text-align: center;
+        max-width: 100%;
+    }
+
+    .customer-service-form {
+        max-width: 100%;
+    }
+
+    .customer-service-form form {
+        width: 100%;
+    }
+}

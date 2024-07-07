@@ -2,7 +2,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import socket from '../../socket';
 import { UserContext } from "../../App";
 import { useNavigate } from 'react-router-dom';
+import { getRequest } from '../../fetch';
 import './secretary.css';
+import RequestDetails from '../driver/RequestDetails';
 
 const SecretaryTravelRequests = () => {
   const [requests, setRequests] = useState([]);
@@ -12,15 +14,14 @@ const SecretaryTravelRequests = () => {
   useEffect(() => {
     const fetchOpenRides = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/rides/waitingForPrice`, {
-          headers: { Authorization: currentUser.token }
-        });
-        const data = await response.json();
-        console.log('Fetched waitingForPrice rides:', data.data);
-        setRequests(data.data);
-      } catch (error) {
-        console.error('Error fetching waitingForPrice rides:', error);
-      }
+        const response = await getRequest(`rides/waitingForPrice`)
+        if (response.ok) {
+            const data = await response.json();
+            setRequests(data.data);
+        }
+    } catch {
+        console.error('Error fetching waitingForDriver rides:', error);
+    }
     };
 
     fetchOpenRides();
@@ -41,7 +42,7 @@ const SecretaryTravelRequests = () => {
       socket.off('rideRequestForSecretary', handleNewRequest);
       socket.off('rideRequestClosed', handleRequestClosed);
     };
-  }, [currentUser.token]);
+  }, []);
 
   const updatePrice = (request, price) => {
     const updatedRequest = { ...request, price, priceUpdated: true };
@@ -72,20 +73,9 @@ const SecretaryTravelRequests = () => {
       <h1 className="page-title">Hello Secretary</h1>
       {sortedRequests.map(request => (
         <div className="request-item" key={request.id}>
+          <RequestDetails request={request}/>
           { request.guestPhone&&<p><strong>טלפון(לקוח לא רשום):</strong> {request.guestPhone}</p>}
-          <p><strong>From:</strong> {request.from || request.pickup_location}</p>
-          <p><strong>To:</strong> {request.to}</p>
-          <p><strong>Date:</strong> {request.date}</p>
-          <p><strong>Time:</strong> {request.time}</p>
-          <p><strong>Type:</strong> {request.requestType === 'package' ? 'Package Delivery' : 'People Transportation'}</p>
-          {request.requestType === 'package' ? (
-            <p><strong>Package Size:</strong> {request.packageSize}</p>
-          ) : (
-            <>
-              <p><strong>מספר נוסעים:</strong> {request.passengers}</p>
-              {/* <p><strong>Infants:</strong> {request.infants}</p> */}
-            </>
-          )}
+         
           {request.closed ? (
             <div className="closed-message">
               <p>This request has been closed.</p>

@@ -4,8 +4,11 @@ import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
 import { useForm } from 'react-hook-form';
 import ForgotPasswordModal from '../forgotPasswordModal/ForgotPasswordModal';
+import { setTokenCookie } from '../cookies/cookies';
+
 // import ForgotPasswordModal from './ForgotPasswordModal';
 import './login.css';
+import { postFetch } from '../../fetch';
 
 const Login = () => {
     const [currentUser, setCurrentUser] = useContext(UserContext);
@@ -41,23 +44,24 @@ const Login = () => {
             lastName: data.lastName,
             email: data.email,
             phone: data.phone,
-            userType: data.userType,
-            token: token_
+            userType: data.userType
+
         });
-        localStorage.setItem('currentUser', JSON.stringify({ phone: data.phone, userId: data.id, token: token_ }));
+        localStorage.setItem('currentUser', JSON.stringify({ phone: data.phone, userId: data.id }));
         navigate(`/home/${data.userType}/${data.id}`);
     };
 
     const logIn = async (user) => {
+
+
         try {
-            const response = await fetch(`http://localhost:8080/entrance/login`, {
-                method: 'POST',
-                body: JSON.stringify({ phone: user.phone, password: user.password }),
-                headers: { 'Content-type': 'application/json; charset=UTF-8' }
-            });
-            const data = await response.json();
-            goToHome(data.data, data.token);
-        } catch (error) {
+            const response = await postFetch(`entrance/login`, { phone: user.phone, password: user.password })
+            if (response.ok) {
+                const data = await response.json();
+                setTokenCookie(data.token)
+                goToHome(data.data);
+            }
+        } catch (error){
             if (error.status == 500)
                 alert("Oops, something went wrong... please try again!");
             else
@@ -92,7 +96,7 @@ const Login = () => {
 
                 <input type="submit" value="כניסה" />
             </form>
-            
+
             {/* כפתור לפתיחת חלונית שחזור סיסמה */}
             <button onClick={openModal}>שכחתי סיסמה</button>
             <ForgotPasswordModal isOpen={modalIsOpen} closeModal={closeModal} />

@@ -9,6 +9,7 @@ export default class EntranceController {
             const result = await userService.login(req.body);
             if (result.result == undefined)
                 throw new Error("No elements found");
+
             return res.json({ data: result.result, token: result.token, status: 200 });
         } catch (ex) {
             const err = {}
@@ -22,7 +23,9 @@ export default class EntranceController {
         try {
             const userService = new UserService();
             const result = await userService.register(req.body);
-            return res.json({ id: result.userId, token: result.token, status: 200 });
+            console.log( result.userId)
+
+            return res.status(200).json({ id: result.userId, token: result.token, status: 200 });
         }
         catch (ex) {
             const err = {};

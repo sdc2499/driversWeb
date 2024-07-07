@@ -2,42 +2,34 @@ import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../App';
 import './drivers.css';
 import { useForm } from "react-hook-form";
-
+import { getTokenFromCookie } from '../cookies/cookies';
+import { putRequest } from '../../fetch';
 const Drivers = () => {
   const [currentUser, setCurrentUser] = useContext(UserContext);
   const [openForm, setOpenForm] = useState(false);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
-  const registerDriver = (driverDetails) => {
-    fetch(`http://localhost:8080/users/upgradeToDriver/${currentUser.id}`, {
-      method: 'PUT',
-      body: JSON.stringify({ gender: driverDetails.gender, religiousSector: driverDetails.religiousSector }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-        'Authorization': currentUser.token
+  const registerDriver = async (driverDetails) => {
+
+    try {
+      const response = await putRequest(`users/upgradeToDriver/${currentUser.id}`, { gender: driverDetails.gender, religiousSector: driverDetails.religiousSector })
+      if (response.ok) {
+        alert("הצטרפת לצוות הנהגים שלנו בהצלחה!!!");
+        setOpenForm(!openForm);
       }
-    }).then(() => {
-      alert("הצטרפת לצוות הנהגים שלנו בהצלחה!!!");
-      setOpenForm(!openForm);
+    } catch {
+      console.error('Error fetching waitingForDriver rides:');
     }
-    )
+
   };
 
   return (
     <div className="container">
-      <h1 className="title">הצטרף לצוות הנהגים שלנו</h1>
+     {currentUser.userType === 'costumer' && <h1 className="title">הצטרף לצוות הנהגים שלנו</h1>}
       <p>להיות נהג אצלנו מגיע עם יתרונות גדולים ותגמולים. הצטרף לצוות שלנו היום והתחל להרוויח!</p>
 
       <h2 className="subtitle">פרטי הנהגים</h2>
       <ul className="driver-list">
-        {/* {drivers.map(driver => (
-          <li className="driver-item" key={driver.id}>
-            <h3>{driver.name}</h3>
-            <p>אימייל: {driver.email}</p>
-            <p>טלפון: {driver.phone}</p>
-            <p>משכורת: {driver.salary}</p>
-          </li>
-        ))} */}
       </ul>
 
       <h2 className="subtitle">בונוסים</h2>
@@ -47,7 +39,7 @@ const Drivers = () => {
         <li>בונוס 3: 300$ על הפניית נהג חדש</li>
       </ul>
 
-      {currentUser.userType === 1 && (
+      {currentUser.userType === 'costumer' && (
         <button className="join-button" onClick={() => setOpenForm(!openForm)}>הצטרף כנהג</button>
       )}
       {openForm && (
@@ -55,7 +47,7 @@ const Drivers = () => {
           <input
             type='text'
             name='gender'
-            placeholder='gender M/F'
+            placeholder='מגדר M/F'
             {...register("gender", {
               required: "gender is required.",
             })}
@@ -64,7 +56,7 @@ const Drivers = () => {
           <input
             type='text'
             name='religiousSector'
-            placeholder='religiousSector'
+            placeholder='מגזר דתי'
             {...register("religiousSector", {
               required: "religiousSector is required.",
             })}

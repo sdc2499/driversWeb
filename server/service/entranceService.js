@@ -11,14 +11,14 @@ export class UserService {
         let queryUser = queryItem.loginQuery()
         const result = await executeQuery(queryUser, Object.values(user));
         console.log("hi " + result[0].id)
-        { result[0].id && console.log("111") }
         const userT = {
             id: result[0].id,
             phone: user.phone
         }
         const token = jwt.sign(userT, process.env.JWT_SECRET, {
             expiresIn: '1h',
-        });
+        }); 
+           console.log("hi " + token)
         return { result: result[0], token: token };
     }
 
@@ -28,11 +28,13 @@ export class UserService {
         let queryUser = queryItem.postItemQuery("users", "NULL," + "?,".repeat(Object.keys(user).length - 1) + "?");
         const { password, ...userWithoutPassword } = user;
         const result = await executeQuery(queryUser, [...Object.values(userWithoutPassword),1]);
-        let queryUserPswd = queryItem.postItemQuery("passwords", "?,?");
-        await executeQuery(queryUserPswd, [result.insertId, pswd]);
+        let queryUserPswd = queryItem.postItemQuery("passwords", "?,?,?");
+        await executeQuery(queryUserPswd, [result.insertId, pswd,0]);
         const token = jwt.sign(user, process.env.JWT_SECRET, {
             expiresIn: '1h',
         });
+        console.log( result.insertId)
+        console.log("t   "+ token)
         return { userId: result.insertId, token: token };
     }
 }

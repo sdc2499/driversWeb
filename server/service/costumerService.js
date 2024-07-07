@@ -44,7 +44,10 @@ export class CostumerService {
         let stringToQuery = "";
         Object.keys(body).forEach(key => { (key != "id") && (stringToQuery += key += "=?,") });
         stringToQuery = stringToQuery.slice(0, -1);
+        console.log("body in update:::" + stringToQuery)
         let values = Object.values(body);
+        console.log("body in update:::" + values)
+
         values.push(id);
         const queryCostumer = queryItem.updateItemQuery("users", stringToQuery);
         const result = await executeQuery(queryCostumer, values)
@@ -52,7 +55,6 @@ export class CostumerService {
     }
 
     async changePswd(body, id) {
-        console.log("body in update:::" + body)
         const queryItem = new QueryItem();
         const queryCostumer = queryItem.changePswdItemQuery();
         let curPswd = sha256(body.currentPassword)

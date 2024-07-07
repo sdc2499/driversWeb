@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import './driver.css'
 import { UserContext } from "../../App";
 import RequestDetails from './RequestDetails';
-
+import { getTokenFromCookie } from '../cookies/cookies';
+import { getRequest } from '../../fetch';
 const RidesAvailable = () => {
 
     const [requests, setRequests] = useState([]);
@@ -14,15 +15,17 @@ const RidesAvailable = () => {
     useEffect(() => {
         console.log("currentUser  " + currentUser)
         const fetchOpenRides = async () => {
+
             try {
-                const response = await fetch(`http://localhost:8080/rides/waitingForDriver`, {
-                    headers: { Authorization: currentUser.token }
-                });
-                const data = await response.json();
-                setRequests(data.data);
-            } catch (error) {
+                const response = await getRequest(`rides/waitingForDriver`)
+                if (response.ok) {
+                    const data = await response.json();
+                    setRequests(data.data);
+                }
+            } catch {
                 console.error('Error fetching waitingForDriver rides:', error);
             }
+
         };
 
         fetchOpenRides();
@@ -53,7 +56,7 @@ const RidesAvailable = () => {
 
         <div className="new-ride-requests">
 
-            {(requests.length!=0)? requests.map(request => (
+            {(requests.length != 0) ? requests.map(request => (
                 <div className="ride-request" key={request.id}>
                     {console.log(request)}
                     <RequestDetails request={request} />

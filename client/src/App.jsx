@@ -22,11 +22,12 @@ import AcceptedRequests from './componnent/driver/AcceptedRequests';
 import RidesAvailable from './componnent/driver/RidesAvailable';
 import SecretaryChat from './componnent/chat/SecretaryChat';
 import Main from './main/Main'
+import { getTokenFromCookie } from './componnent/cookies/cookies';
 export const UserContext = createContext();
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
-  const user = (data, token) => {
+  const user = (data) => {
     switch (data.userType) {
       case '1':
         data.userType = "costumer";
@@ -47,20 +48,18 @@ function App() {
       lastName: data.lastName,
       email: data.email,
       phone: data.phone,
-      userType: data.userType,
-      token: token
+      userType: data.userType
     }
   }
 
   useEffect(() => {
     const currntUser = JSON.parse(localStorage.getItem("currentUser"))
     currntUser && fetch(`http://localhost:8080/users?id=${currntUser.userId}`, {
-      headers: { Authorization: currntUser.token }
+      headers: { Authorization: getTokenFromCookie() }
     })
       .then(async response => {
         const data = await response.json();
-        console.log("data in app.jsx: " + data)
-        response.ok && setCurrentUser(() => user(data.data, currntUser.token))
+        response.ok && setCurrentUser(() => user(data.data))
       })
   }, []);
 
@@ -84,30 +83,16 @@ function App() {
               </Route>
               <Route path='costumer/:id' element={<Layout />} >
                 <Route index element={<User />} />
-
-                {/* 
-                <Route path='editDetails' element={<EditDetails />} />
-                <Route path='info' element={<Info />} /> */}
                 <Route path='aboutUs' element={<AboutUs />} />
-                {/* <Route path='main' element={<Main />} /> */}
-                {/* <Route path='contact' element={<Contact />} /> */}
-                {/* <Route path='requestRide' element={<RequestRide />} /> */}
+              
                 <Route path='drivers' element={<Drivers />} />
               </Route>
 
-              <Route path='driver/:id' element={<Layout />} >
-                {/* <Route index element={<AcceptedRequests />} /> */}
+              <Route path='driver/:id' element={<Layout />} >             
                 <Route index element={<Driver />}/>
-                {/* <Route path='main' element={<Main />} /> */}
                 <Route path='drivers' element={<Drivers />} />
-
                 <Route path='acceptedRequests' element={<AcceptedRequests />} />
                 <Route path='ridesAvailable' element={<RidesAvailable />} />
-
-                {/* <Route path='info' element={<Info />} />
-                <Route path='editDetails' element={<EditDetails />} /> */}
-                {/* <Route path='requestRide' element={<RequestRide />} /> */}
-                {/* <Route path='aboutUs' element={<AboutUs />} /> */}
                 <Route path='contact' element={<Contact />} />
               </Route>
 
