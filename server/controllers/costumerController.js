@@ -1,10 +1,11 @@
 import { CostumerService } from "../service/costumerService.js";
+
 export default class CostumerController {
+
     async getUserByParam(req, res, next){
         try {
             const costumerService = new CostumerService();
             const result = await costumerService.getUserByParam(req);
-            // console.log(result[0].id)
             return res.json({ data: result[0], status: 200 });
         }
         catch (ex) {
@@ -14,6 +15,7 @@ export default class CostumerController {
             next(err)
         }
     }
+
     async upgradeToDriver(req, res, next){
         try {
             const costumerService = new CostumerService();
@@ -28,12 +30,12 @@ export default class CostumerController {
             next(err)
         }
     }
+
     async updateCostumer(req, res, next) {
         try {
             const costumerService = new CostumerService();
             console.log("req.body in controller:::"+req.body)
             await costumerService.updateCostumer(req.body, req.params.id);
-
             return res.json({ status: 200, data: req.params.id });
         }
         catch (ex) {
@@ -43,12 +45,12 @@ export default class CostumerController {
             next(err)
         }
     }
+
     async changePswd(req, res, next){
         try {
             const costumerService = new CostumerService();
             console.log("req.body in controller:::"+req.body)
             await costumerService.changePswd(req.body, req.params.id);
-
             return res.json({ status: 200, data: req.params.id });
         }
         catch (ex) {

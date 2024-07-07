@@ -1,20 +1,16 @@
 import { DriverService } from "../service/driverService.js";
-import CostumerController from "./costumerController.js";
 
 export default class DriverController {
 
     async getDrivers(req, res, next) {
-
         try {
             const driverService = new DriverService();
             const result = await driverService.getDrivers(req);
             return res.json({ data: result, status: 200 });
         }
-
         catch (ex) {
             const err = {};
             switch (ex.message) {
-                //לבדוק אם אין נהגים לזרוק שגיאה או פשוט אין מחזיר מערך ריק?
                 case "No elements found":
                     err.statusCode = 404;
                     break;
@@ -25,21 +21,14 @@ export default class DriverController {
             err.message = ex.message;
             next(err);
         }
-
     }
 
     async rating(req, res, next) {
-        const { stars, ratingMsg } = req.body;
-        //למה לא מכיר
-        console.log("f  "+stars)
-        console.log("f  "+req.body.ratingMsg)
-
         try {
             const driveService = new DriverService();
             const result = await driveService.postRaitingDriver(req.query.token, req.body);
             if(result.alreadyRated)
                 throw('This ride has already been rated.')
-                // return res.status(400).json({ status: 400, message: 'This ride has already been rated.' });
             return res.json({ status: 200 });
         } catch (message) {
             const err = {};
@@ -55,7 +44,6 @@ export default class DriverController {
             next(err);
         }
     }
-
 
     async getDriverById(req, res, next) {
         try {
@@ -79,7 +67,6 @@ export default class DriverController {
 
     }
 
-
     async getMainDetails(req, res, next) {
         try {
             const driverService = new DriverService();
@@ -102,7 +89,6 @@ export default class DriverController {
 
     }
 
-
     async addDriver(req, res, next) {
         try {
             const driveService = new DriverService();
@@ -119,8 +105,6 @@ export default class DriverController {
             next(err);
         }
     }
-
-
 
     async updateDriverById(req, res, next) {
         try {

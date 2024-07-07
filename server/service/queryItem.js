@@ -19,8 +19,6 @@ export class QueryItem {
         return `UPDATE db.passwords SET password = ? WHERE userId = ? and password=?;`
     }
 
-
-
     postItemQuery(tableName,questionMarks,columns="") {
         const query = `INSERT INTO db.${tableName} ${columns} VALUES( ${questionMarks}) `;
         return query;
@@ -34,12 +32,10 @@ export class QueryItem {
         const query = `SELECT * FROM db.${tableName} where ${conditions}`
         return query;
     }
-    //לשאול את המורה אם לעשות ןסאקטיב או דליט
     deleteItemQuery(tableName, params) {
         const query = `UPDATE db.${tableName} SET isActive = 0 WHERE ${params} = ?`;
         return query;
     }
-    //לבדוק האם עובד בריירת מחדל
     updateItemQuery(tableName, updateDetails, key = "id") {
         const query = `UPDATE db.${tableName} SET ${updateDetails}  WHERE ${key} = ?`;
         return query;
