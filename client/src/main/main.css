@@ -1,0 +1,52 @@
+
+
+body {
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff; /* לבן */
+}
+
+
+
+
+/* תמונת רקע */
+.background-image {
+    background-image: url('../../background.png');
+    background-size: cover;
+    height:100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* כיתוב ותוכן */
+.content {
+    margin-top: 65%;
+    position: relative;
+}
+
+
+  .content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .content p {
+    font-size: 1.6rem;
+    line-height: 2.2rem;
+  }
+
+
+.additional-image {
+    margin-top: 20px; 
+}
+
+.right-side-box {
+    margin-top: 10%;
+    top: 50%; /* ממוקם בחציון למעלה */
+    width: 100%;
+
+    right: 80px; 
+  }

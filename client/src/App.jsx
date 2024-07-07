@@ -22,6 +22,7 @@ import ForgotPasswordModal from './componnent/forgotPasswordModal/ForgotPassword
 import AcceptedRequests from './componnent/driver/AcceptedRequests';
 import RidesAvailable from './componnent/driver/RidesAvailable';
 import SecretaryChat from './componnent/chat/SecretaryChat';
+import Main from './main/Main'
 export const UserContext = createContext();
 
 function App() {
@@ -70,13 +71,12 @@ function App() {
       <UserContext.Provider value={[currentUser, setCurrentUser]}>
         <Router>
           <Routes >
-            <Route path='/' element={<Navigate to={'/home'} />} />
+            <Route path='/' element={<Navigate to={'/home/main'} />} />
             <Route path='/rating/:token' element={<RatingPage />} />
-
             <Route path='/home' element={<Home />}>
               {/* <Route path='editDetails' element={<EditDetails />} /> */}
               <Route path='requestRide' element={<RequestRide />} />
-
+              <Route path='main' element={<Main/>} />
               <Route path={`${currentUser.userType}/:id`} element={<Layout />} >
                 <Route path='editDetails' element={<EditDetails />} />
                 {/* <Route path='info' element={<Info />} /> */}
@@ -98,8 +98,7 @@ function App() {
 
               <Route path='driver/:id' element={<Layout />} >
                 {/* <Route index element={<AcceptedRequests />} /> */}
-                <Route path='drivers' element={<Drivers />} />
-                <Route index element={<Driver />} />
+                <Route index element={<Driver />}/>
                 <Route path='acceptedRequests' element={<AcceptedRequests />} />
                 <Route path='ridesAvailable' element={<RidesAvailable />} />
 

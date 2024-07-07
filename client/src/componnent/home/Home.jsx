@@ -79,7 +79,7 @@ const Home = () => {
                         <NavLink to={`/home/${currentUser.userType}/${currentUser.id}/ridesAvailable`}>בקשות נסיעה</NavLink></>)}
                 </nav>
             </header>
-
+            
             {currentUser.userType === 'secretary' && <SecretaryChat />}
             {currentUser.userType === 'costumer' && <UserChat />}
             <footer>
