@@ -78,8 +78,6 @@ io.on('connection', (socket) => {
     sendRatingEmail(requestId.costumerEmail, { costumerId: requestId.costumerId, driverId: requestId.driverId, rideId: requestId.request });
   });
 
-
-
   socket.on('requestChat', (data) => {
     io.emit('chatRequestForSecretary', data);
   });

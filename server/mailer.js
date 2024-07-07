@@ -2,9 +2,7 @@ import nodemailer from 'nodemailer';
 import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 
-//לסדר את הקישור ולסדר את ההבטחה בדירוג נהג
 export const sendRatingEmail = async (userEmail, obj) => {
-    // console.log("ddd   " + rideId)
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -55,9 +53,9 @@ export const sendRatingEmail = async (userEmail, obj) => {
     `,
         attachments: [
             {
-                filename: 'logo.png', // Replace with your logo's filename
-                path: 'C:/Users/The user/Desktop/פר/driversWeb/server/logo.png', // Replace with the path to your logo file
-                cid: 'logo' // Use the same cid value as used in the img src attribute
+                filename: 'logo.png', 
+                path: 'C:/Users/The user/Desktop/פר/driversWeb/server/logo.png', 
+                cid: 'logo' 
             }
         ]
     };
