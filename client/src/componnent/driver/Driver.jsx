@@ -3,6 +3,7 @@ import socket from '../../socket';
 import { useNavigate, NavLink } from 'react-router-dom';
 import './driver.css'
 import { UserContext } from "../../App";
+import Main from '../../main/Main';
 
 const Driver = () => {
   const navigate = useNavigate();
@@ -31,13 +32,9 @@ const Driver = () => {
           <NavLink to={`/home/driver/${currentUser.id}/ridesAvailable`}>לחצו כאן</NavLink>
           לעבור לעמוד הבקשות.
         </div>
-
-
-
-
       )}
-
-      <div className="driver-welcome-container">
+      <Main/>
+      {/* <div className="driver-welcome-container">
         <h1>ברוך הבא, נהג יקר!</h1>
         <p>
           אנחנו שמחים לראות אותך כאן. כמוביל בשירות התחבורה שלנו, יש לך את הכוח והיכולת לספק חוויית נסיעה בטוחה, נעימה ומקצועית לכל הנוסעים.
@@ -62,7 +59,7 @@ const Driver = () => {
         <p>
           נסיעה בטוחה ומהנה!
         </p>
-      </div>
+      </div> */}
     </>
   );
 };

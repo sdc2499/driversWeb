@@ -17,9 +17,9 @@ const Main = () => {
                     לצרכיכם, וזהו מה שהופך את שירותנו לשווה ביותר.
                 </p>
                 <div className="right-side-box">
-                    <img src="../../button.png" alt="Additional Image" className="additional-image" /></div>
-                 
-                    <img src="../../imgg.png" alt="Additional Image"  className="image" />
+                    <img src="../../button.png" alt="Additional Image" className="additional-image" />
+                </div>
+                <img src="../../imgg.png" alt="Additional Image" className="image" />
             </div>
         </div>
     );

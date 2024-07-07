@@ -28,7 +28,6 @@ export const UserContext = createContext();
 function App() {
   const [currentUser, setCurrentUser] = useState({});
   const user = (data, token) => {
-    //לבדוק שבאמת עובד
     switch (data.userType) {
       case '1':
         data.userType = "costumer";
@@ -91,6 +90,7 @@ function App() {
                 <Route path='editDetails' element={<EditDetails />} />
                 <Route path='info' element={<Info />} /> */}
                 <Route path='aboutUs' element={<AboutUs />} />
+                <Route path='main' element={<Main />} />
                 {/* <Route path='contact' element={<Contact />} /> */}
                 {/* <Route path='requestRide' element={<RequestRide />} /> */}
                 <Route path='drivers' element={<Drivers />} />
@@ -99,6 +99,7 @@ function App() {
               <Route path='driver/:id' element={<Layout />} >
                 {/* <Route index element={<AcceptedRequests />} /> */}
                 <Route index element={<Driver />}/>
+                <Route path='main' element={<Main />} />
                 <Route path='acceptedRequests' element={<AcceptedRequests />} />
                 <Route path='ridesAvailable' element={<RidesAvailable />} />
 
@@ -111,6 +112,8 @@ function App() {
 
               <Route path='secretary/:id' element={<Layout />} >
                 <Route index element={<Secretary />} />
+                <Route path='main' element={<Main />} />
+
                 <Route path='travelRequests' element={<SecretaryTravelRequests />} />
                 <Route path='callRequests' element={<SecretaryChat />} />
                 {/* <Route path='editDetails' element={<EditDetails />} /> */}

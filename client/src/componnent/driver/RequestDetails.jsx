@@ -17,7 +17,7 @@ const RequestDetails = ({ request }) => {
                 <p><strong>גודל החבילה:</strong> {request.packageSize}</p>
             ) : (
                 <div>
-                    <p><strong>מספר נוסעים:</strong> {request.passengers}</p>
+                    <p><strong>מספר נוסעים:</strong> {!request.passengers?0:request.passengers}</p>
                 </div>
             )}
         </>
