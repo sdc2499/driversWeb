@@ -3,6 +3,7 @@ import socket from '../../socket';
 import { UserContext } from "../../App";
 import './secretaryCss.css';
 import { useNavigate, NavLink } from 'react-router-dom';
+import Main from '../../main/Main';
 
 const Secretary = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const Secretary = () => {
 
   return (
     <div>
-      <h1>אני מזכירה תותחיתתתת</h1>
+      <Main/>
       {notification && (
         <div className="notification show">
           יש בקשה חדשה!{' '}

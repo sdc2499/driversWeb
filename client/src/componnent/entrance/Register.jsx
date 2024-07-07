@@ -20,7 +20,7 @@ const Register = () => {
         });
 
         localStorage.setItem('currentUser', JSON.stringify({ phone: user.phone, userId: data.id, token: data.dataToken }));
-        navigate(`/home/costumer/${data.id}/main`);
+        navigate(`/home/costumer/${data.id}`);
     };
 
     const { register, handleSubmit, formState: { errors }, trigger } = useForm();

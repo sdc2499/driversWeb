@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { UserContext } from '../../App';
 import { io } from 'socket.io-client';
 import './user.css';
+import Main from "../../main/Main";
 
 const User = () => {
     const [currentUser, setCurrentUser] = useContext(UserContext);
@@ -23,7 +24,7 @@ const User = () => {
 
     return (
         <>
-            <h1>Hello {currentUser.firstName} {currentUser.lastName}!!!</h1>
+            <Main />
             <button onClick={() => setOpenForm(!openForm)}>To become a driver, press here</button>
             {openForm && (
                 <form noValidate onSubmit={handleSubmit(registerDriver)}>
