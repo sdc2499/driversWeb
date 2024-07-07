@@ -1,7 +1,7 @@
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import app from './app.js';
-import { sendRatingEmail } from './mailer.js';
+import { sendRatingEmail } from './email/emailService.js';
 import 'dotenv/config';
 import { executeQuery } from '../server/service/executeQuery.js'
 import { QueryItem } from "../server/service/queryItem.js";
