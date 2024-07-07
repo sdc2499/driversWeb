@@ -2,10 +2,18 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaUser } from 'react-icons/fa';
 import NavLinks from './NavLinks';
+import { useParams, useNavigate, Outlet } from 'react-router-dom';
 // import './header.css';
 
-const Header = ({ currentUser, logout }) => (
-    <header className="sticky">
+const Header = ({ currentUser, logout }) => {
+    const navigate = useNavigate();
+    const handleRequestRideClick = () => {
+        const path = currentUser.id
+            ? `/home/${currentUser.userType}/${currentUser.id}/requestRide`
+            : `/home/requestRide`;
+        navigate(path);
+    };
+    return (<header className="sticky">
         <nav>
             <NavLinks currentUser={currentUser} logout={logout} />
             <button onClick={() => handleRequestRideClick()} className="ride-button">
@@ -27,7 +35,7 @@ const Header = ({ currentUser, logout }) => (
                 </>
             )}
         </nav>
-    </header>
-);
+    </header>)
+}
 
 export default Header;

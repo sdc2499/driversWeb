@@ -22,12 +22,6 @@ const Home = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const handleRequestRideClick = () => {
-        const path = currentUser.id
-            ? `/home/${currentUser.userType}/${currentUser.id}/requestRide`
-            : `/home/requestRide`;
-        navigate(path);
-    };
 
     const logout = () => {
         localStorage.removeItem('currentUser');

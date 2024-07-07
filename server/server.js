@@ -3,7 +3,7 @@ import { Server } from 'socket.io';
 import app from './app.js';
 import { sendRatingEmail } from './mailer.js';
 import 'dotenv/config';
-import { query } from '../server/service/query.js'
+import { executeQuery } from '../server/service/executeQuery.js'
 import { QueryItem } from "../server/service/queryItem.js";
 
 const server = createServer(app);
@@ -18,7 +18,7 @@ async function updateRidePrice(updatedRequest) {
   const queryItem = new QueryItem();
   const updateQuery = queryItem.updateItemQuery("rides", "price = ?, status = ?");
   const values = [updatedRequest.price, 2, updatedRequest.id];
-  const result = await query(updateQuery, values)
+  const result = await executeQuery(updateQuery, values)
   return
 }
 
@@ -26,7 +26,7 @@ async function driverAccepted(requestId) {
   const queryItem = new QueryItem();
   const updateQuery = queryItem.updateItemQuery("rides", "status = ?, driverId = ?");
   const values = [3, requestId.driverId, requestId.request];
-  const result = await query(updateQuery, values)
+  const result = await executeQuery(updateQuery, values)
 
   return
 }
@@ -49,7 +49,7 @@ async function newRideRequest(request,socketId) {
     request.time,
     socketId
   ];
-  const result = await query(postQuery, values)
+  const result = await executeQuery(postQuery, values)
 
   return result.insertId
 }
