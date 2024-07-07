@@ -5,9 +5,7 @@ import Register from './componnent/entrance/Register'
 import Login from './componnent/entrance/Loginn';
 import Layout from './componnent/Layout'
 import Error from './componnent/Error';
-// import Info from './componnent/info/Info'
 import User from './componnent/user/User'
-// import User from './componnent/user/User'
 import Secretary from './componnent/secretary/Secretary'
 import EditDetails from './componnent/editDetails/EditDetails'
 import Driver from './componnent/driver/Driver'
@@ -101,6 +99,8 @@ function App() {
                 {/* <Route index element={<AcceptedRequests />} /> */}
                 <Route index element={<Driver />}/>
                 {/* <Route path='main' element={<Main />} /> */}
+                <Route path='drivers' element={<Drivers />} />
+
                 <Route path='acceptedRequests' element={<AcceptedRequests />} />
                 <Route path='ridesAvailable' element={<RidesAvailable />} />
 
