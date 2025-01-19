@@ -17,7 +17,6 @@ import RatingPage from './componnent/rating/Rating'
 import SecretaryTravelRequests from './componnent/secretary/SecretaryTravelRequests';
 import './App.css'
 import ThankYou from './componnent/thankYou/ThankYou';
-import ForgotPasswordModal from './componnent/forgotPasswordModal/ForgotPasswordModal';
 import AcceptedRequests from './componnent/driver/AcceptedRequests';
 import RidesAvailable from './componnent/driver/RidesAvailable';
 import SecretaryChat from './componnent/chat/SecretaryChat';
@@ -68,28 +67,28 @@ function App() {
       <UserContext.Provider value={[currentUser, setCurrentUser]}>
         <Router>
           <Routes >
+
             <Route path='/' element={<Navigate to={'/home/main'} />} />
             <Route path='/rating/:token' element={<RatingPage />} />
+
             <Route path='/home' element={<Home />}>
-              {/* <Route path='editDetails' element={<EditDetails />} /> */}
               <Route path='requestRide' element={<RequestRide />} />
-              <Route path='main' element={<Main/>} />
+              <Route path='main' element={<Main />} />
+
               <Route path={`${currentUser.userType}/:id`} element={<Layout />} >
                 <Route path='editDetails' element={<EditDetails />} />
-                {/* <Route path='info' element={<Info />} /> */}
                 <Route path='requestRide' element={<RequestRide />} />
                 <Route path='contact' element={<Contact />} />
-
               </Route>
+
               <Route path='costumer/:id' element={<Layout />} >
                 <Route index element={<User />} />
                 <Route path='aboutUs' element={<AboutUs />} />
-              
                 <Route path='drivers' element={<Drivers />} />
               </Route>
 
-              <Route path='driver/:id' element={<Layout />} >             
-                <Route index element={<Driver />}/>
+              <Route path='driver/:id' element={<Layout />} >
+                <Route index element={<Driver />} />
                 <Route path='drivers' element={<Drivers />} />
                 <Route path='acceptedRequests' element={<AcceptedRequests />} />
                 <Route path='ridesAvailable' element={<RidesAvailable />} />
@@ -98,29 +97,17 @@ function App() {
 
               <Route path='secretary/:id' element={<Layout />} >
                 <Route index element={<Secretary />} />
-                {/* <Route path='main' element={<Main />} /> */}
-
                 <Route path='travelRequests' element={<SecretaryTravelRequests />} />
                 <Route path='callRequests' element={<SecretaryChat />} />
-                {/* <Route path='editDetails' element={<EditDetails />} /> */}
               </Route>
-
-              {/* 
-              <Route path='secretary/:id' element={<Secretary />} />
-              <Route path='driver/:id' element={<Driver />} > */}
-              {/* <Route path='editDetails' element={<EditDetails />} /> */}
             </Route>
+
             <Route path='/costumer/:id/rating/:driverId' element={<RatingPage />} />
             <Route path='/thank' element={<ThankYou />} />
-            {/* <Route path='/login' element={<Layout />} >
-            <Route index element={<Login />} />
-            <Route path='forgotPasswordModal' element={<ForgotPasswordModal/>} />
-          
-            </Route> */}
-
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/error' element={<Error />} />
+         
           </Routes>
         </Router>
       </UserContext.Provider >

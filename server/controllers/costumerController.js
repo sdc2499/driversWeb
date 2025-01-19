@@ -48,6 +48,7 @@ export default class CostumerController {
 
     async changePswd(req, res, next){
         try {
+            console.log("Hi there im in changePswd")
             const costumerService = new CostumerService();
             console.log("req.body in controller:::"+req.body)
             await costumerService.changePswd(req.body, req.params.id);

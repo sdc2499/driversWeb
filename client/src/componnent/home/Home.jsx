@@ -37,9 +37,9 @@ const Home = () => {
             <Header currentUser={currentUser} logout={logout} />
             {currentUser.userType === 'secretary' && <SecretaryChat />}
             {currentUser.userType === 'customer' && <UserChat />}
-            <footer>
+            {/* <footer>
                 <ScrollToTopButton visible={visible} />
-            </footer>
+            </footer> */}
             <Outlet />
         </>
     );

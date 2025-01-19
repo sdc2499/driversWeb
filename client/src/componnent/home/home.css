@@ -1,20 +1,122 @@
-.inactive {
-    color: rgb(42, 41, 41);
+/* Global reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and layout styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff; /* White background */
+    color: #333; /* Default text color */
+}
+
+/* Sticky header */
+.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #3a383662; /* Light orange */
+    z-index: 1000;
+    border-bottom: 0.5px solid #ff990079; /* Darker orange border */
+    transition: background-color 0.3s ease-in-out;
+}
+
+.sticky.hide {
+    transform: translateY(-100%);
+}
+
+/* Navigation styling */
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 60px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fdfcfc;
+    padding: 0 15px;
+    line-height: 60px;
+    font-size: 16px;
+}
+
+nav a:hover {
+    color: #FF9800; /* Dark orange on hover */
+}
+
+/* Dropdown menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    cursor: pointer;
+    padding: 10px 15px;
+    background-color: #FF9800; /* Orange button */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
+.dropdown-toggle:hover {
+    background-color: #FF5722; /* Darker orange on hover */
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15); /* Darker shadow */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 4px;
+    padding: 8px 0;
+    top: 100%;
+    left: 0;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #FFEB3B; /* Light yellow hover */
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Button and link styling */
+button, a {
+    background-color: transparent;
+    border: none;
+    color: #FF5722; /* Dark orange for buttons and links */
+    cursor: pointer;
+    text-decoration: none;
     font-weight: bold;
-    margin: 20px;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
 }
 
-.active {
-    color: red;
-    text-decoration: underline red;
-    font-weight: bolder;
+button:hover, a:hover {
+    color: #FF9800; /* Lighter orange on hover */
+    text-decoration: underline;
 }
 
-.inactive:hover,
-.active:hover {
-    color: red;
-}
-
+/* Scroll to top button */
 .topBtn {
     position: fixed;
     bottom: 20px;
@@ -23,164 +125,63 @@
     font-size: 18px;
     border: none;
     outline: none;
-    background-color: red;
+    background-color: #FF5722; /* Dark orange */
     color: white;
     cursor: pointer;
     padding: 15px;
-    border-radius: 4px;
-}
-
-.editUser {
-    font-size: 28px;
-    border: none;
-    outline: none;
-    color: rgb(117, 211, 245);
-    cursor: pointer;
-}
-
-/* Dropdown container */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-/* Dropdown text */
-.dropdown-text {
-    cursor: pointer;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-/* Dropdown content (hidden by default) */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-top: 5px;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-/* General styling */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Styles for the header */
-.sticky {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #ffffff; /* Example background color */
-    z-index: 1000; /* Ensure menu stays above content */
-    border-bottom: 1px solid #ccc; /* Bottom border */
-    transition: background-color 0.3s ease-in-out; /* Smooth background color change */
-}
-
-.sticky.hide {
-    transform: translateY(-100%);
-}
-
-/* Navigation styles */
-nav {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 60px; /* Navigation height */
-}
-
-nav a {
-    text-decoration: none;
-    color: #333333; /* Text color */
-    padding: 0 10px;
-    line-height: 60px; /* Vertical alignment */
-}
-
-nav a:hover {
-    color: #007bff; /* Text color on hover */
-}
-
-/* Styles for dropdown menu */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-text {
-    cursor: pointer;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-top: 5px;
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
-
-.dropdown-text:hover .dropdown-content {
-    display: block;
-}
-
-/* Scroll to top button styles */
-.topBtn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #007bff; /* Background color */
-    color: #ffffff; /* Text color */
-    border: none;
-    border-radius: 50%; /* Circle shape */
-    padding: 10px;
-    cursor: pointer;
-    display: none; /* Display only when scrolled */
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
 }
 
 .topBtn:hover {
-    background-color: #0056b3; /* Background color on hover */
+    background-color: #FF9800; /* Lighter orange */
+}
+
+/* Footer styling */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #FFB74D; /* Light orange */
+}
+
+/* Active and inactive state for links */
+.inactive {
+    color: #333;
+    font-weight: bold;
+}
+
+.active {
+    color: #ffffff;
+    text-decoration: underline;
+    font-weight: bolder;
+}
+
+.inactive:hover,
+.active:hover {
+    color: #FF9800; /* Lighter orange on hover */
+}
+
+/* Header and footer for home page */
+header, footer {
+    padding: 20px;
+    background-color: #FFB74D; /* Light orange */
+}
+
+/* Specific styling for components */
+.editUser {
+    font-size: 28px;
+    color: #FF5722; /* Dark orange */
+    cursor: pointer;
+}
+
+/* Header dropdown links */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #FFEB3B; /* Light yellow on hover */
 }

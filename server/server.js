@@ -75,6 +75,7 @@ io.on('connection', (socket) => {
     console.log(request)
     console.log(request.request)
     io.emit('rideRequestClosed', request.request);
+    console.log("request.costumerEmail:::💗"+request.costumerEmail)
     sendRatingEmail(request.costumerEmail, { costumerId: request.costumerId, driverId: request.driverId, rideId: request.request });
   });
 

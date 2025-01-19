@@ -6,7 +6,7 @@ const Info = () => {
   return (
     <>
       <div className="info_item">
-        <h1>פרטיים</h1>
+        <h1>פרטים</h1>
         <p><span>מזהה:</span> {currentUser.id}</p>
         <p><span>שם פרטי:</span> {currentUser.firstName}</p>
         <p><span>שם משפחה:</span> {currentUser.lastName}</p>

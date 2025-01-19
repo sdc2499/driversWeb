@@ -23,7 +23,7 @@ export const sendEmail = async ({ to, subject, htmlContent, attachments }) => {
         attachments: attachments || [
             {
                 filename: 'logo.png', 
-                path: 'C:/Users/The user/Desktop/פר/driversWeb/server/logo.png', 
+                path: 'C:/Users/The user/source/repos/driversWeb/server/logo.png', 
                 cid: 'logo' 
             }
         ]

@@ -1,46 +1,95 @@
-/* components/drivers/Drivers.css */
-.container {
-    padding: 20px;
-    background-color: #f9f9f9;
-    direction: rtl; /* כיוון הטקסט מימין לשמאל */
-  }
-  
-  .title {
-    color: #333;
+.drivers-container {
+    padding: 40px 20px;
+    margin-top: 70px; /* מרווח מתחת לנאב בר */
+    background-color: #2f2f2f; /* רקע אפור כהה */
+    color: #f5f5f5; /* טקסט בהיר */
+    direction: rtl;
+    border-radius: 10px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.drivers-title {
     text-align: center;
-  }
-  
-  .subtitle {
-    color: #555;
-  }
-  
-  .driver-list {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #FFA726; /* טקסט זהוב */
+}
+
+.drivers-description {
+    text-align: center;
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    color:#c77b07;
+}
+
+.drivers-subtitle {
+    font-size: 1.5em;
+    margin-top: 20px;
+    color: #fff;
+}
+
+.driver-list {
     list-style-type: none;
     padding: 0;
-  }
-  
-  .driver-item {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
+}
+
+.driver-list li {
     margin: 10px 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .join-button {
+    font-size: 1.1em;
+}
+
+.drivers-join-button {
     display: block;
-    margin: 20px auto;
+    margin: 30px auto;
     padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #ffa500;
+    color: #333;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .join-button:hover {
-    background-color: #0056b3;
-  }
-  
+    font-size: 1.2em;
+    transition: background-color 0.3s ease;
+}
+
+.drivers-join-button:hover {
+    background-color: #ffd700;
+}
+
+.drivers-form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.drivers-form input {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 400px;
+}
+
+.form-submit-button {
+    background-color: #ffd700;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.form-submit-button:hover {
+    background-color: #ffa500;
+}
+
+.error-message {
+    color: #ff4d4d;
+    font-size: 0.9em;
+}

@@ -4,6 +4,7 @@ import { UserContext } from '../../App';
 import { io } from 'socket.io-client';
 import { LoadScript, Autocomplete } from '@react-google-maps/api';
 import './requestRide.css'
+import UserChat from "../chat/UserChat";
 const socket = io('http://localhost:8080');
 const libraries = ['places'];
 
@@ -23,6 +24,7 @@ const RequestRide = () => {
 
     const fromInputRef = useRef(null);
     const toInputRef = useRef(null);
+
     const calculateDistance = (from, to) => {
         const service = new window.google.maps.DistanceMatrixService();
         service.getDistanceMatrix({
@@ -57,7 +59,8 @@ const RequestRide = () => {
             setError("to", { type: "manual", message: "אנא בחר כתובת חוקית מתוך אפשרויות ההשלמה האוטומטית." });
             return;
         }
-
+        console.log("my id::" + currentUser.id)
+        console.log("currentUser.email::::🌞"+currentUser.email)
         const rideRequest = { costumerId: currentUser.id || rideDetails.guestPhone, costumerEmail: currentUser.email || rideDetails.email, from, to, ...rideDetails, requestType, priceRange, date: rideDetails.date, time: rideDetails.time };
         socket.emit('newRideRequest', rideRequest);
         setRideStatus('Waiting for a driver to accept your request...');
@@ -98,7 +101,7 @@ const RequestRide = () => {
         <div className="background">
             <div className="form-container">
                 <h1>הזמן נסיעה</h1>
-                <LoadScript googleMapsApiKey="AIzaSyAOADq1o80YyWo4Tvp5vlbzimVXDYpJVWA" libraries={libraries}>
+                <LoadScript googleMapsApiKey="AIzaSyAr5TP19dZdlhJ1uw6QHHNv_q1wZGh4maM" libraries={libraries}>
                     <form noValidate onSubmit={handleSubmit(requestRide)}>
                         {!currentUser.id && <input type='tel' name='phone' placeholder='טלפון' {...register("guestPhone", {
                             required: "יש להכניס טלפון",
@@ -249,10 +252,11 @@ const RequestRide = () => {
                         <input type="submit" value="הזמן נסיעה" />
                     </form>
                     {rideStatus && <p>{rideStatus}</p>}
-                    {!driverFound ? (noDriverMessage && <p>{noDriverMessage}</p>):<p></p>}
+                    {!driverFound ? (noDriverMessage && <p>{noDriverMessage}</p>) : <p></p>}
                 </LoadScript>
                 <img src="../../../logo.png" alt="Additional Image" className="additional" />
             </div>
+            <UserChat/>
         </div>
 
     );

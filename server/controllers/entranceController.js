@@ -5,6 +5,7 @@ export default class EntranceController {
 
     async login(req, res, next) {
         try {
+            console.log("req:::"+req)
             const userService = new UserService();
             const result = await userService.login(req.body);
             if (result.result == undefined)

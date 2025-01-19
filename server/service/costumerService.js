@@ -57,6 +57,7 @@ export class CostumerService {
     async changePswd(body, id) {
         const queryItem = new QueryItem();
         const queryCostumer = queryItem.changePswdItemQuery();
+        console.log("pswd:::::>"+body.currentPassword+" "+body.newPassword)
         let curPswd = sha256(body.currentPassword)
         let newPswd = sha256(body.newPassword)
         const result = await executeQuery(queryCostumer, [newPswd, id, curPswd])

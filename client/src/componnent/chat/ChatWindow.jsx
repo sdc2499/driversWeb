@@ -9,27 +9,36 @@ const ChatWindow = ({
   sendMessage,
   closeChat,
   currentUser
-}) => (
-  <div className="chat-window">
-    <h3>שיחה עם המזכירה</h3>
-    <button className="close-chat-button" onClick={closeChat}>❎</button>
-    <div className="chat-messages">
-      {messages.map((msg, index) => (
-        <Message key={index} msg={msg} currentUser={currentUser} />
-      ))}
+}) => {
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  };
+
+  return (
+    <div className="chat-window">
+      <h3>שיחה עם המזכירה</h3>
+      <button className="close-chat-button" onClick={closeChat}>❎</button>
+      <div className="chat-messages">
+        {messages.map((msg, index) => (
+          <Message key={index} msg={msg} currentUser={currentUser} />
+        ))}
+      </div>
+      <div className="chat-input">
+        <input
+          type="text"
+          value={messageInput}
+          onChange={(e) => setMessageInput(e.target.value)}
+          onKeyDown={handleKeyDown} 
+          placeholder="הקלד הודעה..."
+          disabled={!activeChat}
+        />
+        <button onClick={sendMessage} disabled={!activeChat}>שלח</button>
+      </div>
     </div>
-    <div className="chat-input">
-      <input
-        type="text"
-        value={messageInput}
-        onChange={(e) => setMessageInput(e.target.value)}
-        placeholder="הקלד הודעה..."
-        disabled={!activeChat}
-      />
-      <button onClick={sendMessage} disabled={!activeChat}>שלח</button>
-    </div>
-  </div>
-);
+  );
+};
 
 export default ChatWindow;
 
@@ -45,27 +54,27 @@ export default ChatWindow;
 //   sendMessage,
 //   closeChat,
 //   currentUser
-// }) => {
-//   return (
-//     <div className="chat-window">
-//       <h3>שיחה עם {activeChat.userName} ({activeChat.customerSocketId})</h3>
-//       <button className="close-chat-button" onClick={closeChat}>❎</button>
-//       <div className="chat-messages">
-//         {messages.map((msg, index) => (
-//           <Message key={index} msg={msg} currentUser={currentUser} />
-//         ))}
-//       </div>
-//       <div className="chat-input">
-//         <input
-//           type="text"
-//           value={messageInput}
-//           onChange={(e) => setMessageInput(e.target.value)}
-//           placeholder="הקלד הודעה..."
-//         />
-//         <button onClick={sendMessage}>שלח</button>
-//       </div>
+// }) => (
+//   <div className="chat-window">
+//     <h3>שיחה עם המזכירה</h3>
+//     <button className="close-chat-button" onClick={closeChat}>❎</button>
+//     <div className="chat-messages">
+//       {messages.map((msg, index) => (
+//         <Message key={index} msg={msg} currentUser={currentUser} />
+//       ))}
 //     </div>
-//   );
-// };
+//     <div className="chat-input">
+//       <input
+//         type="text"
+//         value={messageInput}
+//         onChange={(e) => setMessageInput(e.target.value)}
+//         placeholder="הקלד הודעה..."
+//         disabled={!activeChat}
+//       />
+//       <button onClick={sendMessage} disabled={!activeChat}>שלח</button>
+//     </div>
+//   </div>
+// );
 
 // export default ChatWindow;
+

@@ -46,6 +46,7 @@ export async function putRequest(url, body) {
 
 export async function postFetch(url, body) {
     try {
+        console.log("The URL:::"+url)
         const response = await fetch(`http://localhost:8080/${url}`, {
             method: 'POST',
             headers: { 'Content-type': 'application/json; charset=UTF-8' },

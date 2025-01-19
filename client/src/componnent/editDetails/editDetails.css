@@ -1,3 +1,4 @@
+/* overlay container */
 .overlay {
     position: fixed;
     top: 0;
@@ -7,36 +8,67 @@
     background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.modal {
-    background: white;
+    align-items: flex-start; /* מתחיל מלמעלה, עם אפשרות לגלול */
+    z-index: 999;
     padding: 20px;
+    overflow-y: auto; /* גלילה במידת הצורך */
+    margin: 50px auto 20px; /* מרווח עליון מוגדל */
+}
+
+/* המודל עצמו */
+.modal {
+    background: #2f2f2f;
+    padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    color: #f5f5f5;
+    width: 100%; /* המודל יתפרש על כל רוחב הדף */
+    max-width: 800px; /* רוחב מקסימלי */
+    margin: 20px 0; /* רווח מלמעלה ומלמטה */
 }
 
-.modal h2 {
-    margin: 0 0 20px;
+/* שדה טקסט */
+.modal input[type="text"],
+.modal input[type="email"],
+.modal input[type="tel"],
+.modal input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0 20px;
+    background-color: #444;
+    color: #f5f5f5;
+    border: none;
+    border-radius: 5px;
 }
 
-.modal button {
+/* כפתורים */
+.modal button,
+.modal input[type="submit"] {
     padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
+    background-color: #FFA726;
+    color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
 }
 
-.modal button:hover {
-    background-color: #45a049;
+.modal button:hover,
+.modal input[type="submit"]:hover {
+    background-color: #FF7F00;
 }
 
-
+/* שגיאה */
 .error {
     color: red;
+    margin-top: -10px;
+}
+
+/* עבור מסכים קטנים */
+@media (max-width: 768px) {
+    .modal {
+        padding: 20px;
+        margin: 10px 0;
+    }
 }

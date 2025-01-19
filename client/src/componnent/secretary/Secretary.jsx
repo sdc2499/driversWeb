@@ -4,7 +4,7 @@ import { UserContext } from "../../App";
 import './secretaryCss.css';
 import { useNavigate, NavLink } from 'react-router-dom';
 import Main from '../../main/Main';
-
+import SecretaryChat from '../chat/SecretaryChat';
 const Secretary = () => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useContext(UserContext);
@@ -35,6 +35,7 @@ const Secretary = () => {
           לעבור לעמוד הבקשות.
         </div>
       )}
+      <SecretaryChat/>
     </div>
   );
 }
