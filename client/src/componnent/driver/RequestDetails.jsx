@@ -1,6 +1,5 @@
 import React from "react"
 import './driver.css'
-import Driver from "./Driver"
 
 const RequestDetails = ({ request }) => {
 

@@ -6,7 +6,51 @@
     border: 1px solid #ccc;
     border-radius: 8px;
   }
-  
+  .accepted-requests {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.requests-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* שתי עמודות */
+    gap: 20px; /* מרווח בין הכרטיסים */
+    width: 100%;
+    max-width: 600px; /* אפשר להגדיר רוחב מקסימלי */
+}
+
+.accepted-request {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 600px;
+}
+
+.pagination-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.pagination-buttons button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
   .page-title {
     font-size: 24px;
     margin-bottom: 20px;
