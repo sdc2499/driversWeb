@@ -12,6 +12,51 @@
     align-items: center;
     gap: 20px;
 }
+.driver-ratings-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ratings-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 עמודות */
+  gap: 20px; /* רווח בין כרטיסים */
+  margin: 20px auto;
+  max-width: 1200px; /* גבול רוחב כולל */
+}
+
+.rating-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.pagination-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.pagination-buttons button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pagination-buttons button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
 
 .requests-grid {
     display: grid;

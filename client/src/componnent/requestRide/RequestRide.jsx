@@ -61,7 +61,7 @@ const RequestRide = () => {
         }
         console.log("my id::" + currentUser.id)
         console.log("currentUser.email::::🌞"+currentUser.email)
-        const rideRequest = { costumerId: currentUser.id || rideDetails.guestPhone, costumerEmail: currentUser.email || rideDetails.email, from, to, ...rideDetails, requestType, priceRange, date: rideDetails.date, time: rideDetails.time };
+        const rideRequest = {phone:currentUser.phone, costumerId: currentUser.id || rideDetails.guestPhone, costumerEmail: currentUser.email || rideDetails.email, from, to, ...rideDetails, requestType, priceRange, date: rideDetails.date, time: rideDetails.time };
         socket.emit('newRideRequest', rideRequest);
         setRideStatus('Waiting for a driver to accept your request...');
         reset();

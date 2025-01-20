@@ -4,6 +4,7 @@ import { useNavigate, NavLink } from 'react-router-dom';
 import './driver.css'
 import { UserContext } from "../../App";
 import Main from '../../main/Main';
+import DriverRatings from './DriverRatings';
 
 const Driver = () => {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ const Driver = () => {
           לעבור לעמוד הבקשות.
         </div>
       )}
+      
     </>
   );
 };

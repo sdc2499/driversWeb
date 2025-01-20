@@ -46,7 +46,7 @@ export async function putRequest(url, body) {
 
 export async function postFetch(url, body) {
     try {
-        console.log("The URL:::"+url)
+        console.log("The URL:::" + url)
         const response = await fetch(`http://localhost:8080/${url}`, {
             method: 'POST',
             headers: { 'Content-type': 'application/json; charset=UTF-8' },
@@ -58,3 +58,16 @@ export async function postFetch(url, body) {
         console.error('Error:', error);
     }
 }
+// export async function fetchRatings(driverId) {
+//     try {
+//         const response = await getRequest(`ratings/driver/${driverId}`);
+//         if (response.ok) {
+//             const data = await response.json();
+//             return data.ratings;
+//         }
+//     } catch (error) {
+//         console.error("Error fetching ratings:", error);
+//     }
+//     return [];
+// };
+

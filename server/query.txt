@@ -85,3 +85,6 @@ CREATE TABLE db.rides (
 INSERT INTO db.travelstatus (code, travelStatus) VALUES ('2', 'priceUpdated');
 INSERT INTO db.travelstatus (code, travelStatus) VALUES ('3', 'requestClosedWithDriver');
 INSERT INTO db.travelstatus (code, travelStatus) VALUES ('1', 'requestOpened');
+
+ALTER TABLE `db`.`rides` 
+ADD COLUMN `phone` VARCHAR(10) NOT NULL AFTER `socketId`;

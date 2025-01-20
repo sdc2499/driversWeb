@@ -22,6 +22,7 @@ import RidesAvailable from './componnent/driver/RidesAvailable';
 import SecretaryChat from './componnent/chat/SecretaryChat';
 import Main from './main/Main'
 import { getTokenFromCookie } from './componnent/cookies/cookies';
+import DriverRatings from './componnent/driver/DriverRatings';
 export const UserContext = createContext();
 
 function App() {
@@ -94,6 +95,7 @@ function App() {
                 <Route path='acceptedRequests' element={<AcceptedRequests />} />
                 <Route path='ridesAvailable' element={<RidesAvailable />} />
                 <Route path='contact' element={<Contact />} />
+                <Route path='rating' element={<DriverRatings />} />
               </Route>
 
               <Route path='secretary/:id' element={<Layout />} >
@@ -108,7 +110,7 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/error' element={<Error />} />
-         
+
           </Routes>
         </Router>
       </UserContext.Provider >

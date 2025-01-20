@@ -35,6 +35,9 @@ const Header = ({ currentUser, logout }) => {
                         <NavLink to={`/home/${currentUser.userType}/${currentUser.id}/ridesAvailable`}>
                             בקשות נסיעה
                         </NavLink>
+                        <NavLink to={`/home/${currentUser.userType}/${currentUser.id}/rating`}>
+                            הדירוג שלי
+                        </NavLink>
                     </>
                 )}
             </nav>

@@ -99,5 +99,22 @@ export class DriverService {
         else
             return { alreadyRated: true }
     }
-
+    async getDriverRates(driverId) {
+        const queryItem = new QueryItem();
+    
+        // יצירת השאילתה לשליפת הדירוגים של הנהג
+        const getRatingsQuery = queryItem.getByParamQuery("ratingdriver", "driverId=?");
+    
+        try {
+            // שליפת הדירוגים מהמסד נתונים
+            const result = await executeQuery(getRatingsQuery, [driverId]);
+    
+            // החזרת התוצאה
+            return result;
+        } catch (error) {
+            console.error("Error fetching driver ratings:", error);
+            throw new Error("Failed to fetch driver ratings");
+        }
+    }
+    
 }

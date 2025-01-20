@@ -11,6 +11,7 @@ const RequestDetails = ({ request }) => {
             <p><strong>תאריך:</strong> {request.date}</p>
             <p><strong>שעה:</strong> {request.time}</p>
             <p><strong>מחיר:</strong> {request.price}</p>
+            <p><strong>טלפון:</strong> {request.phone}</p>
             {request.guestPhone && <p><strong>טלפון(לקוח לא רשום):</strong> {request.guestPhone}</p>}
             {request.requestType === 'package'||request.packageSize !=null ? (
                 <p>{request.packageSize}<strong> :גודל החבילה</strong> </p>

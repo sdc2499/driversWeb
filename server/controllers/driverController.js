@@ -27,8 +27,8 @@ export default class DriverController {
         try {
             const driveService = new DriverService();
             const result = await driveService.postRaitingDriver(req.query.token, req.body);
-            if(result.alreadyRated)
-                throw('This ride has already been rated.')
+            if (result.alreadyRated)
+                throw ('This ride has already been rated.')
             return res.json({ status: 200 });
         } catch (message) {
             const err = {};
@@ -44,7 +44,27 @@ export default class DriverController {
             next(err);
         }
     }
+    async getDriverRate(req, res, next) {
+        try {
+            const driverService = new DriverService();
+            const result = await driverService.getDriverRates(req.params.id);
+            return res.json({ data: result, status: 200 });
+        }
+        catch (ex) {
+            const err = {};
+            switch (ex.message) {
+                case "No elements found":
+                    err.statusCode = 404;
+                    break;
+                default:
+                    err.statusCode = 500;
+                    break;
+            }
+            err.message = ex.message;
+            next(err);
+        }
 
+    }
     async getDriverById(req, res, next) {
         try {
             const driverService = new DriverService();

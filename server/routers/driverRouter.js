@@ -5,6 +5,7 @@ const driverRouter=express.Router();
 const driverController = new DriverController();
 
 driverRouter.get("/:id",driverController.getDriverById);
+driverRouter.get("/:id/ratings",driverController.getDriverRate);
 driverRouter.get("/mainDetails/:id",driverController.getMainDetails)
 driverRouter.get("/",driverController.getDrivers)
 driverRouter.post("/rating",driverController.rating)

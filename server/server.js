@@ -36,7 +36,7 @@ async function newRideRequest(request,socketId) {
   let t;
   let tt;
   request.requestType === 'package' ? (t = "packageSize", tt = request.packageSize) : (t = "passengers", tt = request.passengers)
-  const postQuery = queryItem.postItemQuery("rides", "?,?, ?, ?, ?, ?, ?,?,?,?", `(price, costumerId, status, pickupLocation, destination, ${t},isRated,date,time,socketId)`);
+  const postQuery = queryItem.postItemQuery("rides", "?,?, ?, ?, ?, ?, ?,?,?,?,?", `(price, costumerId, status, pickupLocation, destination, ${t},isRated,date,time,socketId,phone)`);
   let values = [
     null,
     request.costumerId,
@@ -47,7 +47,8 @@ async function newRideRequest(request,socketId) {
     0,
     request.date,
     request.time,
-    socketId
+    socketId,
+    request.phone
   ];
   const result = await executeQuery(postQuery, values)
 
