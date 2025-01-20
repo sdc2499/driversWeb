@@ -8,6 +8,7 @@ import { rideRouter } from "./routers/rideRouter.js";
 import { driverRouter } from "./routers/driverRouter.js";
 import { usersRouter } from "./routers/costumersRouter.js";
 import { passwordResetRouter } from "./routers/passwordResetRouter.js";
+import emailRouter from "./routers/emailRouter.js"
 const app = express();
 
 app.use(cors());
@@ -18,6 +19,7 @@ app.use(authMiddleware);
 app.use('/users', usersRouter);
 app.use('/rides', rideRouter);
 app.use('/drivers', driverRouter);
+app.use('/contact',emailRouter)
 app.use(logErrors);
 
 export default app;

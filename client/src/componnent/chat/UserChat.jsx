@@ -57,7 +57,7 @@ const UserChat = () => {
     const initialMessage = {
       senderId: socket.id,
       recipientId: secretarySocketId,
-      userName: currentUser.firstName,
+      userName: "System",
       text: `שלום לך ${currentUser.firstName} ${currentUser.lastName} איך אוכל לעזור לך היום?`,
       timestamp: new Date().toISOString(),
     };

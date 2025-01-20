@@ -3,6 +3,7 @@ import { UserContext } from '../../App';
 import { useNavigate } from 'react-router-dom';
 import { putRequest } from '../../fetch';
 import './editDetails.css';
+import { getTokenFromCookie } from "../../componnent/cookies";
 
 const EditDetails = () => {
     const [currentUser, setCurrentUser] = useContext(UserContext);
@@ -51,7 +52,10 @@ const EditDetails = () => {
         fetch(`http://localhost:8080/users/changePassword/${currentUser.id}`, {
             method: 'PUT',
             body: JSON.stringify({ currentPassword, newPassword }),
-            headers: { 'Content-Type': 'application/json; charset=UTF-8' }
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': getTokenFromCookie()
+            }
         }).then(response => {
             if (response.status === 200) {
                 setPasswordChange(false);
@@ -74,7 +78,7 @@ const EditDetails = () => {
         <>
             <div className="overlay">
                 <div className="modal">
-                {updateSuccess && (
+                    {updateSuccess && (
                         <div className="update-success-container">
                             <h2>הפרטים עודכנו בהצלחה!</h2>
                             <button onClick={handleConfirmation} className="confirm-button">אישור</button>
@@ -126,7 +130,7 @@ const EditDetails = () => {
                         </div>
                     )}
 
-                    
+
                 </div>
             </div>
         </>

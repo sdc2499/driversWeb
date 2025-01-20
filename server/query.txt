@@ -1,94 +1,87 @@
+CREATE TABLE db.users (
+  id INT NOT NULL AUTO_INCREMENT,
+  firstName VARCHAR(20) NOT NULL,
+  lastName VARCHAR(20) NOT NULL,
+  phone VARCHAR(10) NOT NULL,
+  email VARCHAR(25) NOT NULL,
+  userType VARCHAR(15) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE INDEX id_UNIQUE (id ASC) VISIBLE,
+  UNIQUE INDEX phone_UNIQUE (phone ASC) VISIBLE,
+  UNIQUE INDEX userscol_UNIQUE (email ASC) VISIBLE);
 
-CREATE TABLE `db`.`users` (
-  `id` INT AUTO_INCREMENT,
-  `firstName` VARCHAR(20) NOT NULL,
-  `lastName` VARCHAR(20) NOT NULL,
-  `phone` VARCHAR(10) NOT NULL,
-  `email` VARCHAR(25) NOT NULL,
-  `userType` VARCHAR(15) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  UNIQUE INDEX `phone_UNIQUE` (`phone` ASC) VISIBLE,
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);
+  CREATE TABLE db.drivers (
+  driverId INT NOT NULL,
+  gender VARCHAR(1) NOT NULL,
+  religiousSector VARCHAR(45) NOT NULL,
+  ratingAmount INT NOT NULL,
+  ratingAverage FLOAT NULL DEFAULT NULL,
+  PRIMARY KEY (driverId),
+  UNIQUE INDEX driverId_UNIQUE (driverId ASC) VISIBLE,
+  CONSTRAINT driverId
+    FOREIGN KEY (driverId)
+    REFERENCES db.users (id)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT);
 
-
-CREATE TABLE `db`.`passwords` (
-  `userId` INT NOT NULL,
-  `password` VARCHAR(256) NOT NULL,
-  PRIMARY KEY (`userId`),
-  CONSTRAINT `userId`
-    FOREIGN KEY (`userId`)
-    REFERENCES `db`.`users` (`id`)
+CREATE TABLE db.passwords (
+  userId INT NOT NULL,
+  password VARCHAR(256) NOT NULL,
+  otp VARCHAR(256) NOT NULL DEFAULT '0',
+  PRIMARY KEY (userId),
+  UNIQUE INDEX userId_UNIQUE (userId ASC) VISIBLE,
+  CONSTRAINT userId
+    FOREIGN KEY (userId)
+    REFERENCES db.users (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
+CREATE TABLE db.customerstatus (
+  code INT NOT NULL,
+  status VARCHAR(20) NOT NULL,
+  PRIMARY KEY (code),
+  UNIQUE INDEX code_UNIQUE (code ASC) VISIBLE,
+  UNIQUE INDEX status_UNIQUE (status ASC) VISIBLE);
 
-CREATE TABLE `db`.`drivers` (
-  `driverId` INT NOT NULL,
-  `gender` VARCHAR(1) NOT NULL,
-  `religiousSector` VARCHAR(15) NOT NULL,
-  `ratingAmount` INT NOT NULL,
-  `ratingAverage` FLOAT NULL,
-  PRIMARY KEY (`driverId`),
-  UNIQUE INDEX `driverId_UNIQUE` (`driverId` ASC) VISIBLE,
-  CONSTRAINT `driverId`
-    FOREIGN KEY (`driverId`)
-    REFERENCES `db`.`users` (`id`)
+CREATE TABLE db.rides (
+  id INT NOT NULL AUTO_INCREMENT,
+  price DECIMAL(10,2) NULL DEFAULT NULL,
+  status INT NOT NULL DEFAULT '1',
+  driverId VARCHAR(255) NULL DEFAULT NULL,
+  costumerId VARCHAR(255) NULL DEFAULT NULL,
+  pickupLocation VARCHAR(255) NULL DEFAULT NULL,
+  destination VARCHAR(255) NULL DEFAULT NULL,
+  packageSize VARCHAR(50) NULL DEFAULT NULL,
+  passengers INT NULL DEFAULT NULL,
+  createdAt TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  isRated TINYINT NOT NULL DEFAULT '0',
+  date VARCHAR(45) NULL DEFAULT NULL,
+  time VARCHAR(45) NULL DEFAULT NULL,
+  socketId VARCHAR(205) NULL DEFAULT NULL,
+  PRIMARY KEY (id));
+
+  CREATE TABLE db.travelstatus (
+  code INT NOT NULL,
+  travelStatus VARCHAR(65) NOT NULL,
+  PRIMARY KEY (code),
+  UNIQUE INDEX code_UNIQUE (code ASC) VISIBLE,
+  UNIQUE INDEX travelStatus_UNIQUE (travelStatus ASC) VISIBLE);
+
+  CREATE TABLE db.ratingdriver (
+  id INT NOT NULL AUTO_INCREMENT,
+  driverId INT NOT NULL,
+  stars INT NOT NULL,
+  ratingMsg VARCHAR(50) NULL DEFAULT NULL,
+  userId INT NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE INDEX id_UNIQUE (id ASC) VISIBLE,
+  INDEX id_driver_idx (driverId ASC) VISIBLE,
+  CONSTRAINT id_driver
+    FOREIGN KEY (driverId)
+    REFERENCES db.drivers (driverId)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-
-
-    
-CREATE TABLE `db`.`ratingdriver` (
-  `id` INT AUTO_INCREMENT,
-  `driverId` INT NOT NULL,
-  `stars` INT NOT NULL,
-  `ratingMsg` VARCHAR(50) NULL,
-  `userPhone` VARCHAR(15) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `id_driver_idx` (`driverId` ASC) VISIBLE,
-  CONSTRAINT `id_driver`
-    FOREIGN KEY (`driverId`)
-    REFERENCES `db`.`drivers` (`driverId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
-
-
-
-
-    CREATE TABLE db.rides (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    request_details TEXT,
-    price DECIMAL(10, 2),
-   status ENUM('request_opened', 'price_updated', 'request_closed_with_driver', 'request_closed_without_driver') DEFAULT 'request_opened',
-    driver_id VARCHAR(255),
-    customer_id VARCHAR(255),
-    pickup_location VARCHAR(255),
-    destination VARCHAR(255),
-    package_size VARCHAR(50),
-    passengers INT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-
-
-INSERT INTO `db`.`customerstatus` (`code`, `status`) VALUES ('1', 'costumer');
-INSERT INTO `db`.`customerstatus` (`code`, `status`) VALUES ('2', 'driver');
-INSERT INTO `db`.`customerstatus` (`code`, `status`) VALUES ('3', 'secretary');
-
-
-
-
-CREATE TABLE `db`.`travelstatus` (
-  `code` INT NOT NULL,
-  `travelStatus` VARCHAR(65) NOT NULL,
-  PRIMARY KEY (`code`),
-  UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE,
-  UNIQUE INDEX `travelStatus_UNIQUE` (`travelStatus` ASC) VISIBLE);
-
-
-INSERT INTO `db`.`travelstatus` (`code`, `travelStatus`) VALUES ('1', 'requestOpened');
-INSERT INTO `db`.`travelstatus` (`code`, `travelStatus`) VALUES ('2', 'priceUpdated');
-INSERT INTO `db`.`travelstatus` (`code`, `travelStatus`) VALUES ('3', 'request_closedWithDriver');
+INSERT INTO db.travelstatus (code, travelStatus) VALUES ('2', 'priceUpdated');
+INSERT INTO db.travelstatus (code, travelStatus) VALUES ('3', 'requestClosedWithDriver');
+INSERT INTO db.travelstatus (code, travelStatus) VALUES ('1', 'requestOpened');
