@@ -79,6 +79,7 @@ function App() {
                 <Route path='editDetails' element={<EditDetails />} />
                 <Route path='requestRide' element={<RequestRide />} />
                 <Route path='contact' element={<Contact />} />
+                <Route path='aboutUs' element={<AboutUs />} />
               </Route>
 
               <Route path='costumer/:id' element={<Layout />} >

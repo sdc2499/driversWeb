@@ -14,7 +14,7 @@ const NavLinks = ({ currentUser, logout }) => {
         <div className="dropdown">
             <NavLink to={`/home/${currentUser.userType}/${currentUser.id}/contact`}>צור קשר</NavLink>
             <NavLink to={`/home/${currentUser.userType}/${currentUser.id}/aboutUs`}>קצת עלינו</NavLink>
-            <NavLink to={`/home/${currentUser.userType}/${currentUser.id}/drivers`}>נהגים</NavLink>
+            {currentUser.userType=='costumer'?<NavLink to={`/home/${currentUser.userType}/${currentUser.id}/drivers`}>נהגים</NavLink>:<></>}
             {currentUser.id ? (
                 <>
                     <span onClick={toggleDropdown} className="dropdown-toggle">
