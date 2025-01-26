@@ -14,17 +14,18 @@ const SecretaryTravelRequests = () => {
   useEffect(() => {
     const fetchOpenRides = async () => {
       try {
-        const response = await getRequest(`rides/waitingForPrice`)
+        const response = await getRequest(`rides/waitingForPrice`);
         if (response.ok) {
-            const data = await response.json();
-            setRequests(data.data);
+          const data = await response.json();
+          setRequests(data.data);
         }
-    } catch {
+      } catch {
         console.error('Error fetching waitingForDriver rides:', error);
-    }
+      }
     };
 
     fetchOpenRides();
+
     const handleNewRequest = (request) => {
       setRequests(prev => [{ ...request, closed: false, priceUpdated: false }, ...prev]);
     };
@@ -64,25 +65,20 @@ const SecretaryTravelRequests = () => {
     return requestDate >= today && requestDate <= oneWeekFromNow;
   };
 
-  const sortedRequests = requests
-    .filter(request => !request.closed || (request.closed && isWithinNextWeek(request.date)))
-    .sort((a, b) => a.closed === b.closed ? 0 : a.closed ? 1 : -1);
+  const openRequests = requests.filter(request => !request.closed);
+  const closedRequests = requests.filter(request => request.closed);
 
   return (
     <div className="secretary-container">
       <h1 className="page-title">Hello Secretary</h1>
-      {sortedRequests.map(request => (
-        <div className="request-item" key={request.id}>
-          <RequestDetails request={request}/>
-          { request.guestPhone&&<p><strong>טלפון(לקוח לא רשום):</strong> {request.guestPhone}</p>}
-         
-          {request.closed ? (
-            <div className="closed-message">
-              <p>This request has been closed.</p>
-              {request.price && <p><strong>Final Price:</strong> {request.price}</p>}
-            </div>
-          ) : (
-            <div>
+
+      <div className="request-section">
+        <h2 className="section-title">Open Requests</h2>
+        <div className="request-grid">
+          {openRequests.map(request => (
+            <div className="request-item" key={request.id}>
+              <RequestDetails request={request} />
+              {request.guestPhone && <p><strong>טלפון(לקוח לא רשום):</strong> {request.guestPhone}</p>}
               <input
                 type="number"
                 placeholder="Enter price"
@@ -94,14 +90,30 @@ const SecretaryTravelRequests = () => {
                 <button onClick={() => sendRequestToDrivers(request)}>Send</button>
               )}
             </div>
-          )}
+          ))}
         </div>
-      ))}
+      </div>
+
+      <div className="request-section">
+        <h2 className="section-title">Closed Requests</h2>
+        <div className="request-grid">
+          {closedRequests.map(request => (
+            <div className="request-item" key={request.id}>
+              <RequestDetails request={request} />
+              <div className="closed-message">
+                <p>This request has been closed.</p>
+                {request.price && <p><strong>Final Price:</strong> {request.price}</p>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
 
 export default SecretaryTravelRequests;
+
 
 
 

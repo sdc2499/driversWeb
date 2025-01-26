@@ -88,3 +88,6 @@ INSERT INTO db.travelstatus (code, travelStatus) VALUES ('1', 'requestOpened');
 
 ALTER TABLE `db`.`rides` 
 ADD COLUMN `phone` VARCHAR(10) NOT NULL AFTER `socketId`;
+
+ALTER TABLE `db`.`rides` 
+CHANGE COLUMN `phone` `phone` VARCHAR(10) NULL ;
